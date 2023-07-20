@@ -5,6 +5,7 @@ import Section from "./components/Section";
 import PromptChatgpt from "./components/PromptChatgpt";
 import { Button } from "@material-tailwind/react";
 import TestList from "./components/TestList";
+import References from "./components/References";
 
 export default function Home() {
   return (
@@ -13,8 +14,11 @@ export default function Home() {
       <Section label="Bài tập mới nhất">
         <TestList />
       </Section>
-      <Section label="Tạo câu hỏi tự động để luyện tập">
+      <Section label="Luyện English cùng ChatGPT">
         <PromptChatgpt />
+      </Section>
+      <Section label="Tài liệu tham khảo">
+        <References />
       </Section>
     </>
   );

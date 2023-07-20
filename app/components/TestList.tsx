@@ -47,7 +47,7 @@ const TEST_LIST = [
 
 export default function TestList() {
   return (
-    <div className="grid grid-cols-4 gap-10">
+    <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-12 lg:gap-8 md:gap-4 gap-2">
       {TEST_LIST.map((test, index) => (
         <div
           key={`number ${index}`}

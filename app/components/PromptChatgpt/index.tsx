@@ -1,53 +1,59 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./index.module.css";
-import { NextResponse } from "next/server";
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import TabSpeaking from "./TabSpeaking";
+import TabReading from "./TabReading";
+import TabWriting from "./TabWriting";
+import { useEffect, useState } from "react";
+
+const data = [
+  {
+    label: "Speaking",
+  },
+  {
+    label: "Reading",
+  },
+  {
+    label: "Writing",
+  },
+];
 
 export default function PromptChatgpt() {
-  const [animalInput, setAnimalInput] = useState("");
-  const [result, setResult] = useState();
+  const [isVisible, setIsVisible] = useState(false);
 
-  async function onSubmit(event: any) {
-    event.preventDefault();
-    try {
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ animal: animalInput }),
-      });
-
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw (
-          data.error ||
-          new Error(`Request failed with status ${response.status}`)
-        );
-      }
-
-      setResult(data.result);
-      setAnimalInput("");
-      return NextResponse.json(data);
-    } catch (error: any) {
-      console.error(error);
-    }
-  }
-
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
   return (
-    <main className={styles.main}>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          name="animal"
-          placeholder="Enter an animal"
-          value={animalInput}
-          onChange={(e) => setAnimalInput(e.target.value)}
-        />
-        <input type="submit" value="Generate names" />
-      </form>
-      <div className={styles.result}>{result}</div>
-    </main>
+    <>
+      <Tabs value="Speaking">
+        <TabsHeader>
+          {data.map(({ label }) => (
+            <Tab key={label} value={label}>
+              {label}
+            </Tab>
+          ))}
+        </TabsHeader>
+        {isVisible && (
+          <TabsBody className="overflow-visible mt-6">
+            <TabPanel value="Speaking" className="flex flex-col gap-10">
+              <TabSpeaking />
+            </TabPanel>
+            <TabPanel value="Reading" className="flex flex-col gap-10">
+              <TabReading />
+            </TabPanel>
+            <TabPanel value="Writing" className="flex flex-col gap-10">
+              <TabWriting />
+            </TabPanel>
+          </TabsBody>
+        )}
+      </Tabs>
+    </>
   );
 }

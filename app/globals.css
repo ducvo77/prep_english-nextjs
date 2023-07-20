@@ -17,3 +17,9 @@
 .second-bg {
   background-color: #1A56DB;
 }
+
+/* Tab Group */
+
+.MuiTabs-flexContainer.css-heg063-MuiTabs-flexContainer {
+  justify-content: center;
+}
