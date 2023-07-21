@@ -27,11 +27,18 @@ export default function User() {
         </button>
       </MenuHandler>
       <MenuList className="flex flex-col rounded-lg p-0 min-w-[120px]">
-        <MenuItem className="text-left px-5 py-3 hover:bg-[#FFEB3B]">
-          <Link href="/login">Đăng nhập</Link>
+        <MenuItem className="text-left p-0 flex">
+          <Link href="/login" className="w-full px-5 py-3 hover:bg-[#FFEB3B]">
+            Đăng nhập
+          </Link>
         </MenuItem>
-        <MenuItem className="text-left px-5 py-3 hover:bg-[#FFEB3B]">
-          <Link href="/register">Đăng ký</Link>
+        <MenuItem className="text-left p-0 flex">
+          <Link
+            href="/register"
+            className="w-full px-5 py-3 hover:bg-[#FFEB3B]"
+          >
+            Đăng ký
+          </Link>
         </MenuItem>
       </MenuList>
     </Menu>

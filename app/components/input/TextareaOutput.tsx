@@ -2,12 +2,17 @@
 import { Textarea } from "@material-tailwind/react";
 import { useState } from "react";
 
-interface TextareaCustomProps {
+interface TextareaOutputProps {
   label: string;
   value: string;
+  height?: string;
 }
 
-export default function TextareaCustom({ label, value }: TextareaCustomProps) {
+export default function TextareaOutput({
+  label,
+  value,
+  height,
+}: TextareaOutputProps) {
   const [data, setData] = useState(value);
   return (
     <Textarea
@@ -16,7 +21,8 @@ export default function TextareaCustom({ label, value }: TextareaCustomProps) {
       size="lg"
       resize={true}
       value={data}
-      className="min-h-[300px]"
+      // className="min-h-[300px]"
+      className={`${height ? height : "min-h-[300px]"}`}
       onChange={(e) => setData(e.target.value)}
     />
   );

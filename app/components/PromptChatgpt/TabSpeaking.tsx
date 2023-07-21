@@ -8,50 +8,52 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import { NextResponse } from "next/server";
-import { useState } from "react";
-import TextareaCustom from "../input/TextareaCustom";
+import { useCallback, useEffect, useState } from "react";
+import TextareaOutput from "../input/TextareaOutput";
 import NoteUsing from "../NoteUsing";
 
 export default function TabSpeaking() {
   const [describe, setDescribe] = useState("");
-  const [part, setPart] = useState("part 1");
-  const [level, setLevel] = useState("easy");
+  const [part, setPart] = useState("Part 1 - Introduction and Interview");
+  const [level, setLevel] = useState("Easy");
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  async function onSubmit(event: React.SyntheticEvent<EventTarget>) {
-    event.preventDefault();
-    setIsLoading(true);
+  const onSubmit = useCallback(
+    async (event: React.SyntheticEvent<EventTarget>) => {
+      event.preventDefault();
+      setIsLoading(true);
 
-    try {
-      const response = await fetch("/api/generate/speaking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ describe, part, level }),
-      });
+      try {
+        const response = await fetch("/api/generate/speaking", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ describe, part, level }),
+        });
 
-      const data = await response.json();
-      if (response.status !== 200) {
-        throw (
-          data.error ||
-          new Error(`Request failed with status ${response.status}`)
-        );
+        const data = await response.json();
+        if (response.status !== 200) {
+          throw (
+            data.error ||
+            new Error(`Request failed with status ${response.status}`)
+          );
+        }
+
+        setResult(data.result);
+        setIsLoading(false);
+        return NextResponse.json(data);
+      } catch (error: any) {
+        console.error(error);
       }
-
-      setResult(data.result);
-      setIsLoading(false);
-      return NextResponse.json(data);
-    } catch (error: any) {
-      setError(error);
-    }
-  }
+    },
+    [describe, level, part]
+  );
 
   return (
     <>
-      <NoteUsing />
+      <NoteUsing speaking />
       <form onSubmit={onSubmit} className="flex gap-10">
         <div className="flex-[6]">
           <Input
@@ -81,7 +83,7 @@ export default function TabSpeaking() {
             placeholder="bottom"
             value={level}
             onChange={(value) => {
-              setLevel(value || "");
+              setLevel(value || "Easy");
             }}
           >
             <Option value="Easy">Easy</Option>
@@ -93,13 +95,9 @@ export default function TabSpeaking() {
           Generate
         </Button>
       </form>
-      {error && (
-        <span className="text-sm text-red-600 italic text-center">
-          Vui lòng nhập đầy đủ thông tin!!
-        </span>
-      )}
-      {isLoading && !error && <Spinner className="flex mx-auto" />}
-      {result && !error && <TextareaCustom label="Result" value={result} />}
+
+      {isLoading && <Spinner className="flex mx-auto" />}
+      {result && <TextareaOutput label="Result" value={result} />}
     </>
   );
 }
