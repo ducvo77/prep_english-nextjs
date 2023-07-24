@@ -25,7 +25,7 @@ export default function Nav() {
         {MENU_LIST.map((item, index) => (
           <li
             key={`item ${index}`}
-            className="hover:text-[#1A56DB] font-semibold"
+            className="hover:text-[#1A56DB] font-semibold white"
           >
             <Link href={item.href}>{item.label}</Link>
           </li>

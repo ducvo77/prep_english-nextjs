@@ -54,7 +54,7 @@ export default function TabSpeaking() {
   return (
     <>
       <NoteUsing speaking />
-      <form onSubmit={onSubmit} className="flex gap-10">
+      <form onSubmit={onSubmit} className="flex gap-10 lg:flex-row flex-col">
         <div className="flex-[6]">
           <Input
             label="Description of the topic of speaking practice"

@@ -25,11 +25,11 @@ const currentYear = new Date().getFullYear();
 
 export default function Footer() {
   return (
-    <footer className="relative w-full border-t-2">
+    <footer className="relative w-full">
       <div className="mx-auto w-full max-w-7xl px-8">
-        <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-4 border-t">
           {SITEMAP.map(({ title, links }, key) => (
-            <div key={key} className="w-full">
+            <div key={key} className="w-full sm:text-left text-center">
               <Typography
                 variant="small"
                 color="blue-gray"

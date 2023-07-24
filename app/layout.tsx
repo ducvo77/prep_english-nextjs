@@ -22,8 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <Container>{children}</Container>
-        <Footer />
+        <Container>
+          {children}
+          <Footer />
+        </Container>
         <BackToTop />
       </body>
     </html>

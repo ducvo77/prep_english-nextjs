@@ -88,7 +88,10 @@ export default function TabReading() {
   return (
     <>
       <NoteUsing reading />
-      <form onSubmit={onSubmitGanerate} className="flex gap-10">
+      <form
+        onSubmit={onSubmitGanerate}
+        className="flex gap-10 lg:flex-row flex-col"
+      >
         <div className="flex-[6]">
           <Input
             value={describe}

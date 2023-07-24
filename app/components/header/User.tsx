@@ -15,8 +15,8 @@ export default function User() {
   return (
     <Menu>
       <MenuHandler>
-        <button className="p-2 flex items-center gap-3 border rounded-full shadow-sm hover:shadow-lg">
-          <AiOutlineMenu size={20} />
+        <button className="p-2 flex items-center gap-3 rounded-full border shadow-sm hover:shadow-lg">
+          <AiOutlineMenu size={20} className="md:flex hidden" />
           <Image
             src="/images/user-default.jpg"
             width="28"
@@ -28,14 +28,17 @@ export default function User() {
       </MenuHandler>
       <MenuList className="flex flex-col rounded-lg p-0 min-w-[120px]">
         <MenuItem className="text-left p-0 flex">
-          <Link href="/login" className="w-full px-5 py-3 hover:bg-[#FFEB3B]">
+          <Link
+            href="/login"
+            className="w-full px-5 py-3 hover:bg-[#1A56DB] hover:text-white"
+          >
             Đăng nhập
           </Link>
         </MenuItem>
         <MenuItem className="text-left p-0 flex">
           <Link
             href="/register"
-            className="w-full px-5 py-3 hover:bg-[#FFEB3B]"
+            className="w-full px-5 py-3 hover:bg-[#1A56DB] hover:text-white"
           >
             Đăng ký
           </Link>

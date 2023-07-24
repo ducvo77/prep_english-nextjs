@@ -11,6 +11,7 @@ export default function Logo() {
         alt="Logo"
         width={192}
         height={69}
+        sizes="(max-width: 500px) 100px"
         className="cursor-pointer"
       />
     </Link>
