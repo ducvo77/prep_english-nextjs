@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.primary-color {
+  color: #ffeb3b;
+}
+
+.primary-bg {
+  background-color: #ffeb3b;
+}
+
+.second-color {
+  color: #1a56db;
+}
+
+.second-bg {
+  background-color: #1a56db;
+}
+
+/* Tab Group */
+
+.MuiTabs-flexContainer.css-heg063-MuiTabs-flexContainer {
+  justify-content: center;
+}
+
+.test .absolute.inset-0.z-10.h-full.bg-white.rounded-md.shadow {
+  border: 1px solid #1a56db;
+}

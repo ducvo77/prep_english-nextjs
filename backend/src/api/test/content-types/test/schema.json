@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tests",
+  "info": {
+    "singularName": "test",
+    "pluralName": "tests",
+    "displayName": "Test",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "time": {
+      "type": "integer"
+    },
+    "part_number": {
+      "type": "integer"
+    },
+    "question_number": {
+      "type": "integer"
+    },
+    "href": {
+      "type": "string"
+    },
+    "hastags": {
+      "type": "json"
+    }
+  }
+}
