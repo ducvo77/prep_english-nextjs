@@ -5,8 +5,8 @@ export const LISTENING = {
   data: [
     {
       name: "recording 1",
-      audio: "link",
-      topic: "link ảnh đề",
+      audio: "/resources/section1-part1.mp3",
+      topic: "đề",
       data: [
         {
           number: 1,
@@ -62,7 +62,7 @@ export const LISTENING = {
     },
     {
       name: "recording 2",
-      audio: "link",
+      audio: "/resources/section1-part1.mp3",
       topic: "link ảnh đề",
       data: [
         {
@@ -119,7 +119,7 @@ export const LISTENING = {
     },
     {
       name: "recording 3",
-      audio: "link",
+      audio: "/resources/section1-part1.mp3",
       topic: "link ảnh đề",
       data: [
         {
@@ -176,7 +176,7 @@ export const LISTENING = {
     },
     {
       name: "recording 4",
-      audio: "link",
+      audio: "/resources/section1-part1.mp3",
       topic: "link ảnh đề",
       data: [
         {

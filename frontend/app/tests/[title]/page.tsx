@@ -52,12 +52,7 @@ export default function page() {
                 value={data.name}
                 className="flex flex-col gap-10 p-0"
               >
-                {data.audio && (
-                  <audio
-                    controls
-                    src="/resources/ChungTaKhongThuocVeNhau-SonTungMTP-4528181.mp3"
-                  ></audio>
-                )}
+                {data.audio && <audio controls src={data.audio}></audio>}
                 <div className="flex gap-5">
                   <div className="w-2/3 h-[750px] bg-gray-100"></div>
                   <Questions data={data} />

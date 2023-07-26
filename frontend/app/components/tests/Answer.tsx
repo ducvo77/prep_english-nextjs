@@ -19,6 +19,8 @@ interface AnswerProps {
 }
 
 export default function Answer({ data }: AnswerProps) {
+  const arrayNumberhasValue = [1, 2, 3, 4, 5, 7, 10];
+
   return (
     <>
       {data.data.map(({ name, data }) => (
@@ -29,7 +31,9 @@ export default function Answer({ data }: AnswerProps) {
               <li
                 key={number}
                 className={`${
-                  false ? "bg-blue-800 text-white" : ""
+                  arrayNumberhasValue.includes(number)
+                    ? "bg-blue-800 text-white"
+                    : ""
                 } border border-gray-800 w-6 h-6 rounded-sm flex items-center justify-center cursor-pointer`}
               >
                 {number}

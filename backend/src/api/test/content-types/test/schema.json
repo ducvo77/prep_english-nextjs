@@ -32,6 +32,18 @@
     },
     "hastags": {
       "type": "json"
+    },
+    "parts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::part.part",
+      "mappedBy": "test_info"
+    },
+    "writings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::writing.writing",
+      "mappedBy": "test"
     }
   }
 }
