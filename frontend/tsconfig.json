@@ -34,5 +34,11 @@
     "pages/api/generate/speaking.js",
     "pages/api/auth/[...nextauth].ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "files": [
+    "./node_modules/redux-persist/types/integration/react.d.ts",
+    "./node_modules/redux-persist/es/persistStore.js",
+    "./node_modules/redux-persist/es/persistReducer.js",
+    "./node_modules/redux-persist/lib/storage/index.js"
+  ]
 }

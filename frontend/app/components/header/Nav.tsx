@@ -1,20 +1,23 @@
 "use client";
 
-import Link from "next/link";
 import User from "./User";
 
 const MENU_LIST = [
   {
     label: "Trang chủ",
-    href: "/",
+    href: "#",
   },
   {
-    label: "Luyện tập",
-    href: "/tests",
+    label: "Bài tập",
+    href: "#practice",
+  },
+  {
+    label: "ChatGPT",
+    href: "#chatgpt",
   },
   {
     label: "Tài liệu tham khảo",
-    href: "/",
+    href: "#references",
   },
 ];
 
@@ -27,7 +30,7 @@ export default function Nav() {
             key={`item ${index}`}
             className="hover:text-[#1A56DB] font-semibold white"
           >
-            <Link href={item.href}>{item.label}</Link>
+            <a href={item.href}>{item.label}</a>
           </li>
         ))}
       </ul>

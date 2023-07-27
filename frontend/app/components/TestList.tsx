@@ -27,8 +27,6 @@ export default function TestList() {
     fetchData();
   }, []);
 
-  console.log(testList);
-
   return (
     testList && (
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-12 lg:gap-8 md:gap-4 gap-2">
@@ -75,7 +73,7 @@ export default function TestList() {
                 variant="outlined"
                 className="font-semibold second-color border-[#1A56DB] hover:bg-[#1A56DB] hover:text-white py-2"
               >
-                Chi tiết
+                Bắt đầu
               </Button>
             </div>
           )

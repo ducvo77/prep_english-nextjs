@@ -5,6 +5,7 @@ import Header from "./components/header";
 import Container from "./components/Container";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import { Providers } from "./redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <Container>
-          {children}
-          <Footer />
-        </Container>
-        <BackToTop />
+        <Providers>
+          <Header />
+          <Container>
+            {children}
+            <Footer />
+          </Container>
+          <BackToTop />
+        </Providers>
       </body>
     </html>
   );

@@ -27,3 +27,9 @@
 .test .absolute.inset-0.z-10.h-full.bg-white.rounded-md.shadow {
   border: 1px solid #1a56db;
 }
+
+/* Tạo hiệu ứng cuộn mượt */
+html,
+body {
+  scroll-behavior: smooth; /* Tạo hiệu ứng cuộn mượt */
+}

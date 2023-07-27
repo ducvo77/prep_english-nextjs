@@ -1,5 +1,7 @@
 "use client";
 
+import { useAppSelector } from "@/app/redux/hook";
+
 interface AnswerProps {
   data: {
     id: number;
@@ -19,7 +21,9 @@ interface AnswerProps {
 }
 
 export default function Answer({ data }: AnswerProps) {
-  const arrayNumberhasValue = [1, 2, 3, 4, 5, 7, 10];
+  const answerValue: { value: string; number: number }[] = useAppSelector(
+    (state) => state.answerReducer
+  );
 
   return (
     <>
@@ -31,7 +35,7 @@ export default function Answer({ data }: AnswerProps) {
               <li
                 key={number}
                 className={`${
-                  arrayNumberhasValue.includes(number)
+                  answerValue.find((item) => item.number === number)
                     ? "bg-blue-800 text-white"
                     : ""
                 } border border-gray-800 w-6 h-6 rounded-sm flex items-center justify-center cursor-pointer`}

@@ -10,13 +10,13 @@ export default function Home() {
   return (
     <>
       <Dashboard />
-      <Section label="Bài tập mới nhất">
+      <Section id="practice" label="Bài tập mới nhất">
         <TestList />
       </Section>
-      <Section label="Luyện English cùng ChatGPT">
+      <Section id="chatgpt" label="Luyện English cùng ChatGPT">
         <PromptChatgpt />
       </Section>
-      <Section label="Tài liệu tham khảo">
+      <Section id="references" label="Tài liệu tham khảo">
         <References />
       </Section>
     </>

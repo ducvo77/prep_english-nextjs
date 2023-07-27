@@ -11,7 +11,9 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 import { LISTENING, READING } from "../../../fakeData";
-import Link from "next/link";
+import ButtonOutPage from "@/app/components/button/ButtonOutPage";
+import TimeCount from "@/app/components/tests/TimeCount";
+import { IoIosArrowForward } from "react-icons/io";
 
 export default function page() {
   const fetchData = LISTENING;
@@ -21,11 +23,7 @@ export default function page() {
       <div className="flex flex-col items-center">
         <div className="flex gap-2">
           <h2 className="text-lg font-semibold">{fetchData.title}</h2>
-          <Link href="/">
-            <Button variant="outlined" className="p-2 text-xs capitalize">
-              Thoát
-            </Button>
-          </Link>
+          <ButtonOutPage />
         </div>
         <p>{fetchData.label}</p>
       </div>
@@ -46,16 +44,24 @@ export default function page() {
             ))}
           </TabsHeader>
           <TabsBody>
-            {fetchData.data.map((data) => (
+            {fetchData.data.map((data, index) => (
               <TabPanel
                 key={data.name}
                 value={data.name}
                 className="flex flex-col gap-10 p-0"
               >
                 {data.audio && <audio controls src={data.audio}></audio>}
-                <div className="flex gap-5">
-                  <div className="w-2/3 h-[750px] bg-gray-100"></div>
-                  <Questions data={data} />
+                <div className="flex flex-col">
+                  <div className="flex gap-5">
+                    <div className="w-2/3 h-[750px] bg-gray-100"></div>
+                    <Questions data={data} part={index} />
+                  </div>
+                  <div className="flex justify-end border-t pt-6">
+                    <button className="uppercase font-medium text-blue-900 flex gap-1 items-center">
+                      <span>Tiếp theo</span>
+                      <IoIosArrowForward size={20} />
+                    </button>
+                  </div>
                 </div>
               </TabPanel>
             ))}
@@ -64,7 +70,9 @@ export default function page() {
         <div className="w-[200px] border p-3 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <span>Thời gian làm</span>
-            <p className="font-semibold text-xl">00:00</p>
+            <p className="font-semibold text-xl">
+              <TimeCount />
+            </p>
           </div>
           <Button
             variant="outlined"

@@ -1,37 +1,57 @@
-// // https://blog.openreplay.com/state-management-in-next-js-with-redux-toolkit
-// // https://www.youtube.com/watch?v=Yokjzp91A4o
+// https://codevoweb.com/setup-redux-toolkit-in-nextjs-13-app-directory/
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// import { createSlice } from "@reduxjs/toolkit";
+type AnswerState = {
+  number: number;
+  value: string;
+};
 
-// interface AnswerState {
-//   number: number;
-//   value: string;
-// }
+const initialState = [] as AnswerState[];
 
-// const initialState = [
-//   {
-//     number: NaN,
-//     value: "",
-//   },
-// ];
+export const answer = createSlice({
+  name: "answer",
+  initialState,
+  reducers: {
+    enteredAnswer: (state, action: PayloadAction<AnswerState>) => {
+      if (
+        action.payload.value !== "" &&
+        !state.find((item) => item.number === action.payload.number)
+      ) {
+        return [
+          ...state,
+          {
+            number: action.payload.number,
+            value: action.payload.value,
+          },
+        ];
+      }
 
-// export const answerSlice = createSlice({
-//   name: "answer",
-//   initialState,
-//   reducers: {
-//     answerValue: (state, action) => {
-//       [
-//         ...state,
-//         {
-//           number: action,
-//           value: action,
-//         },
-//       ];
-//     },
-//   },
-// });
+      if (action.payload.value === "") {
+        return state.filter((item) => item.number !== action.payload.number);
+      }
 
-// // Action creators are generated for each case reducer function
-// export const { answerSlice } = answerSlice.actions;
+      if (
+        action.payload.value !== "" &&
+        state.find((item) => item.number === action.payload.number)
+      ) {
+        return state.map((item) => {
+          if (item.number === action.payload.number) {
+            return { ...item, value: action.payload.value };
+          }
+          return item;
+        });
+      }
+      return state;
+    },
+    clearAnswer: () => {
+      return [];
+    },
+  },
+});
 
-// export default answerSlice.reducer;
+export const { enteredAnswer, clearAnswer } = answer.actions;
+export default answer.reducer;
+//TH1: value = "" -> undifiend, number chua co => return
+//TH2: value != "", number chua co => tao them 1 object
+//TH3: value != "", number co roi => update value
+//TH4: value != "" va value = value da co, number da co => return
