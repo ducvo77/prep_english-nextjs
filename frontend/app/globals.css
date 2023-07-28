@@ -33,3 +33,7 @@ html,
 body {
   scroll-behavior: smooth; /* Tạo hiệu ứng cuộn mượt */
 }
+
+p {
+  padding-bottom: 8px;
+}

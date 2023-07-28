@@ -4,7 +4,7 @@
   "info": {
     "singularName": "test",
     "pluralName": "tests",
-    "displayName": "Test",
+    "displayName": "test",
     "description": ""
   },
   "options": {
@@ -13,36 +13,39 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
-    },
-    "label": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "time": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "part_number": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "question_number": {
-      "type": "integer"
-    },
-    "href": {
-      "type": "string"
+      "type": "integer",
+      "required": true
     },
     "hastags": {
-      "type": "json"
+      "type": "json",
+      "required": true
     },
-    "parts": {
+    "test_kit": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::test-kit.test-kit",
+      "inversedBy": "tests"
+    },
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "listening_tests": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::part.part",
-      "mappedBy": "test_info"
-    },
-    "writings": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::writing.writing",
+      "target": "api::listening-test.listening-test",
       "mappedBy": "test"
     }
   }

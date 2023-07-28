@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "test_kits",
+  "info": {
+    "singularName": "test-kit",
+    "pluralName": "test-kits",
+    "displayName": "Test_kit",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "tests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::test.test",
+      "mappedBy": "test_kit"
+    }
+  }
+}

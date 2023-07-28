@@ -1,6 +1,6 @@
-export default async function getTestList() {
+export default async function getTest() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/test-kits?populate=tests&sort[0]=id`
+    `${process.env.NEXT_PUBLIC_API_URL}/listening-tests/1`
   );
 
   if (!res.ok) {

@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reading_tests",
+  "info": {
+    "singularName": "reading-test",
+    "pluralName": "reading-tests",
+    "displayName": "reading_test",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "topic": {
+      "type": "json"
+    },
+    "question": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::question.question",
+      "inversedBy": "reading_test"
+    }
+  }
+}

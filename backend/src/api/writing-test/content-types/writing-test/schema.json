@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "writing_tests",
+  "info": {
+    "singularName": "writing-test",
+    "pluralName": "writing-tests",
+    "displayName": "writing_test"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "topic": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

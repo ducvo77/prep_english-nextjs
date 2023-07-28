@@ -14,6 +14,7 @@ import { LISTENING, READING } from "../../../fakeData";
 import ButtonOutPage from "@/app/components/button/ButtonOutPage";
 import TimeCount from "@/app/components/tests/TimeCount";
 import { IoIosArrowForward } from "react-icons/io";
+import Topic from "@/app/components/tests/Topic";
 
 export default function page() {
   const fetchData = LISTENING;
@@ -51,9 +52,11 @@ export default function page() {
                 className="flex flex-col gap-10 p-0"
               >
                 {data.audio && <audio controls src={data.audio}></audio>}
-                <div className="flex flex-col">
-                  <div className="flex gap-5">
-                    <div className="w-2/3 h-[750px] bg-gray-100"></div>
+                <div className="flex flex-col ">
+                  <div className="flex gap-5 max-h-[750px]">
+                    <div className="w-2/3 bg-gray-100 text-black p-3 font-medium rounded-md">
+                      <Topic />
+                    </div>
                     <Questions data={data} part={index} />
                   </div>
                   <div className="flex justify-end border-t pt-6">

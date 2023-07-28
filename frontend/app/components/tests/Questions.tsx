@@ -56,7 +56,7 @@ export default function Questions({ data, part }: QuestionsProps) {
   }, [answerValue]);
 
   return (
-    <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 w-1/3">
+    <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 w-1/3 h-full max-h-[750px]">
       {data.data.map(({ number }, index) => (
         <li key={number} className="flex gap-2">
           <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">

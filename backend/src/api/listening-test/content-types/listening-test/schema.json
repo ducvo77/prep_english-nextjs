@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "listening_tests",
+  "info": {
+    "singularName": "listening-test",
+    "pluralName": "listening-tests",
+    "displayName": "listening_test",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "audio": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "audios"
+      ]
+    },
+    "topic": {
+      "type": "json",
+      "required": true
+    },
+    "data": {
+      "type": "json",
+      "required": true
+    },
+    "test": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::test.test",
+      "inversedBy": "listening_tests"
+    }
+  }
+}
