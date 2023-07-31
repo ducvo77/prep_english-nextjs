@@ -7,15 +7,23 @@ interface AnswerProps {
     id: number;
     title: string;
     label: string;
-    data: {
+    listening_tests: {
+      id: number;
       name: string;
-      audio: string | boolean;
-      topic: string;
+      topic: {
+        content: string;
+      };
       data: {
-        number: number;
-        question: string;
         answer: string;
+        number: number;
+        explain: string;
+        question: string;
       }[];
+      audio:
+        | {
+            url: string;
+          }
+        | boolean;
     }[];
   };
 }
@@ -27,7 +35,7 @@ export default function Answer({ data }: AnswerProps) {
 
   return (
     <>
-      {data.data.map(({ name, data }) => (
+      {data.listening_tests.map(({ name, data }) => (
         <div key={name} className="flex flex-col gap-2">
           <h3 className="font-medium capitalize">{name}</h3>
           <ul className="grid grid-cols-5 gap-2 text-[0.75rem]">

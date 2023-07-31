@@ -1,17 +1,39 @@
-import getTest from "@/app/actions/getTest";
-import { useEffect, useState } from "react";
+"use client";
 
-export default function Topic() {
-  const [data, setData] = useState([]);
+import getTestDetail from "@/app/actions/getTestDetail";
+import { memo, useEffect, useMemo, useState } from "react";
+
+interface DataTypes {
+  id: number;
+  name: string;
+  topic: {
+    content: string;
+  };
+  data: {};
+}
+
+const initialData: DataTypes = {
+  id: NaN,
+  name: "",
+  topic: {
+    content: "",
+  },
+  data: {},
+};
+
+function Topic() {
+  const [data, setData] = useState<DataTypes>(initialData);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getTest();
-      setData(data.data);
+      const res = await getTestDetail();
+      setData(res.data);
     };
     fetchData();
   }, []);
-  //   console.log(data.topic.content);
-  const htmlString = data?.topic?.content;
+
+  const htmlString = useMemo(() => data?.topic?.content, [data]);
 
   return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
 }
+
+export default memo(Topic);

@@ -34,6 +34,14 @@ body {
   scroll-behavior: smooth; /* Tạo hiệu ứng cuộn mượt */
 }
 
-p {
+#topic p {
   padding-bottom: 8px;
+}
+
+#topic ul {
+  padding-left: 24px;
+}
+
+#topic li {
+  list-style: disc;
 }

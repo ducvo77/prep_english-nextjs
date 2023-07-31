@@ -1,4 +1,4 @@
-export default async function getTest() {
+export default async function getTestDetail() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/listening-tests/1`
   );

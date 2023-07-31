@@ -13,6 +13,8 @@ export const answer = createSlice({
   initialState,
   reducers: {
     enteredAnswer: (state, action: PayloadAction<AnswerState>) => {
+      console.log(action.payload.number, action.payload.value);
+
       if (
         action.payload.value !== "" &&
         !state.find((item) => item.number === action.payload.number)
@@ -41,6 +43,7 @@ export const answer = createSlice({
           return item;
         });
       }
+
       return state;
     },
     clearAnswer: () => {

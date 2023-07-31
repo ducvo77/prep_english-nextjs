@@ -5,19 +5,19 @@ import User from "./User";
 const MENU_LIST = [
   {
     label: "Trang chủ",
-    href: "#",
+    href: "/#",
   },
   {
     label: "Bài tập",
-    href: "#practice",
+    href: "/#practice",
   },
   {
     label: "ChatGPT",
-    href: "#chatgpt",
+    href: "/#chatgpt",
   },
   {
     label: "Tài liệu tham khảo",
-    href: "#references",
+    href: "/#references",
   },
 ];
 

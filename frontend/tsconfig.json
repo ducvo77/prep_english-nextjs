@@ -32,7 +32,8 @@
     "api/generate.js",
     "api/generate",
     "pages/api/generate/speaking.js",
-    "pages/api/auth/[...nextauth].ts"
+    "pages/api/auth/[...nextauth].ts",
+    "axios.js"
   ],
   "exclude": ["node_modules"],
   "files": [

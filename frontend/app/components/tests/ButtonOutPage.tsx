@@ -15,7 +15,7 @@ export default function ButtonOutPage() {
   const router = useRouter();
   const dispatch = useDispatch();
   const handleConfirm = useCallback(() => {
-    router.push("/");
+    router.push("/#practice");
     dispatch(clearAnswer());
     setOpen(false);
   }, [router, dispatch]);

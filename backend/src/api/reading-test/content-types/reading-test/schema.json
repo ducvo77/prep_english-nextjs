@@ -18,12 +18,6 @@
     },
     "topic": {
       "type": "json"
-    },
-    "question": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::question.question",
-      "inversedBy": "reading_test"
     }
   }
 }
