@@ -18,6 +18,9 @@ import { useEffect, useState } from "react";
 import getListeningTest from "@/app/actions/getListeningTest";
 import { useParams, usePathname } from "next/navigation";
 import getTestList from "@/app/actions/getTestList";
+import { useDispatch } from "react-redux";
+import { getPartTest } from "@/app/redux/features/infoTestSlice";
+import { useAppSelector } from "@/app/redux/hook";
 
 interface DataTypes {
   id: number;
@@ -28,32 +31,35 @@ interface DataTypes {
   hastags: string[];
   href: string;
   test_kit: { id: number; label: string };
-  listening_tests: {
+  testSection: {
     id: number;
     name: string;
     topic: {
       content: string;
     };
     data: {
-      answer: string;
       number: string;
+      answer: string;
       explain: string;
-      question: string;
+      question: string[];
     }[];
-    audio:
-      | {
-          url: string;
-        }
-      | false;
+    audio?: {
+      url: string;
+    };
   }[];
 }
-let testSection = "";
+type TestSectionKeys = "listening_tests" | "reading_tests";
+
+let testSection: TestSectionKeys = "listening_tests";
 
 export default function Test() {
   const [testId, setTestId] = useState(NaN);
-  const [data, setData] = useState<DataTypes>(null);
+  const [data, setData] = useState<DataTypes | null>(null);
   const params = useParams();
   const pathname = usePathname();
+  const dispatch = useDispatch();
+
+  const { part } = useAppSelector((state) => state.infoTestReducer);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,12 +106,13 @@ export default function Test() {
       </div>
       <div className="flex gap-6">
         <Tabs
-          value={data.listening_tests[0].name}
+          value={part || data[testSection][0].name}
           className="border rounded-lg p-5 flex gap-4 flex-col flex-grow"
         >
           <TabsHeader className="flex py-2 bg-white opacity w-1/2 border">
-            {data.listening_tests.map(({ name }) => (
+            {data[testSection].map(({ name }) => (
               <Tab
+                onClick={() => dispatch(getPartTest({ part: name }))}
                 key={name}
                 value={name}
                 className="text-sm capitalize font-semibold text-[#1A56DB] test"
@@ -114,8 +121,14 @@ export default function Test() {
               </Tab>
             ))}
           </TabsHeader>
-          <TabsBody>
-            {data.listening_tests.map((data, index) => (
+          <TabsBody
+            animate={{
+              initial: { y: 250 },
+              mount: { y: 0 },
+              unmount: { y: 250 },
+            }}
+          >
+            {data[testSection].map((data, index) => (
               <TabPanel
                 key={data.name}
                 value={data.name}
@@ -127,23 +140,23 @@ export default function Test() {
                     src={process.env.NEXT_PUBLIC_SOURCE_URL + data.audio.url}
                   />
                 )}
-                <div className="flex flex-col ">
-                  <div className="flex gap-5 max-h-[750px]">
-                    <div
-                      id="topic"
-                      className="w-2/3 bg-gray-100 text-black p-3 font-medium rounded-md"
-                    >
-                      <Topic />
-                    </div>
-                    <Questions data={data} part={index} />
+                {/* <div className="flex flex-col "> */}
+                <div className="flex gap-5 max-h-[750px]">
+                  <div
+                    id="topic"
+                    className="w-2/3 bg-gray-100 text-gray-900 p-4 font-medium rounded-md overflow-y-scroll"
+                  >
+                    <Topic data={data} />
                   </div>
-                  <div className="flex justify-end border-t pt-6">
-                    <button className="uppercase font-medium text-blue-900 flex gap-1 items-center">
-                      <span>Tiếp theo</span>
-                      <IoIosArrowForward size={20} />
-                    </button>
-                  </div>
+                  <Questions data={data} part={index} />
                 </div>
+                {/* </div> */}
+                {/* <div className="flex justify-end border-t pt-6">
+                  <button className="uppercase font-medium text-blue-900 flex gap-1 items-center">
+                    <span>Tiếp theo</span>
+                    <IoIosArrowForward size={20} />
+                  </button>
+                </div> */}
               </TabPanel>
             ))}
           </TabsBody>
@@ -161,7 +174,7 @@ export default function Test() {
           >
             Nộp bài
           </Button>
-          <Answer data={data} />
+          <Answer testSection={testSection} data={data} />
         </div>
       </div>
     </div>

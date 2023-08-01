@@ -1,4 +1,5 @@
 import { clearAnswer } from "@/app/redux/features/answerSlice";
+import { clearInfoTest } from "@/app/redux/features/infoTestSlice";
 import {
   Button,
   Dialog,
@@ -17,6 +18,7 @@ export default function ButtonOutPage() {
   const handleConfirm = useCallback(() => {
     router.push("/#practice");
     dispatch(clearAnswer());
+    dispatch(clearInfoTest());
     setOpen(false);
   }, [router, dispatch]);
   const handleOpen = useCallback(() => {

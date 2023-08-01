@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import answerReducer from "./features/answerSlice";
+import infoTestReducer from "./features/infoTestSlice";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
@@ -7,6 +8,7 @@ import thunk from "redux-thunk";
 
 const reducers = combineReducers({
   answerReducer,
+  infoTestReducer,
 });
 
 const persistConfig = {
@@ -21,13 +23,6 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   middleware: [thunk],
 });
-
-// export const store = configureStore({
-//   reducer: {
-//     answerReducer,
-//   },
-//   devTools: process.env.NODE_ENV !== "production",
-// });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

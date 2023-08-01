@@ -34,7 +34,8 @@ body {
   scroll-behavior: smooth; /* Tạo hiệu ứng cuộn mượt */
 }
 
-#topic p {
+#topic p,
+#topic li {
   padding-bottom: 8px;
 }
 

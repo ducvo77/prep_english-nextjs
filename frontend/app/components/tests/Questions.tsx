@@ -11,7 +11,7 @@ interface QuestionsProps {
     topic: string;
     data: {
       number: number;
-      question: string;
+      question: string[];
       answer: string;
       explain: string;
     }[];
@@ -37,7 +37,6 @@ export default function Questions({ data, part }: QuestionsProps) {
   );
   const handleValueInput = useCallback(
     (value: string, number: number, index: number) => {
-      console.log(index, number);
       if (index + 1 === number) {
         setInputValues((prevState) => ({
           ...prevState,
@@ -64,77 +63,61 @@ export default function Questions({ data, part }: QuestionsProps) {
           <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">
             {number}
           </strong>
-          <div className="flex flex-col text-black w-2/3">
-            <label className="">{question}</label>
-            <input
-              id=""
-              onBlur={() => handleChangeInput(valueInputs[number], number)}
-              type="text"
-              className="border rounded-md border-gray-500 focus:border-blue-700 focus:border-2 focus:outline-none pl-2 text-black w-full"
-              value={valueInputs[number] || ""}
-              onChange={(e) =>
-                handleValueInput(
-                  e.target.value,
-                  Number(number),
-                  part * data.data.length + index
-                )
-              }
-            />
-          </div>
-
-          {/* <div>
-            <h3>Please select your favorite Web language:</h3>
-            <input
-              onChange={() => handleChangeInput(valueInputs[number], number)}
-              value="HTML"
-              // onChange={(e) =>
-              //   handleValueInput(
-              //     e.target.value,
-              //     number,
-              //     part * data.data.length + index
-              //   )
-              // }
-              type="radio"
-              id="html"
-              name="fav_language"
-              checked={valueInputs[number] === "HTML"}
-            />
-            <label htmlFor="html">HTML</label>
-            <br />
-            <input
-              onBlur={() => handleChangeInput(valueInputs[number], number)}
-              value="CSS"
-              onChange={(e) =>
-                handleValueInput(
-                  e.target.value,
-                  number,
-                  part * data.data.length + index
-                )
-              }
-              type="radio"
-              id="css"
-              name="fav_language"
-              checked={valueInputs[number] === "CSS"}
-            />
-            <label htmlFor="css">CSS</label>
-            <br />
-            <input
-              onBlur={() => handleChangeInput(valueInputs[number], number)}
-              value="JavaScript"
-              onChange={(e) =>
-                handleValueInput(
-                  e.target.value,
-                  number,
-                  part * data.data.length + index
-                )
-              }
-              type="radio"
-              id="javascript"
-              name="fav_language"
-              checked={valueInputs[number] === "JavaScript"}
-            />
-            <label htmlFor="javascript">JavaScript</label>
-          </div> */}
+          {question.length > 1 ? (
+            <div className="flex flex-col text-gray-900 font-normal">
+              <h3>{question[0]}</h3>
+              {question.map(
+                (item, index2) =>
+                  index2 >= 1 && (
+                    <div key={item} className="flex items-center justify-start">
+                      <input
+                        onChange={(e) =>
+                          handleValueInput(
+                            e.target.value,
+                            Number(number),
+                            part * data.data.length + index
+                          )
+                        }
+                        onBlur={() =>
+                          handleChangeInput(valueInputs[number], Number(number))
+                        }
+                        value={item}
+                        type="radio"
+                        id={"question" + index + index2}
+                        name={"question" + index}
+                        checked={item === valueInputs[number]}
+                      />
+                      <label
+                        htmlFor={"question" + index + index2}
+                        className="pl-2"
+                      >
+                        {item}
+                      </label>
+                    </div>
+                  )
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-col text-black w-2/3">
+              <label className="">{question}</label>
+              <input
+                id=""
+                onBlur={() =>
+                  handleChangeInput(valueInputs[number], Number(number))
+                }
+                type="text"
+                className="border rounded-md border-gray-500 focus:border-blue-700 focus:border-2 focus:outline-none pl-2 text-black w-full"
+                value={valueInputs[number] || ""}
+                onChange={(e) =>
+                  handleValueInput(
+                    e.target.value,
+                    Number(number),
+                    part * data.data.length + index
+                  )
+                }
+              />
+            </div>
+          )}
         </li>
       ))}
     </ul>

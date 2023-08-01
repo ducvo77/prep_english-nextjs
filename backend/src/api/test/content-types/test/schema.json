@@ -47,6 +47,11 @@
       "relation": "oneToMany",
       "target": "api::listening-test.listening-test",
       "mappedBy": "test"
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }

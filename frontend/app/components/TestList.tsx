@@ -3,8 +3,10 @@
 import { Button } from "@material-tailwind/react";
 
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import getTestKits from "../actions/getTestKits";
+import { useDispatch } from "react-redux";
+import { getLabelTest, getTitleTest } from "../redux/features/infoTestSlice";
 interface Testlist {
   id: number;
   label: string;
@@ -21,6 +23,7 @@ interface Testlist {
 export default function TestList() {
   const router = useRouter();
   const [testList, setTestList] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +32,16 @@ export default function TestList() {
     };
     fetchData();
   }, []);
+
+  const handleClickTest = useCallback(
+    (title: string, label: string, href: string) => {
+      router.push(href);
+      dispatch(getTitleTest({ title }));
+      dispatch(getLabelTest({ label }));
+    },
+
+    [router, dispatch]
+  );
 
   if (!testList) {
     return <div>Loading...</div>;
@@ -76,9 +89,7 @@ export default function TestList() {
                   ))}
                 </div>
                 <Button
-                  onClick={() => {
-                    router.push(href);
-                  }}
+                  onClick={() => handleClickTest(title, label, href)}
                   variant="outlined"
                   className="font-semibold second-color border-[#1A56DB] hover:bg-[#1A56DB] hover:text-white py-2"
                 >
