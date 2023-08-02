@@ -11,7 +11,12 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
-export default function ButtonOutPage() {
+interface ButtonOutPageProps {
+  title: string;
+  subtitle: string;
+}
+
+export default function ButtonOutPage({ title, subtitle }: ButtonOutPageProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -21,6 +26,7 @@ export default function ButtonOutPage() {
     dispatch(clearInfoTest());
     setOpen(false);
   }, [router, dispatch]);
+
   const handleOpen = useCallback(() => {
     setOpen(!open);
   }, [open]);
@@ -34,10 +40,8 @@ export default function ButtonOutPage() {
         Thoát
       </Button>
       <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Thoát trang web?</DialogHeader>
-        <DialogBody divider>
-          Những thay đổi bạn đã thực hiện có thể không được lưu.
-        </DialogBody>
+        <DialogHeader>{title}</DialogHeader>
+        <DialogBody divider>{subtitle}</DialogBody>
         <DialogFooter>
           <Button
             variant="text"

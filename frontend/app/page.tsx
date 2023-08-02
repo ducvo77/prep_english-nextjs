@@ -1,6 +1,6 @@
 "use client";
 
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./dashboard/Dashboard";
 import Section from "./components/Section";
 import PromptChatgpt from "./components/PromptChatgpt";
 import TestList from "./components/TestList";

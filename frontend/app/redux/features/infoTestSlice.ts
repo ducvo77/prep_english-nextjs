@@ -5,7 +5,7 @@ type InfoTestStates = {
   title?: string;
   label?: string;
   part?: string;
-  time?: number;
+  time?: string;
 };
 
 const initialState = {} as InfoTestStates;
@@ -31,7 +31,7 @@ export const infoTest = createSlice({
         title: "",
         label: "",
         part: "",
-        time: 0,
+        time: "",
       };
     },
   },
