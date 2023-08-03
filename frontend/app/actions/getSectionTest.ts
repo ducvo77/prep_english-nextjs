@@ -1,11 +1,11 @@
 import axios from "../config/axios";
 
-export default function getTestKits() {
+export default function getSectionTest(id: number, testSection: string) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios({
         method: "get",
-        url: `/test-kits?populate=tests&sort[0]=id`,
+        url: `/tests/${id}?populate=test_kit&populate=${testSection}&populate=${testSection}.audio`,
       });
       resolve(response);
     } catch (error) {

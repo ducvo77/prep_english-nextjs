@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import getListeningTest from "@/app/actions/getListeningTest";
 import { useParams, usePathname } from "next/navigation";
 import getTestList from "@/app/actions/getTestList";
 import TestContent from "./TestContent";
 import TestHeader from "./TestHeader";
+import getSectionTest from "@/app/actions/getSectionTest";
+import { clearAnswer } from "@/app/redux/features/answerSlice";
+import { clearInfoTest } from "@/app/redux/features/infoTestSlice";
+import { useDispatch } from "react-redux";
 
 export interface DataTypes {
   id: number;
@@ -59,6 +62,21 @@ export default function Test() {
   const [data, setData] = useState<DataTypes | null>(null);
   const params = useParams();
   const pathname = usePathname();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "Are you sure you want to leave?"; // Custom message
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    dispatch(clearInfoTest());
+    dispatch(clearAnswer());
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [dispatch, pathname]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,8 +101,8 @@ export default function Test() {
   useEffect(() => {
     if (testId) {
       const fetchData = async () => {
-        const res = await getListeningTest(testId, testSection);
-        setData(res.data);
+        const res = await getSectionTest(testId, testSection);
+        if (res) setData(res.data);
       };
       fetchData();
     }

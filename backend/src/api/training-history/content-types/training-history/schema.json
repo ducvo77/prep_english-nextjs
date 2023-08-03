@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "training_histories",
+  "info": {
+    "singularName": "training-history",
+    "pluralName": "training-histories",
+    "displayName": "Training_history",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "time": {
+      "type": "string",
+      "required": true
+    },
+    "number_correct": {
+      "required": true,
+      "type": "integer"
+    },
+    "data": {
+      "type": "json",
+      "required": true
+    },
+    "user_name": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "training_histories"
+    }
+  }
+}

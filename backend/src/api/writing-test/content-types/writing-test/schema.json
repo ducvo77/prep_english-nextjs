@@ -4,7 +4,8 @@
   "info": {
     "singularName": "writing-test",
     "pluralName": "writing-tests",
-    "displayName": "writing_test"
+    "displayName": "Writing_test",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true

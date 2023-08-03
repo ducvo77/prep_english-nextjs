@@ -1,9 +1,15 @@
-export default async function getTestKits() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tests`);
+import axios from "../config/axios";
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
+export default function getTestList() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `/tests`,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
 }

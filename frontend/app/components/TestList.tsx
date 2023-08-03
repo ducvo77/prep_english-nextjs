@@ -1,37 +1,29 @@
-// "use client";
+"use client";
 
 import { Button } from "@material-tailwind/react";
 
 import { useRouter } from "next/navigation";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import getTestKits from "../actions/getTestKits";
+import { Fragment, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { getLabelTest, getTitleTest } from "../redux/features/infoTestSlice";
-interface Testlist {
-  id: number;
-  label: string;
-  tests: {
+interface TestlistProps {
+  data: {
     id: number;
-    title: string;
-    time: number;
-    part_number: number;
-    question_number: number;
-    href: string;
-    hastags: [string];
+    label: string;
+    tests: {
+      id: number;
+      title: string;
+      time: number;
+      part_number: number;
+      question_number: number;
+      href: string;
+      hastags: [string];
+    }[];
   }[];
 }
-export default function TestList() {
+export default function TestList({ data }: TestlistProps) {
   const router = useRouter();
-  const [testList, setTestList] = useState([]);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getTestKits();
-      setTestList(res.data);
-    };
-    fetchData();
-  }, []);
 
   const handleClickTest = useCallback(
     (title: string, label: string, href: string) => {
@@ -43,13 +35,9 @@ export default function TestList() {
     [router, dispatch]
   );
 
-  if (!testList) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-6 lg:gap-4 md:gap-2 gap-1">
-      {testList.map(({ id, label, tests }: Testlist) => (
+      {data.map(({ id, label, tests }) => (
         <Fragment key={id}>
           {tests.map(
             ({
