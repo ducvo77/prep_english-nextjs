@@ -3,7 +3,7 @@ import PromptChatgpt from "./components/PromptChatgpt";
 import TestList from "./components/TestList";
 import References from "./components/References";
 import Dashboard from "./components/Dashboard";
-import { SessionProvider } from "next-auth/react";
+import { Metadata } from "next";
 
 async function getDataTestList() {
   const res = await fetch(
@@ -20,7 +20,6 @@ export default async function Home() {
 
   return (
     <>
-      {/* <SessionProvider session={session}> */}
       <Section id="dashboard" label="Lịch sử luyện tập của bạn">
         <Dashboard />
       </Section>
@@ -33,7 +32,6 @@ export default async function Home() {
       <Section id="references" label="Tài liệu tham khảo">
         <References />
       </Section>
-      {/* </SessionProvider> */}
     </>
   );
 }

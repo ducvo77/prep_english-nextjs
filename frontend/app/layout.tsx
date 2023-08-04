@@ -6,6 +6,7 @@ import Container from "./components/Container";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
 import { Providers } from "./redux/provider";
+import { NextAuthProvider } from "./NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,23 +14,24 @@ export const metadata: Metadata = {
   title: "Prep English",
   description: "Initial App",
 };
-
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <Header />
-          <Container>
-            {children}
-            <Footer />
-          </Container>
-          <BackToTop />
-        </Providers>
+        <NextAuthProvider>
+          <Providers>
+            <Header />
+            <Container>
+              {children}
+              <Footer />
+            </Container>
+            <BackToTop />
+          </Providers>
+        </NextAuthProvider>
       </body>
     </html>
   );

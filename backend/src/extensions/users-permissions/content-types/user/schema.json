@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -71,6 +70,9 @@
       "relation": "oneToMany",
       "target": "api::training-history.training-history",
       "mappedBy": "user_name"
+    },
+    "picture": {
+      "type": "string"
     }
   }
 }

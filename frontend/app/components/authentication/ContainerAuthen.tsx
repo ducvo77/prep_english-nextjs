@@ -2,11 +2,11 @@
 
 import { Button, Input } from "@material-tailwind/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IconType } from "react-icons";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 const LOGIN_SOCIAL: { name: string; label: string; Icon: IconType }[] = [
   { name: "google", label: "Đăng nhập bằng Gooogle", Icon: FcGoogle },
@@ -29,7 +29,9 @@ export default function ContainerAuthen() {
               key={label}
               variant="outlined"
               className="flex gap-3 font-normal normal-case text-sm border-gray-300 items-center "
-              onClick={() => signIn(name)}
+              onClick={() => {
+                signIn(name);
+              }}
             >
               {<Icon size={20} />}
               <span className="text-ellipsis overflow-hidden whitespace-nowrap">
@@ -53,7 +55,9 @@ export default function ContainerAuthen() {
           <Input type="Email" label="Email" />
           <Input type="password" label="Mật khẩu" />
         </div>
-        <Button>{isLoginPage ? "Đăng nhập" : "Đăng ký"}</Button>
+        <Button onClick={() => signIn("credentials")}>
+          {isLoginPage ? "Đăng nhập" : "Đăng ký"}
+        </Button>
         <div className="text-sm flex gap-1">
           <span className="text-gray-500">
             {isLoginPage ? "Chưa có tài khoản?" : "Đã có tài khoản?"}
