@@ -2,8 +2,9 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import answerReducer from "./features/answerSlice";
 import infoTestReducer from "./features/infoTestSlice";
 import persistReducer from "redux-persist/es/persistReducer";
-import storage from "redux-persist/lib/storage";
+// import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
+import AsyncStorage from "@react-native-community/async-storage";
 // import createLogger from "redux-logger";
 
 const reducers = combineReducers({
@@ -13,7 +14,7 @@ const reducers = combineReducers({
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: AsyncStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

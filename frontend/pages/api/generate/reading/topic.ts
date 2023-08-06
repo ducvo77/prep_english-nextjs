@@ -1,12 +1,34 @@
 // https://www.youtube.com/watch?v=I14_HrJktIs
+import { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
+
+interface ResponseData {
+  result: string | undefined;
+}
+
+interface GenerateNextApiRequest extends NextApiRequest {
+  body: {
+    describe: string;
+    passage: string;
+    level: string;
+  };
+}
+
+interface ErrorType {
+  error: {
+    message: string;
+  };
+}
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: GenerateNextApiRequest,
+  res: NextApiResponse<ResponseData | ErrorType>
+) {
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -16,12 +38,12 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { topic, data } = req.body;
+  const { describe, passage, level } = req.body;
 
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(topic, data),
+      prompt: generatePrompt(describe, passage, level),
       temperature: 0.6,
       max_tokens: 2048,
       frequency_penalty: 0.5,
@@ -29,7 +51,7 @@ export default async function handler(req, res) {
     });
     const response = completion.data.choices[0].text?.trim();
     res.status(200).json({ result: response });
-  } catch (error) {
+  } catch (error: any) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
       console.error(error.response.status, error.response.data);
@@ -45,9 +67,10 @@ export default async function handler(req, res) {
   }
 }
 
-function generatePrompt(topic, data) {
-  return `Please help me correct this article errors such as spelling, grammar, wording, ... fix all errors to make this IELT article the most complete, based on the topic and article information I provide below:
-  - Topic: ${topic}
-  - My article: ${data}
+function generatePrompt(describe: string, passage: string, level: string) {
+  return `Hello! Please help me create an IELTS Reading, provide me with the topic and questions, in the following required IELT format:
+  1. Subject: ${describe}
+  2. Passage in IELTS test: ${passage}
+  3. Easy difficulty level: ${level}
   `;
 }

@@ -52,6 +52,18 @@
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "reading_tests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reading-test.reading-test",
+      "mappedBy": "test"
+    },
+    "speaking_tests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::speaking-test.speaking-test",
+      "mappedBy": "test"
     }
   }
 }

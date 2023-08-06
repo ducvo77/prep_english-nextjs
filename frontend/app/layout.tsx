@@ -6,7 +6,7 @@ import Container from "./components/Container";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
 import { Providers } from "./redux/provider";
-import { NextAuthProvider } from "./NextAuthProvider";
+import { NextAuthProvider } from "./components/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>

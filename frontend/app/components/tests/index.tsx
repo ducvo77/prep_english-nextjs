@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
-import getTestList from "@/app/actions/getTestList";
+import getTestList from "@/app/lib/getTestList";
 import TestContent from "./TestContent";
 import TestHeader from "./TestHeader";
-import getSectionTest from "@/app/actions/getSectionTest";
+import getSectionTest from "@/app/lib/getSectionTest";
 
 export interface DataTypes {
   id: number;
@@ -72,15 +72,6 @@ export default function Test() {
   }, [pathname]);
 
   useEffect(() => {
-    if (params?.title.includes("listening")) {
-      testSection = "listening_tests";
-    }
-    if (params?.title.includes("reading")) {
-      testSection = "reading_tests";
-    }
-  }, [params?.title]);
-
-  useEffect(() => {
     if (testId) {
       const fetchData = async () => {
         const res: any = await getSectionTest(testId, testSection);
@@ -89,6 +80,15 @@ export default function Test() {
       fetchData();
     }
   }, [testId]);
+
+  useEffect(() => {
+    if (params?.title.includes("listening")) {
+      testSection = "listening_tests";
+    }
+    if (params?.title.includes("reading")) {
+      testSection = "reading_tests";
+    }
+  }, [params?.title]);
 
   if (!data) {
     return <div>Loading...</div>;

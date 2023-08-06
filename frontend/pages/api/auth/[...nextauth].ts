@@ -1,9 +1,11 @@
-import NextAuth, { AuthOptions } from "next-auth";
+// https://www.youtube.com/watch?v=0eu4_lLFkGk
+
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -46,10 +48,8 @@ export const authOptions: AuthOptions = {
       const isSignIn = user ? true : false;
       if (isSignIn && account) {
         try {
-          console.log("Google Account >>>>>>>>>>>>>> ", account);
-          const public_url = "127.0.0.1:1337";
           const response = await fetch(
-            `${public_url}/auth/${account.provider}/callback?access_token=${account?.access_token}`
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/${account.provider}/callback?access_token=${account?.access_token}`
           );
           const data = await response.json();
           console.log("Strapi Callback Data >>>>>>>>>>>>>> ", data);
@@ -70,6 +70,7 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  // database: process.env.NEXT_PUBLIC_DATABASE_URL as string,
 };
 
 export default NextAuth(authOptions);

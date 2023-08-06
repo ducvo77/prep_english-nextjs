@@ -19,6 +19,14 @@
     "topic": {
       "type": "json",
       "required": true
+    },
+    "data": {
+      "type": "json"
+    },
+    "test": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::test.test"
     }
   }
 }

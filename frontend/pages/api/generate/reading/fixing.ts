@@ -1,12 +1,33 @@
 // https://www.youtube.com/watch?v=I14_HrJktIs
+import { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
+
+interface ResponseData {
+  result: string | undefined;
+}
+
+interface GenerateNextApiRequest extends NextApiRequest {
+  body: {
+    topic: string;
+    data: string;
+  };
+}
+
+interface ErrorType {
+  error: {
+    message: string;
+  };
+}
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: GenerateNextApiRequest,
+  res: NextApiResponse<ResponseData | ErrorType>
+) {
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -29,7 +50,7 @@ export default async function handler(req, res) {
     });
     const response = completion.data.choices[0].text?.trim();
     res.status(200).json({ result: response });
-  } catch (error) {
+  } catch (error: any) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
       console.error(error.response.status, error.response.data);
@@ -45,7 +66,7 @@ export default async function handler(req, res) {
   }
 }
 
-function generatePrompt(topic, data) {
+function generatePrompt(topic: string, data: string) {
   return `làm ơn sửa đổi và giải thích chi tiết giúp tôi trả lời câu hỏi của bài đọc ielt này, tôi sẽ gửi câu hỏi và câu trả lời cho bạn dưới đây:
   - Topic: ${topic}
   - The answer i do: ${data}

@@ -19,6 +19,16 @@
     "topic": {
       "type": "json",
       "required": true
+    },
+    "data": {
+      "type": "json",
+      "required": true
+    },
+    "test": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::test.test",
+      "inversedBy": "speaking_tests"
     }
   }
 }

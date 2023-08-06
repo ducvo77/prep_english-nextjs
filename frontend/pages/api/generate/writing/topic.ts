@@ -1,12 +1,34 @@
 // https://www.youtube.com/watch?v=I14_HrJktIs
+import { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
+
+interface ResponseData {
+  result: string | undefined;
+}
+
+interface GenerateNextApiRequest extends NextApiRequest {
+  body: {
+    describe: string;
+    task: string;
+    level: string;
+  };
+}
+
+interface ErrorType {
+  error: {
+    message: string;
+  };
+}
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: GenerateNextApiRequest,
+  res: NextApiResponse<ResponseData | ErrorType>
+) {
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -29,7 +51,7 @@ export default async function handler(req, res) {
     });
     const response = completion.data.choices[0].text?.trim();
     res.status(200).json({ result: response });
-  } catch (error) {
+  } catch (error: any) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
       console.error(error.response.status, error.response.data);
@@ -45,7 +67,7 @@ export default async function handler(req, res) {
   }
 }
 
-function generatePrompt(describe, task, level) {
+function generatePrompt(describe: string, task: string, level: string) {
   return `Hello! Can you help me create an IELTS Writing prompt and provide an outline for that writing task, by the following required IELT format:
   1. Subject: ${describe}
   2. Task in IELTS test: ${task}

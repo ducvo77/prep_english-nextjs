@@ -76,12 +76,12 @@ export default function TestHeader({ data, testSection }: TestContentProps) {
                   <Questions data={data} part={index} />
                 </div>
               </div>
-              <div className="flex justify-end border-t pt-6">
+              {/* <div className="flex justify-end border-t pt-6">
                 <button className="uppercase font-medium text-blue-900 flex gap-1 items-center">
                   <span>Tiếp theo</span>
                   <IoIosArrowForward size={20} />
                 </button>
-              </div>
+              </div> */}
             </TabPanel>
           ))}
         </TabsBody>

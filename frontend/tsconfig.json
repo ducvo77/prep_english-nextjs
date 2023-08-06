@@ -31,7 +31,7 @@
     "api/generate.js",
     "api/generate.js",
     "api/generate",
-    "pages/api/generate/speaking.js",
+    "pages/api/generate/speaking.ts",
     "pages/api/auth/[...nextauth].ts",
     "axios.js",
     "app/config/axios.js"

@@ -3,20 +3,10 @@ import PromptChatgpt from "./components/PromptChatgpt";
 import TestList from "./components/TestList";
 import References from "./components/References";
 import Dashboard from "./components/Dashboard";
-import { Metadata } from "next";
+import getTestKits from "./lib/getTestKits";
 
-async function getDataTestList() {
-  const res = await fetch(
-    `${process.env.API_URL}/test-kits?populate=tests&sort[0]=id`
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  return res.json();
-}
-
-export default async function Home() {
-  const data = await getDataTestList();
+export default async function Page() {
+  const data = await getTestKits();
 
   return (
     <>
@@ -24,7 +14,7 @@ export default async function Home() {
         <Dashboard />
       </Section>
       <Section id="practice" label="Bài tập mới nhất">
-        <TestList data={data.data} />
+        <TestList data={data} />
       </Section>
       <Section id="chatgpt" label="Luyện English cùng ChatGPT">
         <PromptChatgpt />

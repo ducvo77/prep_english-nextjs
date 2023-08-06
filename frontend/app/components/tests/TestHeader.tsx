@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@material-tailwind/react";
-import ButtonOutPage from "./ButtonOutPage";
+// import ButtonOutPage from "./ButtonOutPage";
 import { DataTypes } from "./index";
 import { useRouter } from "next/navigation";
 interface HeaderTestProps {
