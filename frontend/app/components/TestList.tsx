@@ -6,28 +6,14 @@ import { useRouter } from "next/navigation";
 import { Fragment, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { getLabelTest, getTitleTest } from "../redux/features/infoTestSlice";
-interface TestlistProps {
-  data: {
-    id: number;
-    label: string;
-    tests: {
-      id: number;
-      title: string;
-      time: number;
-      part_number: number;
-      question_number: number;
-      href: string;
-      hastags: [string];
-    }[];
-  }[];
-}
-export default function TestList({ data }: TestlistProps) {
+
+export default function TestList({ data }: TestKit) {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const handleClickTest = useCallback(
-    (title: string, label: string, href: string) => {
-      router.push(href);
+    (id: number, title: string, label: string) => {
+      router.push(`/tests/${id}`);
       dispatch(getTitleTest({ title }));
       dispatch(getLabelTest({ label }));
     },
@@ -40,15 +26,7 @@ export default function TestList({ data }: TestlistProps) {
       {data.map(({ id, label, tests }) => (
         <Fragment key={id}>
           {tests.map(
-            ({
-              id,
-              title,
-              time,
-              part_number,
-              question_number,
-              hastags,
-              href,
-            }) => (
+            ({ id, title, time, part_number, question_number, hastags }) => (
               <div
                 key={id}
                 className="border h-auto p-4 rounded-lg bg-[#F8F9FA] flex flex-col gap-2"
@@ -77,7 +55,7 @@ export default function TestList({ data }: TestlistProps) {
                   ))}
                 </div>
                 <Button
-                  onClick={() => handleClickTest(title, label, href)}
+                  onClick={() => handleClickTest(id, title, label)}
                   variant="outlined"
                   className="font-semibold second-color border-[#1A56DB] hover:bg-[#1A56DB] hover:text-white py-2"
                 >

@@ -46,3 +46,18 @@ body {
 #topic li {
   list-style: disc;
 }
+
+/* Chọn đáp án trắc nghiệm */
+.relative.flex.items-center.cursor-pointer.p-3.rounded-full {
+  padding: 8px;
+}
+
+.text-gray-700.font-light.select-none.cursor-pointer.mt-px {
+  font-weight: 500;
+  color: #000;
+}
+
+/* Transcript */
+#transcript p {
+  padding-bottom: 12px;
+}

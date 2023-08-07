@@ -2,13 +2,11 @@
 
 import { Button } from "@material-tailwind/react";
 // import ButtonOutPage from "./ButtonOutPage";
-import { DataTypes } from "./index";
 import { useRouter } from "next/navigation";
-interface HeaderTestProps {
-  data: DataTypes;
-}
-export default function HeaderTest({ data }: HeaderTestProps) {
+
+export default function HeaderTest({ data }: Test) {
   const router = useRouter();
+  console.log(data);
   return (
     <div className="flex flex-col items-center">
       <div className="flex gap-2">

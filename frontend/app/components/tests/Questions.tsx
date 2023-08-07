@@ -7,22 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import ExplainAnswer from "./ExplainAnswer";
 
 interface QuestionsProps {
-  data: {
-    id: number;
-    name: string;
-    audio?: {
-      url: string;
-    };
-    topic: {
-      content: string;
-    };
-    data: {
-      number: string;
-      question: string[];
-      answer: string;
-      explain: string;
-    }[];
-  };
+  data: Question;
   part: number;
 }
 
@@ -106,7 +91,9 @@ export default function Questions({ data, part }: QuestionsProps) {
               </div>
             ) : (
               <div className="flex flex-col text-black w-2/3">
-                <label className="">{question}</label>
+                <label className="mb-1 text-gray-900 font-normal text-sm">
+                  {question}
+                </label>
                 <input
                   onBlur={() =>
                     handleChangeInput(
@@ -129,9 +116,9 @@ export default function Questions({ data, part }: QuestionsProps) {
             )}
             <div className="text-green-500 text-sm">
               <strong>Đáp án đúng: </strong>
-              <span>ABCHD</span>
+              <span>{answer}</span>
             </div>
-            <ExplainAnswer />
+            <ExplainAnswer explain={explain} />
           </div>
         </li>
       ))}

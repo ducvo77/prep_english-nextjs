@@ -13,87 +13,11 @@ const TABLE_HEAD = [
   "",
 ];
 
-const TABLE_ROWS = [
-  {
-    id: 1,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 2,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 3,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 4,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 5,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 6,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 7,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 8,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 9,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 10,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-  {
-    id: 11,
-    title: "C18 IELTS listening test 1",
-    time: "10:00",
-    number_correct: 10,
-    total_sentences: 40,
-  },
-];
+interface DashboardProps {
+  data: TestHistory;
+}
 
-export default function Dashboard() {
+export default function Dashboard({ data }: DashboardProps) {
   const [active, setActive] = useState(1);
 
   const getItemProps = (index: number) =>
@@ -105,7 +29,7 @@ export default function Dashboard() {
     } as any);
 
   const next = () => {
-    if (active === Math.ceil(TABLE_ROWS.length / 5)) return;
+    if (active === Math.ceil(data.training_histories.length / 5)) return;
     setActive(active + 1);
   };
 
@@ -137,7 +61,7 @@ export default function Dashboard() {
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS.map(
+          {data.training_histories.map(
             ({ id, title, time, number_correct, total_sentences }, index) =>
               active === Math.ceil((index + 1) / 5) && (
                 <React.Fragment key={id}>
@@ -215,7 +139,7 @@ export default function Dashboard() {
           <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Trang trước
         </Button>
         <div className="flex items-center gap-2">
-          {TABLE_ROWS.map(
+          {data.training_histories.map(
             ({ id }, index) =>
               index % 5 === 0 && (
                 <IconButton
@@ -232,7 +156,7 @@ export default function Dashboard() {
           color="blue-gray"
           className="flex items-center gap-2 rounded-full"
           onClick={next}
-          disabled={active === Math.ceil(TABLE_ROWS.length / 5)}
+          disabled={active === Math.ceil(data.training_histories.length / 5)}
         >
           Trang sau
           <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />

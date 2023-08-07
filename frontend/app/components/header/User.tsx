@@ -16,7 +16,6 @@ import { GoSignOut } from "react-icons/go";
 
 export default function User() {
   const { data: session }: { data: any } = useSession();
-  console.log(session);
 
   return (
     <Menu>

@@ -12,10 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
     "title": {
       "type": "string",
       "required": true
@@ -41,6 +37,10 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "training_histories"
+    },
+    "total_sentences": {
+      "required": true,
+      "type": "integer"
     }
   }
 }

@@ -38,31 +38,10 @@
       "target": "api::test-kit.test-kit",
       "inversedBy": "tests"
     },
-    "href": {
-      "type": "string",
-      "required": true
-    },
-    "listening_tests": {
+    "parts": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::listening-test.listening-test",
-      "mappedBy": "test"
-    },
-    "slug": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
-    "reading_tests": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::reading-test.reading-test",
-      "mappedBy": "test"
-    },
-    "speaking_tests": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::speaking-test.speaking-test",
+      "target": "api::part.part",
       "mappedBy": "test"
     }
   }

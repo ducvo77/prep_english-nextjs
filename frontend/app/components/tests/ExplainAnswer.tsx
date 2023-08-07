@@ -13,7 +13,7 @@ const CUSTOM_ANIMATION = {
   unmount: { scale: 0.9 },
 };
 
-export default function ExplainAnswer() {
+export default function ExplainAnswer({ explain }: { explain: string }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
@@ -34,11 +34,8 @@ export default function ExplainAnswer() {
           Trích đoạn chứa đáp án
         </AccordionHeader>
         <AccordionBody className="p-0">
-          <p className="text-gray-900 text-sm font-normal p-0l">
-            Right, so now I want to ask you some questions about how you
-            travelled here today. Did you use public transport? Yes. I came by
-            bus. OK. And that was today. Its the 24th of April, isnt it? Isnt it
-            the 25th? No, actually, youre right.
+          <p className="text-gray-900 text-sm font-normal p-0 text-justifytr">
+            {explain}
           </p>
         </AccordionBody>
       </Accordion>

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.API_URL,
 });
 
 // Add a request interceptor
@@ -18,10 +18,10 @@ instance.interceptors.request.use(
 
 // Add a response interceptor
 instance.interceptors.response.use(
-  function (response: AxiosResponse<any>) {
+  function (response: AxiosResponse) {
     // Any status code that lies within the range of 2xx causes this function to trigger
     // Do something with response data
-    return response.data;
+    return response.data.data;
   },
   function (error: AxiosError) {
     // Any status codes that fall outside the range of 2xx cause this function to trigger
