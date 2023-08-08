@@ -11,14 +11,13 @@ import {
 import { IoIosArrowForward } from "react-icons/io";
 import Topic from "@/app/components/tests/Topic";
 import { getPartTest } from "@/app/redux/features/infoTestSlice";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import SubmitTest from "./SubmitTest";
 import Answer from "./Answer";
 import Transcript from "./Transcript";
 
 export default function TestHeader({ data }: Test) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { part } = useAppSelector((state) => state.infoTestReducer);
 
   return (

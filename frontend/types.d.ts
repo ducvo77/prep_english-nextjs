@@ -81,3 +81,13 @@ type TestHistory = {
     }[];
   }[];
 };
+
+type User = {
+  blocked: boolean;
+  confirmed: boolean;
+  email: string;
+  id: number;
+  picture: string | null;
+  provider: "local" | "google" | "facebook" | "github";
+  username: string;
+};

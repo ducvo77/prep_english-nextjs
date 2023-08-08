@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 export default function BackToTop(): JSX.Element {
   const [showButton, setShowButton] = useState(false);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (
       document.body.scrollTop > 20 ||
       document.documentElement.scrollTop > 20
@@ -14,7 +14,7 @@ export default function BackToTop(): JSX.Element {
     } else {
       setShowButton(false);
     }
-  };
+  }, []);
 
   const backToTop = () => {
     document.documentElement.style.scrollBehavior = "smooth";

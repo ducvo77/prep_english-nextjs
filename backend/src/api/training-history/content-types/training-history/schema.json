@@ -30,7 +30,7 @@
     },
     "data": {
       "type": "json",
-      "required": true
+      "required": false
     },
     "user_name": {
       "type": "relation",

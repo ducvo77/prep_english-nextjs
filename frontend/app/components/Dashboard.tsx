@@ -18,6 +18,8 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ data }: DashboardProps) {
+  const sortData = data.training_histories.sort((a, b) => b.id - a.id);
+
   const [active, setActive] = useState(1);
 
   const getItemProps = (index: number) =>
@@ -61,7 +63,7 @@ export default function Dashboard({ data }: DashboardProps) {
           </tr>
         </thead>
         <tbody>
-          {data.training_histories.map(
+          {sortData.map(
             ({ id, title, time, number_correct, total_sentences }, index) =>
               active === Math.ceil((index + 1) / 5) && (
                 <React.Fragment key={id}>

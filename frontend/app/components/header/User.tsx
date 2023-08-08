@@ -6,16 +6,17 @@ import {
   MenuItem,
   MenuList,
 } from "@material-tailwind/react";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { signOut } from "next-auth/react";
 import { GoSignOut } from "react-icons/go";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
+import { logOut } from "@/app/redux/features/userSlice";
 
 export default function User() {
-  const { data: session }: { data: any } = useSession();
+  const dispatch = useAppDispatch();
+  const user: User = useAppSelector((state) => state.userReducer);
 
   return (
     <Menu>
@@ -23,11 +24,7 @@ export default function User() {
         <button className="p-2 flex items-center gap-3 rounded-full border shadow-sm hover:shadow-lg">
           <AiOutlineMenu size={20} className="md:flex hidden" />
           <Image
-            src={
-              session?.user?.picture
-                ? session?.user?.picture
-                : "/images/user-default.jpg"
-            }
+            src={"/images/user-default.jpg"}
             width="28"
             height="28"
             alt="user"
@@ -37,7 +34,7 @@ export default function User() {
       </MenuHandler>
 
       <MenuList className="flex flex-col rounded-lg p-0 min-w-[120px]">
-        {!session ? (
+        {!user.username ? (
           <>
             <MenuItem className="text-left p-0 flex">
               <Link
@@ -57,7 +54,7 @@ export default function User() {
             </MenuItem>
           </>
         ) : (
-          <MenuItem className="p-0" onClick={() => signOut()}>
+          <MenuItem className="p-0" onClick={() => dispatch(logOut())}>
             <button className="flex items-center w-full px-5 py-3 hover:bg-[#1A56DB] hover:text-white gap-2">
               <GoSignOut size={20} />
               <span>Đăng xuất</span>

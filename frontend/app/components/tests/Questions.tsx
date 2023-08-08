@@ -14,14 +14,19 @@ interface QuestionsProps {
 export default function Questions({ data, part }: QuestionsProps) {
   const [valueInputs, setInputValues] = useState<{ [key: number]: string }>({});
   const dispatch = useAppDispatch();
-  const answerValue: { value: string; number: number }[] = useAppSelector(
-    (state) => state.answerReducer
-  );
+  const answerValue: {
+    name: string;
+    data: { answer: string; number: number }[];
+  }[] = useAppSelector((state) => state.answerReducer);
+
+  console.log(answerValue);
 
   const handleChangeInput = useCallback(
-    (value: string, number: number) => {
+    (value: string, number: number, name: string) => {
       if (typeof value !== "undefined") {
-        dispatch(enteredAnswer({ number, value: value.trim() }));
+        dispatch(
+          enteredAnswer({ name, data: [{ number, answer: value.trim() }] })
+        );
       } else return;
     },
 
@@ -40,10 +45,10 @@ export default function Questions({ data, part }: QuestionsProps) {
   );
 
   useEffect(() => {
-    answerValue.map(({ number, value }) => {
+    answerValue.map(({ data }) => {
       setInputValues((prevState) => ({
         ...prevState,
-        [number]: value,
+        [data[0].number]: data[0].answer,
       }));
     });
   }, [answerValue]);
@@ -78,7 +83,8 @@ export default function Questions({ data, part }: QuestionsProps) {
                           onBlur={() =>
                             handleChangeInput(
                               valueInputs[Number(number)],
-                              Number(number)
+                              Number(number),
+                              data.name
                             )
                           }
                           value={item}
@@ -98,7 +104,8 @@ export default function Questions({ data, part }: QuestionsProps) {
                   onBlur={() =>
                     handleChangeInput(
                       valueInputs[Number(number)],
-                      Number(number)
+                      Number(number),
+                      data.name
                     )
                   }
                   type="text"

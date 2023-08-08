@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function HeaderTest({ data }: Test) {
   const router = useRouter();
-  console.log(data);
+
   return (
     <div className="flex flex-col items-center">
       <div className="flex gap-2">

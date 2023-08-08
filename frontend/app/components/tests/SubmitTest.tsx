@@ -1,11 +1,17 @@
+import submitTest from "@/app/lib/submitTest";
 import { getTimeTest } from "@/app/redux/features/infoTestSlice";
+import { useAppDispatch } from "@/app/redux/hook";
 import { Button } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
 
 export default function SubmitTest() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [time, setTime] = useState("");
+
+  const handleSubmitTest = async () => {
+    const res = await submitTest();
+    console.log(res);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,7 +34,7 @@ export default function SubmitTest() {
     }
   }, [elapsedTime]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <>
       <div className="flex flex-col gap-2">
@@ -38,7 +44,7 @@ export default function SubmitTest() {
       <Button
         variant="outlined"
         className="text-lg hover:opacity-100 hover:bg-blue-800 hover:text-white"
-        onClick={() => dispatch(getTimeTest({ time }))}
+        onClick={handleSubmitTest}
       >
         Nộp bài
       </Button>

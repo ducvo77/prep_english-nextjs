@@ -2,10 +2,10 @@
 
 import { redirect, usePathname } from "next/navigation";
 import { useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
 import { clearInfoTest } from "../redux/features/infoTestSlice";
 import { clearAnswer } from "../redux/features/answerSlice";
 import { useSession } from "next-auth/react";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ interface ContainerProps {
 
 export default function Container({ children }: ContainerProps) {
   const pathname = usePathname();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { data: session }: { data: any } = useSession();
   useEffect(() => {
     if (!pathname?.startsWith("/tests")) {
@@ -25,11 +25,14 @@ export default function Container({ children }: ContainerProps) {
   const isActive = useMemo(() => {
     return pathname?.startsWith("/tests");
   }, [pathname]);
+
+  const user: User = useAppSelector((state) => state.userReducer);
+
   useEffect(() => {
-    if (session && (pathname === "/login" || pathname === "/register")) {
+    if (user.username && (pathname === "/login" || pathname === "/register")) {
       redirect("/");
     }
-  }, [pathname, session]);
+  }, [user, pathname, session]);
 
   return (
     <main

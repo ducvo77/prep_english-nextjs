@@ -4,12 +4,12 @@ import { Button } from "@material-tailwind/react";
 
 import { useRouter } from "next/navigation";
 import { Fragment, useCallback } from "react";
-import { useDispatch } from "react-redux";
 import { getLabelTest, getTitleTest } from "../redux/features/infoTestSlice";
+import { useAppDispatch } from "../redux/hook";
 
 export default function TestList({ data }: TestKit) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleClickTest = useCallback(
     (id: number, title: string, label: string) => {

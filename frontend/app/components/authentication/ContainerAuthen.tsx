@@ -2,11 +2,17 @@
 
 import { Button, Input } from "@material-tailwind/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import register from "@/app/lib/auth/register";
+import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import login from "@/app/lib/auth/login";
+import { getUser } from "@/app/redux/features/userSlice";
+import { useAppDispatch } from "@/app/redux/hook";
 
 const LOGIN_SOCIAL: { name: string; label: string; Icon: IconType }[] = [
   { name: "google", label: "Đăng nhập bằng Gooogle", Icon: FcGoogle },
@@ -14,8 +20,42 @@ const LOGIN_SOCIAL: { name: string; label: string; Icon: IconType }[] = [
 ];
 
 export default function ContainerAuthen() {
+  const [username, setUserName] = useState("");
+  const [email, setEmaill] = useState("");
+  const [password, setPassword] = useState("");
+  const [isFailure, setIsFailure] = useState(false);
+
+  const dispatch = useAppDispatch();
+
   const params = usePathname();
-  const isLoginPage = params === "/login";
+  const isLoginPage = useMemo(() => params === "/login", [params]);
+
+  const router = useRouter();
+
+  const handleRegister = async () => {
+    if (username === "" || email === "" || password === "") {
+      return setIsFailure(true);
+    }
+
+    const res = await register(username, email, password);
+    if (res.status === 200) {
+      return router.push("/login");
+    } else {
+      setIsFailure(true);
+    }
+  };
+
+  const handleLogin = async () => {
+    if (email === "" || password === "") {
+      return setIsFailure(true);
+    }
+    const res = await login(email, password);
+    if (res.status === 200) {
+      return dispatch(getUser(res.data.user));
+    } else {
+      setIsFailure(true);
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-[90vh">
@@ -48,16 +88,35 @@ export default function ContainerAuthen() {
         <div className="flex flex-col gap-3">
           {!isLoginPage && (
             <>
-              <Input type="text" label="Họ và tên" />
-              <Input type="number" label="Số điện thoại" />
+              <Input
+                type="text"
+                label="Tên tài khoản"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+              />
             </>
           )}
-          <Input type="Email" label="Email" />
-          <Input type="password" label="Mật khẩu" />
+          <Input
+            type="Email"
+            label="Email"
+            value={email}
+            onChange={(e) => setEmaill(e.target.value)}
+          />
+          <Input
+            type="password"
+            label="Mật khẩu"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
-        <Button onClick={() => signIn("credentials")}>
+        <Button onClick={isLoginPage ? handleLogin : handleRegister}>
           {isLoginPage ? "Đăng nhập" : "Đăng ký"}
         </Button>
+        {isFailure && (
+          <span className="text-sm text-red-400 text-center italic">
+            {isLoginPage ? "Đăng nhập thất bại" : "Đăng ký thất bại"}
+          </span>
+        )}
         <div className="text-sm flex gap-1">
           <span className="text-gray-500">
             {isLoginPage ? "Chưa có tài khoản?" : "Đã có tài khoản?"}
