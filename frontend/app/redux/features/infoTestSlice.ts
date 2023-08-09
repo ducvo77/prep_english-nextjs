@@ -1,13 +1,6 @@
 // https://codevoweb.com/setup-redux-toolkit-in-nextjs-13-app-directory/
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type InfoTestStates = {
-  title?: string;
-  label?: string;
-  part?: string;
-  time?: string;
-};
-
 const initialState = {} as InfoTestStates;
 
 export const infoTest = createSlice({

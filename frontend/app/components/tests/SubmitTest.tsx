@@ -1,17 +1,33 @@
 import submitTest from "@/app/lib/submitTest";
 import { getTimeTest } from "@/app/redux/features/infoTestSlice";
-import { useAppDispatch } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@material-tailwind/react";
-import { useCallback, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function SubmitTest() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [time, setTime] = useState("");
 
+  const infoData: InfoTestStates = useAppSelector(
+    (state) => state.infoTestReducer
+  );
+
+  const answerData: AnswerState = useAppSelector(
+    (state) => state.answerReducer
+  );
+
+  const { data: session }: any = useSession();
+
   const handleSubmitTest = async () => {
-    const res = await submitTest();
+    const res = await submitTest(
+      infoData,
+      session?.user?.id || session?.user?.sub,
+      answerData
+    );
     console.log(res);
   };
+  console.log(infoData.time);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,6 +51,10 @@ export default function SubmitTest() {
   }, [elapsedTime]);
 
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getTimeTest({ time }));
+  }, [time, dispatch]);
+
   return (
     <>
       <div className="flex flex-col gap-2">

@@ -1,9 +1,8 @@
-// https://www.youtube.com/watch?v=0eu4_lLFkGk
-
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -18,41 +17,57 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { label: "email", type: "text" },
-        password: { label: "password", type: "password" },
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Invalid credentials");
-        }
+        if (credentials == null) return null;
+        try {
+          const { user, jwt } =
+            (await axios
+              .post(`${process.env.API_URL}/auth/local`, {
+                identifier: credentials.email,
+                password: credentials.password,
+              })
+              .then((response) => {
+                return response.data;
+              })
+              .catch((error) => {
+                console.log(error.response);
+                throw new Error(error.response.data.message);
+              })) || null;
 
-        const user = false;
-        if (user) {
-          return user;
-        } else {
-          return null;
+          return { jwt, ...user };
+        } catch (error) {
+          console.warn(error);
         }
       },
     }),
   ],
-
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
     async session({ user, session, token }: any) {
+      // console.log(token);
+
       session.user = token as any;
-      session.user.id = user ? user.id : null;
+      session.user.id = token ? token.id : null;
       return Promise.resolve(session);
     },
 
     async jwt({ token, user, account }: any) {
+      // console.log(account);
+
       const isSignIn = user ? true : false;
       if (isSignIn && account) {
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/${account.provider}/callback?access_token=${account?.access_token}`
+            `${process.env.API_URL}/auth/${account.provider}/callback?access_token=${account?.access_token}`
           );
           const data = await response.json();
-          console.log("Strapi Callback Data >>>>>>>>>>>>>> ", data);
+          // console.log("Strapi Callback Data >>>>>>>>>>>>>> ", data);
+
           token.jwt = data.jwt;
           token.id = data.user.id;
         } catch (error) {
@@ -62,15 +77,10 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(token);
     },
   },
-  pages: {
-    signIn: "/",
-  },
-  debug: process.env.NODE_ENV === "development",
-  session: {
-    strategy: "jwt",
-  },
+
   secret: process.env.NEXTAUTH_SECRET,
-  // database: process.env.NEXT_PUBLIC_DATABASE_URL as string,
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

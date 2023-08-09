@@ -91,3 +91,18 @@ type User = {
   provider: "local" | "google" | "facebook" | "github";
   username: string;
 };
+
+type AnswerState = {
+  name: string;
+  data: {
+    number: number;
+    answer: string;
+  }[];
+};
+
+type InfoTestStates = {
+  title?: string;
+  label?: string;
+  part?: string;
+  time?: string;
+};

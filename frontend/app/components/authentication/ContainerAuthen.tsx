@@ -10,9 +10,6 @@ import { signIn } from "next-auth/react";
 import register from "@/app/lib/auth/register";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import login from "@/app/lib/auth/login";
-import { getUser } from "@/app/redux/features/userSlice";
-import { useAppDispatch } from "@/app/redux/hook";
 
 const LOGIN_SOCIAL: { name: string; label: string; Icon: IconType }[] = [
   { name: "google", label: "Đăng nhập bằng Gooogle", Icon: FcGoogle },
@@ -24,8 +21,6 @@ export default function ContainerAuthen() {
   const [email, setEmaill] = useState("");
   const [password, setPassword] = useState("");
   const [isFailure, setIsFailure] = useState(false);
-
-  const dispatch = useAppDispatch();
 
   const params = usePathname();
   const isLoginPage = useMemo(() => params === "/login", [params]);
@@ -39,19 +34,9 @@ export default function ContainerAuthen() {
 
     const res = await register(username, email, password);
     if (res.status === 200) {
-      return router.push("/login");
-    } else {
-      setIsFailure(true);
-    }
-  };
+      console.log(res);
 
-  const handleLogin = async () => {
-    if (email === "" || password === "") {
-      return setIsFailure(true);
-    }
-    const res = await login(email, password);
-    if (res.status === 200) {
-      return dispatch(getUser(res.data.user));
+      return router.push("/login");
     } else {
       setIsFailure(true);
     }
@@ -109,7 +94,17 @@ export default function ContainerAuthen() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button onClick={isLoginPage ? handleLogin : handleRegister}>
+        <Button
+          onClick={
+            isLoginPage
+              ? () =>
+                  signIn("credentials", {
+                    email,
+                    password,
+                  })
+              : handleRegister
+          }
+        >
           {isLoginPage ? "Đăng nhập" : "Đăng ký"}
         </Button>
         {isFailure && (

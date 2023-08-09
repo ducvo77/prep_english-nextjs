@@ -3,7 +3,7 @@
 import { useAppSelector } from "@/app/redux/hook";
 
 export default function Answer({ data }: Test) {
-  const answerValue: { value: string; number: number }[] = useAppSelector(
+  const answerValue: AnswerState[] = useAppSelector(
     (state) => state.answerReducer
   );
 
@@ -17,7 +17,9 @@ export default function Answer({ data }: Test) {
               <li
                 key={number}
                 className={`${
-                  answerValue.find((item) => item.number === Number(number))
+                  answerValue.find((item) =>
+                    item.data.find((item) => item.number === Number(number))
+                  )
                     ? "bg-blue-800 text-white"
                     : ""
                 } border border-gray-800 w-6 h-6 rounded-sm flex items-center justify-center cursor-pointer`}

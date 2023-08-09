@@ -19,8 +19,6 @@ export default function Questions({ data, part }: QuestionsProps) {
     data: { answer: string; number: number }[];
   }[] = useAppSelector((state) => state.answerReducer);
 
-  console.log(answerValue);
-
   const handleChangeInput = useCallback(
     (value: string, number: number, name: string) => {
       if (typeof value !== "undefined") {
@@ -46,10 +44,12 @@ export default function Questions({ data, part }: QuestionsProps) {
 
   useEffect(() => {
     answerValue.map(({ data }) => {
-      setInputValues((prevState) => ({
-        ...prevState,
-        [data[0].number]: data[0].answer,
-      }));
+      data.map((item) => {
+        setInputValues((prevState) => ({
+          ...prevState,
+          [item.number]: item.answer,
+        }));
+      });
     });
   }, [answerValue]);
 

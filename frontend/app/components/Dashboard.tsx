@@ -18,8 +18,6 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ data }: DashboardProps) {
-  const sortData = data.training_histories.sort((a, b) => b.id - a.id);
-
   const [active, setActive] = useState(1);
 
   const getItemProps = (index: number) =>
@@ -40,6 +38,8 @@ export default function Dashboard({ data }: DashboardProps) {
 
     setActive(active - 1);
   };
+
+  const sortData = data.training_histories.sort((a, b) => b.id - a.id);
 
   return (
     <Card className="h-full w-full min-h-[400px]">
