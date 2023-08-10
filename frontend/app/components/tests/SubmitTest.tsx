@@ -1,23 +1,32 @@
 import submitTest from "@/app/lib/submitTest";
 import { getTimeTest } from "@/app/redux/features/infoTestSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
-import { Button } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import ButtonOutPage from "./ButtonOutPage";
+import { useRouter } from "next/navigation";
 
-export default function SubmitTest() {
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const [time, setTime] = useState("");
+export default function SubmitTest({ data }: Test) {
+  const router = useRouter();
 
   const infoData: InfoTestStates = useAppSelector(
     (state) => state.infoTestReducer
   );
-
   const answerData: AnswerState = useAppSelector(
     (state) => state.answerReducer
   );
-
   const { data: session }: any = useSession();
+
+  const timeTypeNumber = () => {
+    const [minutes, seconds] = infoData.time
+      ? infoData.time.split(":")
+      : ["0", "0"];
+
+    return parseInt(minutes, 10) * 60 + parseInt(seconds, 10);
+  };
+
+  const [elapsedTime, setElapsedTime] = useState(timeTypeNumber);
+  const [time, setTime] = useState("");
 
   const handleSubmitTest = async () => {
     const res = await submitTest(
@@ -26,8 +35,9 @@ export default function SubmitTest() {
       answerData
     );
     console.log(res);
+
+    if (res) router.push(`/tests/${data.id}/results/${res.data.data.id}`);
   };
-  console.log(infoData.time);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,15 +69,17 @@ export default function SubmitTest() {
     <>
       <div className="flex flex-col gap-2">
         <span>Thời gian làm</span>
-        <p className="font-semibold text-xl">{time || "00:00"}</p>
+        <p className="font-semibold text-xl">{infoData.time || "00:00"}</p>
       </div>
-      <Button
+      <ButtonOutPage
+        title="Bạn muốn nộp bài?"
+        subTitle="Kết quả của bạn sẽ được lưu"
         variant="outlined"
         className="text-lg hover:opacity-100 hover:bg-blue-800 hover:text-white"
         onClick={handleSubmitTest}
       >
-        Nộp bài
-      </Button>
+        <span>Nộp bài</span>
+      </ButtonOutPage>
     </>
   );
 }

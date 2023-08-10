@@ -27,7 +27,7 @@ export default function BackToTop(): JSX.Element {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
 
   return (
     <>

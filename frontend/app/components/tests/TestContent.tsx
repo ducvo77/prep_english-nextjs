@@ -16,7 +16,12 @@ import SubmitTest from "./SubmitTest";
 import Answer from "./Answer";
 import Transcript from "./Transcript";
 
-export default function TestHeader({ data }: Test) {
+interface TestHeaderProp {
+  data: TestTest;
+  userAssignment?: UserAssignment;
+}
+
+export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
   const dispatch = useAppDispatch();
   const { part } = useAppSelector((state) => state.infoTestReducer);
 
@@ -57,7 +62,7 @@ export default function TestHeader({ data }: Test) {
                   src={process.env.NEXT_PUBLIC_SOURCE_URL + part.audio[0].url}
                 />
               )}
-              <Transcript data={part} />
+              {userAssignment && <Transcript data={part} />}
               <div className="flex flex-col ">
                 <div className="flex gap-5 max-h-[750px]">
                   <div
@@ -66,21 +71,25 @@ export default function TestHeader({ data }: Test) {
                   >
                     <Topic data={part} />
                   </div>
-                  <Questions data={part} part={index} />
+                  <Questions
+                    data={part}
+                    part={index}
+                    userAssignment={userAssignment}
+                  />
                 </div>
               </div>
-              {/* <div className="flex justify-end border-t pt-6">
+              <div className="flex justify-end border-t pt-6">
                 <button className="uppercase font-medium text-blue-900 flex gap-1 items-center">
                   <span>Tiếp theo</span>
                   <IoIosArrowForward size={20} />
                 </button>
-              </div> */}
+              </div>
             </TabPanel>
           ))}
         </TabsBody>
       </Tabs>
       <div className="w-[200px] border p-3 flex flex-col gap-4 flex-shrink-0">
-        <SubmitTest />
+        {!userAssignment && <SubmitTest data={data} />}
         <Answer data={data} />
       </div>
     </div>

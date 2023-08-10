@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@material-tailwind/react";
-// import ButtonOutPage from "./ButtonOutPage";
 import { useRouter } from "next/navigation";
+import ButtonOutPage from "./ButtonOutPage";
 
 export default function HeaderTest({ data }: Test) {
   const router = useRouter();
@@ -10,18 +9,16 @@ export default function HeaderTest({ data }: Test) {
   return (
     <div className="flex flex-col items-center">
       <div className="flex gap-2">
-        <h2 className="text-lg font-semibold">{data.title}</h2>
-        {/* <ButtonOutPage
-          title="Thoát trang web?"
-          subtitle="Những thay đổi bạn đã thực hiện có thể không được lưu."
-        /> */}
-        <Button
-          onClick={() => router.push("/")}
+        <h2 className="text-xl font-semibold">{data.title}</h2>
+        <ButtonOutPage
           variant="outlined"
           className="p-2 text-xs capitalize"
+          title="Bạn muốn thoát?"
+          subTitle="Những thay đổi bạn đã thực hiện có thể không được lưu."
+          onClick={() => router.push("/")}
         >
-          Thoát
-        </Button>
+          <span>Thoát</span>
+        </ButtonOutPage>
       </div>
       <p>{data.test_kit.label}</p>
     </div>

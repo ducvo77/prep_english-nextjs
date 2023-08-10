@@ -4,7 +4,7 @@ import { Button } from "@material-tailwind/react";
 
 import { useRouter } from "next/navigation";
 import { Fragment, useCallback } from "react";
-import { getLabelTest, getTitleTest } from "../redux/features/infoTestSlice";
+import { getInfoTest } from "../redux/features/infoTestSlice";
 import { useAppDispatch } from "../redux/hook";
 
 export default function TestList({ data }: TestKit) {
@@ -12,10 +12,9 @@ export default function TestList({ data }: TestKit) {
   const dispatch = useAppDispatch();
 
   const handleClickTest = useCallback(
-    (id: number, title: string, label: string) => {
+    (id: number, title: string, label: string, question_number: number) => {
       router.push(`/tests/${id}`);
-      dispatch(getTitleTest({ title }));
-      dispatch(getLabelTest({ label }));
+      dispatch(getInfoTest({ title, label, question_number }));
     },
 
     [router, dispatch]
@@ -55,7 +54,9 @@ export default function TestList({ data }: TestKit) {
                   ))}
                 </div>
                 <Button
-                  onClick={() => handleClickTest(id, title, label)}
+                  onClick={() =>
+                    handleClickTest(id, title, label, question_number)
+                  }
                   variant="outlined"
                   className="font-semibold second-color border-[#1A56DB] hover:bg-[#1A56DB] hover:text-white py-2"
                 >

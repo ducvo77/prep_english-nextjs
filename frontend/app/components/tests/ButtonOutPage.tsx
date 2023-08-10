@@ -1,61 +1,61 @@
-// import { clearAnswer } from "@/app/redux/features/answerSlice";
-// import { clearInfoTest } from "@/app/redux/features/infoTestSlice";
-// import {
-//   Button,
-//   Dialog,
-//   DialogHeader,
-//   DialogBody,
-//   DialogFooter,
-// } from "@material-tailwind/react";
-// import { useRouter } from "next/navigation";
-// import { useCallback, useState } from "react";
-// import { useDispatch } from "react-redux";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
+import { useCallback, useState } from "react";
 
-// interface ButtonOutPageProps {
-//   title: string;
-//   subtitle: string;
-// }
+interface ButtonOutPageProps {
+  title: string;
+  subTitle: string;
+  children: React.ReactElement;
+  variant: "outlined";
+  className: string;
+  onClick: () => void;
+}
 
-// export default function ButtonOutPage({ title, subtitle }: ButtonOutPageProps) {
-//   const [open, setOpen] = useState(false);
-//   const router = useRouter();
-//   const dispatch = useDispatch();
-//   const handleConfirm = useCallback(() => {
-//     router.push("/");
-//     dispatch(clearAnswer());
-//     dispatch(clearInfoTest());
-//     setOpen(false);
-//   }, [router, dispatch]);
+export default function ButtonOutPage({
+  children,
+  title,
+  subTitle,
+  variant,
+  className,
+  onClick,
+}: ButtonOutPageProps) {
+  const [open, setOpen] = useState(false);
 
-//   const handleOpen = useCallback(() => {
-//     setOpen(!open);
-//   }, [open]);
-//   return (
-//     <>
-//       <Button
-//         onClick={handleOpen}
-//         variant="outlined"
-//         className="p-2 text-xs capitalize"
-//       >
-//         Thoát
-//       </Button>
-//       <Dialog open={open} handler={handleOpen}>
-//         <DialogHeader>{title}</DialogHeader>
-//         <DialogBody divider>{subtitle}</DialogBody>
-//         <DialogFooter>
-//           <Button
-//             variant="text"
-//             color="red"
-//             onClick={handleOpen}
-//             className="mr-1"
-//           >
-//             <span>Hủy</span>
-//           </Button>
-//           <Button variant="gradient" color="green" onClick={handleConfirm}>
-//             <span>Xác nhận</span>
-//           </Button>
-//         </DialogFooter>
-//       </Dialog>
-//     </>
-//   );
-// }
+  const handleConfirm = useCallback(() => {
+    setOpen(false);
+    onClick();
+  }, [onClick]);
+
+  const handleOpen = useCallback(() => {
+    setOpen(!open);
+  }, [open]);
+  return (
+    <>
+      <Button variant={variant} className={className} onClick={handleOpen}>
+        {children}
+      </Button>
+      <Dialog open={open} handler={handleOpen}>
+        <DialogHeader className="text-xl">{title}</DialogHeader>
+        <DialogBody divider>{subTitle}</DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Hủy</span>
+          </Button>
+          <Button variant="gradient" color="green" onClick={handleConfirm}>
+            <span>Xác nhận</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
+    </>
+  );
+}

@@ -94,7 +94,7 @@ type User = {
 
 type AnswerState = {
   name: string;
-  data: {
+  content: {
     number: number;
     answer: string;
   }[];
@@ -105,4 +105,50 @@ type InfoTestStates = {
   label?: string;
   part?: string;
   time?: string;
+  question_number?: number;
+};
+
+type TestTest = {
+  id: number;
+  title: string;
+  time: number;
+  part_number: number;
+  question_number: number;
+  hastags: string[];
+  test_kit: { id: number; label: string };
+  parts: {
+    id: number;
+    name: string;
+    topic: {
+      content: string;
+      transcript: string;
+    };
+    data: {
+      number: string;
+      answer: string;
+      explain: string;
+      question: string[];
+    }[];
+    audio?: {
+      url: string;
+    }[];
+  }[];
+};
+
+type UserAssignment = {
+  data: {
+    id: number;
+    title: string;
+    label: string;
+    time: string;
+    number_correct: number;
+    total_sentences: number;
+    data: {
+      content: {
+        answer: string;
+        number: string;
+      }[];
+      name: string;
+    }[];
+  };
 };

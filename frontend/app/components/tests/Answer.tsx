@@ -18,7 +18,7 @@ export default function Answer({ data }: Test) {
                 key={number}
                 className={`${
                   answerValue.find((item) =>
-                    item.data.find((item) => item.number === Number(number))
+                    item.content.find((item) => item.number === Number(number))
                   )
                     ? "bg-blue-800 text-white"
                     : ""

@@ -14,10 +14,10 @@ export const answer = createSlice({
           ...state,
           {
             name: action.payload.name,
-            data: [
+            content: [
               {
-                number: action.payload.data[0].number,
-                answer: action.payload.data[0].answer,
+                number: action.payload.content[0].number,
+                answer: action.payload.content[0].answer,
               },
             ],
           },
@@ -28,8 +28,8 @@ export const answer = createSlice({
         state.some(
           (item) =>
             item.name === action.payload.name &&
-            item.data.every(
-              (item) => item.number !== action.payload.data[0].number
+            item.content.every(
+              (item) => item.number !== action.payload.content[0].number
             )
         )
       ) {
@@ -37,13 +37,13 @@ export const answer = createSlice({
           ...state.filter((item) => item.name !== action.payload.name),
           {
             name: action.payload.name,
-            data: [
+            content: [
               ...state
                 .filter((item) => item.name === action.payload.name)[0]
-                .data.map((item) => item),
+                .content.map((item) => item),
               {
-                number: action.payload.data[0].number,
-                answer: action.payload.data[0].answer,
+                number: action.payload.content[0].number,
+                answer: action.payload.content[0].answer,
               },
             ],
           },
@@ -55,8 +55,8 @@ export const answer = createSlice({
         state.some(
           (item) =>
             item.name === action.payload.name &&
-            item.data.some(
-              (item) => item.number === action.payload.data[0].number
+            item.content.some(
+              (item) => item.number === action.payload.content[0].number
             )
         )
       ) {
@@ -64,15 +64,15 @@ export const answer = createSlice({
           ...state.filter((item) => item.name !== action.payload.name),
           {
             name: action.payload.name,
-            data: [
+            content: [
               ...state
                 .filter((item) => item.name === action.payload.name)[0]
-                .data.filter(
-                  (item) => item.number !== action.payload.data[0].number
+                .content.filter(
+                  (item) => item.number !== action.payload.content[0].number
                 ),
               {
-                number: action.payload.data[0].number,
-                answer: action.payload.data[0].answer,
+                number: action.payload.content[0].number,
+                answer: action.payload.content[0].answer,
               },
             ],
           },

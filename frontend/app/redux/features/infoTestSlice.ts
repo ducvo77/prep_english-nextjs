@@ -10,11 +10,13 @@ export const infoTest = createSlice({
     getPartTest(state, action: PayloadAction<InfoTestStates>) {
       return { ...state, part: action.payload.part };
     },
-    getTitleTest(state, action: PayloadAction<InfoTestStates>) {
-      return { ...state, title: action.payload.title };
-    },
-    getLabelTest(state, action: PayloadAction<InfoTestStates>) {
-      return { ...state, label: action.payload.label };
+    getInfoTest(state, action: PayloadAction<InfoTestStates>) {
+      return {
+        ...state,
+        title: action.payload.title,
+        label: action.payload.label,
+        question_number: action.payload.question_number,
+      };
     },
     getTimeTest(state, action: PayloadAction<InfoTestStates>) {
       return { ...state, time: action.payload.time };
@@ -30,11 +32,6 @@ export const infoTest = createSlice({
   },
 });
 
-export const {
-  getTitleTest,
-  getLabelTest,
-  getTimeTest,
-  getPartTest,
-  clearInfoTest,
-} = infoTest.actions;
+export const { getInfoTest, getPartTest, clearInfoTest, getTimeTest } =
+  infoTest.actions;
 export default infoTest.reducer;

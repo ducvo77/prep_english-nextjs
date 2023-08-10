@@ -9,21 +9,26 @@ import ExplainAnswer from "./ExplainAnswer";
 interface QuestionsProps {
   data: Question;
   part: number;
+  userAssignment?: UserAssignment;
 }
 
-export default function Questions({ data, part }: QuestionsProps) {
+export default function Questions({
+  data,
+  part,
+  userAssignment,
+}: QuestionsProps) {
   const [valueInputs, setInputValues] = useState<{ [key: number]: string }>({});
   const dispatch = useAppDispatch();
   const answerValue: {
     name: string;
-    data: { answer: string; number: number }[];
+    content: { answer: string; number: number }[];
   }[] = useAppSelector((state) => state.answerReducer);
 
   const handleChangeInput = useCallback(
     (value: string, number: number, name: string) => {
       if (typeof value !== "undefined") {
         dispatch(
-          enteredAnswer({ name, data: [{ number, answer: value.trim() }] })
+          enteredAnswer({ name, content: [{ number, answer: value.trim() }] })
         );
       } else return;
     },
@@ -43,15 +48,16 @@ export default function Questions({ data, part }: QuestionsProps) {
   );
 
   useEffect(() => {
-    answerValue.map(({ data }) => {
-      data.map((item) => {
+    const arrayData = userAssignment ? userAssignment.data.data : answerValue;
+    arrayData.map(({ content }) => {
+      content.map((item) => {
         setInputValues((prevState) => ({
           ...prevState,
           [item.number]: item.answer,
         }));
       });
     });
-  }, [answerValue]);
+  }, [answerValue, userAssignment]);
 
   return (
     <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 w-1/3 h-full max-h-[750px]">
@@ -121,11 +127,15 @@ export default function Questions({ data, part }: QuestionsProps) {
                 />
               </div>
             )}
-            <div className="text-green-500 text-sm">
-              <strong>Đáp án đúng: </strong>
-              <span>{answer}</span>
-            </div>
-            <ExplainAnswer explain={explain} />
+            {userAssignment && (
+              <>
+                <div className="text-green-500 text-sm">
+                  <strong>Đáp án đúng: </strong>
+                  <span>{answer}</span>
+                </div>
+                <ExplainAnswer explain={explain} />
+              </>
+            )}
           </div>
         </li>
       ))}

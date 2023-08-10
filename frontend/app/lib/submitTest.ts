@@ -14,7 +14,7 @@ const submitTest = (
           label: infoData.label, //ok
           time: infoData.time, //ok
           number_correct: 20,
-          total_sentences: 40, //ok
+          total_sentences: infoData.question_number, //ok
           user_name: userId, //ok
           data: answer,
         },
