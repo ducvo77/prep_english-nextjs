@@ -10,13 +10,14 @@ const submitTest = (
       `${process.env.NEXT_PUBLIC_API_URL}/training-histories`,
       {
         data: {
-          title: infoData.title, //ok
-          label: infoData.label, //ok
-          time: infoData.time, //ok
+          title: infoData.title,
+          label: infoData.label,
+          time: infoData.time,
           number_correct: 20,
-          total_sentences: infoData.question_number, //ok
-          user_name: userId, //ok
+          total_sentences: infoData.question_number,
+          user_name: userId,
           data: answer,
+          testId: infoData.id,
         },
       },
       {

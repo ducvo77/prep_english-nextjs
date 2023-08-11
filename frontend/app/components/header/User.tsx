@@ -20,7 +20,7 @@ export default function User() {
     <Menu>
       <MenuHandler>
         <button className="p-2 flex items-center gap-3 rounded-full border shadow-sm hover:shadow-lg">
-          <AiOutlineMenu size={20} className="md:flex hidden" />
+          <AiOutlineMenu size={20} />
           <Image
             src={
               session?.user.picture

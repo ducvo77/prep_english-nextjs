@@ -71,6 +71,7 @@ type TestHistory = {
     time: string;
     number_correct: number;
     total_sentences: number;
+    testId: number;
     data: {
       data: {
         answer: string;
@@ -101,6 +102,7 @@ type AnswerState = {
 };
 
 type InfoTestStates = {
+  id?: number;
   title?: string;
   label?: string;
   part?: string;
@@ -143,12 +145,14 @@ type UserAssignment = {
     time: string;
     number_correct: number;
     total_sentences: number;
-    data: {
-      content: {
-        answer: string;
-        number: string;
-      }[];
-      name: string;
-    }[];
+    data:
+      | {
+          content: {
+            answer: string;
+            number: string;
+          }[];
+          name: string;
+        }[]
+      | null;
   };
 };

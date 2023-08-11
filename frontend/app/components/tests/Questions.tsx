@@ -17,7 +17,12 @@ export default function Questions({
   part,
   userAssignment,
 }: QuestionsProps) {
-  const [valueInputs, setInputValues] = useState<{ [key: number]: string }>({});
+  const [valueInput, setValueInput] = useState<{ [key: number]: string }>({});
+
+  const [isWrongAnswer, setIsWrongAnswer] = useState(false);
+  const [isRightAnswer, setIsRightAnswer] = useState(false);
+  const [isNotAnswered, setIsNotAnswered] = useState(false);
+
   const dispatch = useAppDispatch();
   const answerValue: {
     name: string;
@@ -26,6 +31,8 @@ export default function Questions({
 
   const handleChangeInput = useCallback(
     (value: string, number: number, name: string) => {
+      if (userAssignment) return;
+
       if (typeof value !== "undefined") {
         dispatch(
           enteredAnswer({ name, content: [{ number, answer: value.trim() }] })
@@ -33,31 +40,42 @@ export default function Questions({
       } else return;
     },
 
-    [dispatch]
+    [dispatch, userAssignment]
   );
   const handleValueInput = useCallback(
     (value: string, number: number, index: number) => {
+      if (userAssignment) return;
+
       if (index + 1 === number) {
-        setInputValues((prevState) => ({
+        setValueInput((prevState) => ({
           ...prevState,
           [number]: value,
         }));
       }
     },
-    []
+    [userAssignment]
   );
 
   useEffect(() => {
     const arrayData = userAssignment ? userAssignment.data.data : answerValue;
-    arrayData.map(({ content }) => {
+
+    arrayData?.map(({ content }) => {
       content.map((item) => {
-        setInputValues((prevState) => ({
+        setValueInput((prevState) => ({
           ...prevState,
           [item.number]: item.answer,
         }));
       });
     });
   }, [answerValue, userAssignment]);
+
+  useEffect(() => {
+    console.log(userAssignment?.data.data);
+    // console.log(data.data);
+    // data.data.some((item) => {item.answer, item.number} === userAssignment?.data.data?.map((item) => item.content.map(item => item)))
+    // data.data.map((item) => console.log(item));
+    userAssignment?.data.data?.map((item) => console.log(item.content));
+  }, [userAssignment, data]);
 
   return (
     <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 w-1/3 h-full max-h-[750px]">
@@ -78,6 +96,7 @@ export default function Questions({
                         className="flex items-center justify-start"
                       >
                         <Radio
+                          disabled={!!userAssignment}
                           onChange={(e) =>
                             handleValueInput(
                               e.target.value,
@@ -85,16 +104,16 @@ export default function Questions({
                               part * data.data.length + index
                             )
                           }
-                          name={"question" + index}
+                          name={item + index}
                           onBlur={() =>
                             handleChangeInput(
-                              valueInputs[Number(number)],
+                              valueInput[Number(number)],
                               Number(number),
                               data.name
                             )
                           }
                           value={item}
-                          checked={item === valueInputs[Number(number)]}
+                          checked={item === valueInput[Number(number)]}
                           label={item}
                         />
                       </div>
@@ -107,16 +126,17 @@ export default function Questions({
                   {question}
                 </label>
                 <input
+                  disabled={!!userAssignment}
                   onBlur={() =>
                     handleChangeInput(
-                      valueInputs[Number(number)],
+                      valueInput[Number(number)],
                       Number(number),
                       data.name
                     )
                   }
                   type="text"
                   className="border rounded-md border-gray-500 focus:border-blue-700 focus:outline-none pl-2 text-black w-full"
-                  value={valueInputs[Number(number)] || ""}
+                  value={valueInput[Number(number)] || ""}
                   onChange={(e) =>
                     handleValueInput(
                       e.target.value,

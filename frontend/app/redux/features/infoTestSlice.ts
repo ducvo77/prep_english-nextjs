@@ -13,6 +13,7 @@ export const infoTest = createSlice({
     getInfoTest(state, action: PayloadAction<InfoTestStates>) {
       return {
         ...state,
+        id: action.payload.id,
         title: action.payload.title,
         label: action.payload.label,
         question_number: action.payload.question_number,

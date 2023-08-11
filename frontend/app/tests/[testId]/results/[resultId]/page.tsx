@@ -36,7 +36,6 @@ export default async function Result({
     <div className="flex flex-col gap-2 py-10">
       <TestHeader data={test.data} />
       <TestContent data={test.data} userAssignment={userAssignment} />
-      <div>Hello</div>
     </div>
   );
 }

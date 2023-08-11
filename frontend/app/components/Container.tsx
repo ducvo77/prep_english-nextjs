@@ -15,8 +15,9 @@ export default function Container({ children }: ContainerProps) {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
+
   useEffect(() => {
-    if (!pathname?.startsWith("/tests")) {
+    if (!pathname?.startsWith("/tests") || pathname.includes("results")) {
       dispatch(clearInfoTest());
       dispatch(clearAnswer());
     }

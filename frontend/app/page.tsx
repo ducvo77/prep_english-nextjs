@@ -12,9 +12,10 @@ export default async function Page() {
   const session: any = await getServerSession(authOptions);
 
   const testKitsData: Promise<TestKit> = getTestKits();
-  const testHistoryData: Promise<TestHistory> = getTestHistory(
-    session?.user?.id || Number(session?.user?.sub)
-  );
+  const testHistoryData: Promise<TestHistory> | null = session
+    ? getTestHistory(session?.user?.id || Number(session?.user?.sub))
+    : null;
+
   const [testKits, testHistory] = await Promise.all([
     testKitsData,
     testHistoryData,

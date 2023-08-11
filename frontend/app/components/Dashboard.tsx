@@ -3,6 +3,7 @@
 import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const TABLE_HEAD = [
   "STT",
@@ -42,19 +43,21 @@ export default function Dashboard({ data }: DashboardProps) {
   const sortData = data.training_histories.sort((a, b) => b.id - a.id);
 
   return (
-    <Card className="h-full w-full min-h-[400px]">
+    <Card className="h-full w-full min-h-[400px] overflow-x-scroll">
       <table className="w-full min-w-max table-auto text-center">
         <thead>
           <tr>
-            {TABLE_HEAD.map((head) => (
+            {TABLE_HEAD.map((head, index) => (
               <th
                 key={head}
-                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                className={`border-b border-blue-gray-100 bg-blue-gray-50 p-4 ${
+                  index === 4 ? "md:table-cell hidden" : ""
+                } ${index === 2 || index === 3 ? "sm:table-cell hidden" : ""}`}
               >
                 <Typography
                   variant="small"
                   color="blue-gray"
-                  className="leading-none text-base font-semibold"
+                  className={`leading-none text-base font-semibold`}
                 >
                   {head}
                 </Typography>
@@ -64,7 +67,10 @@ export default function Dashboard({ data }: DashboardProps) {
         </thead>
         <tbody>
           {sortData.map(
-            ({ id, title, time, number_correct, total_sentences }, index) =>
+            (
+              { id, title, time, number_correct, total_sentences, testId },
+              index
+            ) =>
               active === Math.ceil((index + 1) / 5) && (
                 <React.Fragment key={id}>
                   <tr className="even:bg-blue-gray-50/50 text-center">
@@ -86,7 +92,7 @@ export default function Dashboard({ data }: DashboardProps) {
                         {title}
                       </Typography>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 sm:table-cell hidden">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -95,7 +101,7 @@ export default function Dashboard({ data }: DashboardProps) {
                         {time}
                       </Typography>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 sm:table-cell hidden">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -104,7 +110,7 @@ export default function Dashboard({ data }: DashboardProps) {
                         {number_correct + " / " + total_sentences}
                       </Typography>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 md:table-cell hidden">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -115,8 +121,8 @@ export default function Dashboard({ data }: DashboardProps) {
                     </td>
                     <td className="p-4">
                       <Typography
-                        as="a"
-                        href="#"
+                        as={Link}
+                        href={`/tests/${testId}/results/${id}`}
                         variant="small"
                         color="blue"
                         className="font-medium"
@@ -134,7 +140,7 @@ export default function Dashboard({ data }: DashboardProps) {
         <Button
           variant="text"
           color="blue-gray"
-          className="flex items-center gap-2 rounded-full"
+          className="sm:flex hidden items-center gap-2 rounded-full"
           onClick={prev}
           disabled={active === 1}
         >
@@ -156,7 +162,7 @@ export default function Dashboard({ data }: DashboardProps) {
         <Button
           variant="text"
           color="blue-gray"
-          className="flex items-center gap-2 rounded-full"
+          className="sm:flex hidden items-center gap-2 rounded-full"
           onClick={next}
           disabled={active === Math.ceil(data.training_histories.length / 5)}
         >

@@ -3,5 +3,6 @@ export default async function getTestHistory(userId: number) {
     cache: "no-cache",
   });
   if (!res.ok) return null;
+
   return res.json();
 }

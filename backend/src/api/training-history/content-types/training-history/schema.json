@@ -41,6 +41,10 @@
     "total_sentences": {
       "required": true,
       "type": "integer"
+    },
+    "testId": {
+      "type": "integer",
+      "required": true
     }
   }
 }

@@ -14,7 +14,7 @@ export default function TestList({ data }: TestKit) {
   const handleClickTest = useCallback(
     (id: number, title: string, label: string, question_number: number) => {
       router.push(`/tests/${id}`);
-      dispatch(getInfoTest({ title, label, question_number }));
+      dispatch(getInfoTest({ id, title, label, question_number }));
     },
 
     [router, dispatch]

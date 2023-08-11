@@ -12,7 +12,7 @@ export default function Logo() {
         width={192}
         height={69}
         sizes="(max-width: 500px) 100px"
-        className="cursor-pointer"
+        className="cursor-pointer lg:w-[192px] md:w-[164px] sm:w-[148px] w-[132px]"
         priority
       />
     </Link>

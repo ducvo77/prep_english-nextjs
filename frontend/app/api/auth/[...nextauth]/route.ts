@@ -49,16 +49,12 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ user, session, token }: any) {
-      // console.log(token);
-
       session.user = token as any;
       session.user.id = token ? token.id : null;
       return Promise.resolve(session);
     },
 
     async jwt({ token, user, account }: any) {
-      // console.log(account);
-
       const isSignIn = user ? true : false;
       if (isSignIn && account) {
         try {
@@ -66,7 +62,6 @@ export const authOptions: NextAuthOptions = {
             `${process.env.API_URL}/auth/${account.provider}/callback?access_token=${account?.access_token}`
           );
           const data = await response.json();
-          // console.log("Strapi Callback Data >>>>>>>>>>>>>> ", data);
 
           token.jwt = data.jwt;
           token.id = data.user.id;

@@ -11,7 +11,7 @@ export default function Section({ children, label, id }: SectionProps) {
     <section className="my-16">
       <h1
         id={id}
-        className="text-center text-2xl font-semibold mb-8 uppercase scroll-m-24"
+        className="text-center md:text-2xl text-xl font-semibold mb-8 uppercase scroll-m-24"
       >
         {label}
       </h1>

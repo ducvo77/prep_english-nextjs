@@ -34,8 +34,6 @@ export default function ContainerAuthen() {
 
     const res = await register(username, email, password);
     if (res.status === 200) {
-      console.log(res);
-
       return router.push("/login");
     } else {
       setIsFailure(true);
