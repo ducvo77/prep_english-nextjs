@@ -4,9 +4,8 @@ import answerReducer from "./features/answerSlice";
 import infoTestReducer from "./features/infoTestSlice";
 import userReducer from "./features/userSlice";
 import persistReducer from "redux-persist/es/persistReducer";
-// import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
-import AsyncStorage from "@react-native-community/async-storage";
 
 const reducers = combineReducers({
   answerReducer,
@@ -16,8 +15,7 @@ const reducers = combineReducers({
 
 const persistConfig = {
   key: "root",
-  storage: AsyncStorage,
-  // storage,
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -41,8 +41,11 @@ export default function Nav({ show }: { show: boolean }) {
               <li
                 key={`item ${index}`}
                 className={`hover:text-[#1A56DB] font-semibold white flex ${
-                  index === MENU_LIST.length - 1 ? "lg:hidden block" : ""
-                } `}
+                  index === MENU_LIST.length - 1 ||
+                  index === MENU_LIST.length - 2
+                    ? "lg:hidden block"
+                    : ""
+                }`}
               >
                 {item.href ? (
                   <a href={item.href}>{item.label}</a>
