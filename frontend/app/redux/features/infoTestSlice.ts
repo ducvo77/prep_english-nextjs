@@ -22,12 +22,20 @@ export const infoTest = createSlice({
     getTimeTest(state, action: PayloadAction<InfoTestStates>) {
       return { ...state, time: action.payload.time };
     },
+    // getCorrectAmount(state, action: PayloadAction<InfoTestStates>) {
+    //   return {
+    //     ...state,
+    //     correct_amount: (state.correct_amount =
+    //       0 + action.payload.correct_amount),
+    //   };
+    // },
     clearInfoTest() {
       return {
         title: "",
         label: "",
         part: "",
         time: "",
+        correct_amount: 0,
       };
     },
   },

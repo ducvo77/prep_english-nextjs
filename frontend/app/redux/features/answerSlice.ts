@@ -56,7 +56,9 @@ export const answer = createSlice({
           (item) =>
             item.name === action.payload.name &&
             item.content.some(
-              (item) => item.number === action.payload.content[0].number
+              (item) =>
+                item.number === action.payload.content[0].number &&
+                action.payload.content[0].answer !== ""
             )
         )
       ) {
@@ -78,7 +80,35 @@ export const answer = createSlice({
           },
         ];
       }
+      // Trường hợp có part đó trong mảng, có câu đó trong mảng, muốn xóa value câu đó
+
+      if (
+        state.some(
+          (item) =>
+            item.name === action.payload.name &&
+            item.content.some(
+              (item) =>
+                item.number === action.payload.content[0].number &&
+                action.payload.content[0].answer === ""
+            )
+        )
+      ) {
+        return [
+          ...state.filter((item) => item.name !== action.payload.name),
+          {
+            name: action.payload.name,
+            content: [
+              ...state
+                .filter((item) => item.name === action.payload.name)[0]
+                .content.filter(
+                  (item) => item.number !== action.payload.content[0].number
+                ),
+            ],
+          },
+        ];
+      }
     },
+
     clearAnswer: () => {
       return [];
     },

@@ -108,6 +108,7 @@ type InfoTestStates = {
   part?: string;
   time?: string;
   question_number?: number;
+  correct_amount?: number;
 };
 
 type TestTest = {

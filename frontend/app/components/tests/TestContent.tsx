@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import SubmitTest from "./SubmitTest";
 import Answer from "./Answer";
 import Transcript from "./Transcript";
+import { useCallback, useState } from "react";
 
 interface TestHeaderProp {
   data: TestTest;
@@ -24,17 +25,25 @@ interface TestHeaderProp {
 export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
   const dispatch = useAppDispatch();
   const { part } = useAppSelector((state) => state.infoTestReducer);
+  const [activeTab, setActiveTab] = useState(part || data.parts[0].name);
+
+  const handleClickTab = useCallback(
+    (name: string) => {
+      dispatch(getPartTest({ part: name })), setActiveTab(name);
+    },
+    [dispatch]
+  );
 
   return (
     <div className="flex gap-6">
       <Tabs
-        value={part || data.parts[0].name}
+        value={activeTab}
         className="border rounded-lg p-5 flex gap-4 flex-col flex-grow"
       >
         <TabsHeader className="flex py-2 bg-white opacity w-1/2 border">
           {data.parts.map(({ name }) => (
             <Tab
-              onClick={() => dispatch(getPartTest({ part: name }))}
+              onClick={() => handleClickTab(name)}
               key={name}
               value={name}
               className="text-sm capitalize font-semibold text-[#1A56DB] test"
@@ -78,12 +87,15 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                   />
                 </div>
               </div>
-              <div className="flex justify-end border-t pt-6">
-                <button className="uppercase font-medium text-blue-900 flex gap-1 items-center">
+              {/* <div className="flex justify-end border-t pt-6"> */}
+              {/* <button
+                  onClick={() => setActiveTab(data.parts[0].name)}
+                  className="uppercase font-medium text-blue-900 flex gap-1 items-center"
+                >
                   <span>Tiếp theo</span>
                   <IoIosArrowForward size={20} />
-                </button>
-              </div>
+                </button> */}
+              {/* </div> */}
             </TabPanel>
           ))}
         </TabsBody>

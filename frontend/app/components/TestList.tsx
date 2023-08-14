@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Fragment, useCallback } from "react";
 import { getInfoTest } from "../redux/features/infoTestSlice";
 import { useAppDispatch } from "../redux/hook";
+import ButtonOutPage from "./ButtonOutPage";
 
 export default function TestList({ data }: TestKit) {
   const router = useRouter();
@@ -53,15 +54,17 @@ export default function TestList({ data }: TestKit) {
                     </span>
                   ))}
                 </div>
-                <Button
+                <ButtonOutPage
                   onClick={() =>
                     handleClickTest(id, title, label, question_number)
                   }
                   variant="outlined"
                   className="font-semibold second-color border-[#1A56DB] hover:bg-[#1A56DB] hover:text-white py-2"
+                  title="Bạn muốn làm bài kiểm tra?"
+                  subTitle={`Bài kiểm tra: ${title}`}
                 >
-                  Bắt đầu
-                </Button>
+                  <span>Bắt đầu</span>
+                </ButtonOutPage>
               </div>
             )
           )}

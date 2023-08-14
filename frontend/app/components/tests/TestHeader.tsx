@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import ButtonOutPage from "./ButtonOutPage";
+import ButtonOutPage from "../ButtonOutPage";
 
 export default function HeaderTest({ data }: Test) {
   const router = useRouter();

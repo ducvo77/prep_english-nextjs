@@ -3,7 +3,7 @@ import { getTimeTest } from "@/app/redux/features/infoTestSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import ButtonOutPage from "./ButtonOutPage";
+import ButtonOutPage from "../ButtonOutPage";
 import { useRouter } from "next/navigation";
 
 export default function SubmitTest({ data }: Test) {
@@ -34,7 +34,6 @@ export default function SubmitTest({ data }: Test) {
       session?.user?.id || session?.user?.sub,
       answerData
     );
-    console.log(res);
 
     if (res) router.push(`/tests/${data.id}/results/${res.data.data.id}`);
   };

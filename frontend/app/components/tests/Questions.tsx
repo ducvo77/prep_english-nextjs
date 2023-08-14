@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Radio } from "@material-tailwind/react";
 import { useCallback, useEffect, useState } from "react";
 import ExplainAnswer from "./ExplainAnswer";
+// import { getCorrectAmount } from "@/app/redux/features/infoTestSlice";
 
 interface QuestionsProps {
   data: Question;
@@ -19,9 +20,9 @@ export default function Questions({
 }: QuestionsProps) {
   const [valueInput, setValueInput] = useState<{ [key: number]: string }>({});
 
-  const [isWrongAnswer, setIsWrongAnswer] = useState(false);
-  const [isRightAnswer, setIsRightAnswer] = useState(false);
-  const [isNotAnswered, setIsNotAnswered] = useState(false);
+  const [isRightAnswer, setIsRightAnswer] = useState<{
+    [key: number]: boolean;
+  }>({});
 
   const dispatch = useAppDispatch();
   const answerValue: {
@@ -70,12 +71,32 @@ export default function Questions({
   }, [answerValue, userAssignment]);
 
   useEffect(() => {
-    console.log(userAssignment?.data.data);
-    // console.log(data.data);
-    // data.data.some((item) => {item.answer, item.number} === userAssignment?.data.data?.map((item) => item.content.map(item => item)))
-    // data.data.map((item) => console.log(item));
-    userAssignment?.data.data?.map((item) => console.log(item.content));
-  }, [userAssignment, data]);
+    const newArrayUserAssignment = userAssignment?.data.data
+      ?.map((item) => item.content)
+      .flat();
+    const newArrayData = [...data.data];
+
+    let count = 0;
+    newArrayUserAssignment?.map((item) => {
+      const isCorrect = newArrayData.filter(
+        (item2) => item2.number === item.number && item2.answer === item.answer
+      )[0]?.answer;
+
+      if (isCorrect) {
+        count++;
+        setIsRightAnswer((prevState) => ({
+          ...prevState,
+          [item.number]: true,
+        }));
+      } else {
+        setIsRightAnswer((prevState) => ({
+          ...prevState,
+          [item.number]: false,
+        }));
+      }
+    });
+    // dispatch(getCorrectAmount({ correct_amount: count }));
+  }, [userAssignment, data, dispatch]);
 
   return (
     <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 w-1/3 h-full max-h-[750px]">
@@ -93,7 +114,7 @@ export default function Questions({
                     index2 >= 1 && (
                       <div
                         key={item}
-                        className="flex items-center justify-start"
+                        className="flex items-center justify-start text-red-600"
                       >
                         <Radio
                           disabled={!!userAssignment}
@@ -104,7 +125,7 @@ export default function Questions({
                               part * data.data.length + index
                             )
                           }
-                          name={item + index}
+                          name={item}
                           onBlur={() =>
                             handleChangeInput(
                               valueInput[Number(number)],
@@ -115,6 +136,24 @@ export default function Questions({
                           value={item}
                           checked={item === valueInput[Number(number)]}
                           label={item}
+                          containerProps={{
+                            className: "p-0",
+                          }}
+                          labelProps={{
+                            className: `px-2 py-1 font-normal text-gray-900 ${
+                              !userAssignment
+                                ? ""
+                                : `${
+                                    isRightAnswer[Number(number)] &&
+                                    item === valueInput[Number(number)] &&
+                                    "bg-green-200"
+                                  } ${
+                                    !isRightAnswer[Number(number)] &&
+                                    item === valueInput[Number(number)] &&
+                                    "bg-red-200"
+                                  }`
+                            }`,
+                          }}
                         />
                       </div>
                     )
@@ -135,7 +174,13 @@ export default function Questions({
                     )
                   }
                   type="text"
-                  className="border rounded-md border-gray-500 focus:border-blue-700 focus:outline-none pl-2 text-black w-full"
+                  className={`border rounded-md focus:border-blue-700 focus:outline-none pl-2 text-black w-full ${
+                    !userAssignment
+                      ? "border-gray-500"
+                      : isRightAnswer[Number(number)]
+                      ? "border-green-200"
+                      : "border-red-200"
+                  }`}
                   value={valueInput[Number(number)] || ""}
                   onChange={(e) =>
                     handleValueInput(
