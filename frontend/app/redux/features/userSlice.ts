@@ -1,7 +1,7 @@
 // https://codevoweb.com/setup-redux-toolkit-in-nextjs-13-app-directory/
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type UserStates = {};
+interface UserStates {}
 
 const initialState = {} as UserStates;
 

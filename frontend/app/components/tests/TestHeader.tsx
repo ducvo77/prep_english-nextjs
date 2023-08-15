@@ -3,7 +3,11 @@
 import { useRouter } from "next/navigation";
 import ButtonOutPage from "../ButtonOutPage";
 
-export default function HeaderTest({ data }: Test) {
+interface HeaderTestProps {
+  data: Test;
+}
+
+export default function HeaderTest({ data }: HeaderTestProps) {
   const router = useRouter();
 
   return (

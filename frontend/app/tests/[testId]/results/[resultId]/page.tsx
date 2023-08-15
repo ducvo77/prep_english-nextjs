@@ -4,17 +4,21 @@ import { Metadata } from "next";
 import getTest from "@/app/lib/getTest";
 import getUserAssignment from "@/app/lib/getUserAssignment";
 
-type ResultPageProps = {
+interface ResultPageProps {
   params: {
     testId: string;
     resultId: string;
   };
-};
+}
+
+interface TestDataType {
+  data: Test;
+}
 
 export async function generateMetadata({
   params: { testId },
 }: ResultPageProps): Promise<Metadata> {
-  const testData: Promise<Test> = getTest(testId);
+  const testData: Promise<TestDataType> = getTest(testId);
   const test = await testData;
   return {
     title: "Đáp án chi tiết: " + test.data.title,
@@ -24,7 +28,7 @@ export async function generateMetadata({
 export default async function Result({
   params: { testId, resultId },
 }: ResultPageProps) {
-  const testData: Promise<Test> = getTest(testId);
+  const testData: Promise<TestDataType> = getTest(testId);
   const userAssignmentData: Promise<UserAssignment> =
     getUserAssignment(resultId);
   const [test, userAssignment] = await Promise.all([

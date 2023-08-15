@@ -22,13 +22,12 @@ export const infoTest = createSlice({
     getTimeTest(state, action: PayloadAction<InfoTestStates>) {
       return { ...state, time: action.payload.time };
     },
-    // getCorrectAmount(state, action: PayloadAction<InfoTestStates>) {
-    //   return {
-    //     ...state,
-    //     correct_amount: (state.correct_amount =
-    //       0 + action.payload.correct_amount),
-    //   };
-    // },
+    getCorrectAmount(state, action: PayloadAction<InfoTestStates>) {
+      return {
+        ...state,
+        correct_amount: action.payload.correct_amount,
+      };
+    },
     clearInfoTest() {
       return {
         title: "",
@@ -41,6 +40,11 @@ export const infoTest = createSlice({
   },
 });
 
-export const { getInfoTest, getPartTest, clearInfoTest, getTimeTest } =
-  infoTest.actions;
+export const {
+  getInfoTest,
+  getPartTest,
+  clearInfoTest,
+  getTimeTest,
+  getCorrectAmount,
+} = infoTest.actions;
 export default infoTest.reducer;

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Radio } from "@material-tailwind/react";
 import { useCallback, useEffect, useState } from "react";
 import ExplainAnswer from "./ExplainAnswer";
-// import { getCorrectAmount } from "@/app/redux/features/infoTestSlice";
+import { getCorrectAmount } from "@/app/redux/features/infoTestSlice";
 
 interface QuestionsProps {
   data: Question;
@@ -76,8 +76,8 @@ export default function Questions({
       .flat();
     const newArrayData = [...data.data];
 
-    let count = 0;
     newArrayUserAssignment?.map((item) => {
+      let count = 0;
       const isCorrect = newArrayData.filter(
         (item2) => item2.number === item.number && item2.answer === item.answer
       )[0]?.answer;
@@ -94,12 +94,12 @@ export default function Questions({
           [item.number]: false,
         }));
       }
+      dispatch(getCorrectAmount({ correct_amount: count }));
     });
-    // dispatch(getCorrectAmount({ correct_amount: count }));
   }, [userAssignment, data, dispatch]);
 
   return (
-    <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 w-1/3 h-full max-h-[750px]">
+    <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 lg:w-1/3 w-full h-full max-h-[750px]">
       {data.data.map(({ number, answer, explain, question }, index) => (
         <li key={number} className="flex gap-2">
           <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">

@@ -2,7 +2,11 @@
 
 import { useAppSelector } from "@/app/redux/hook";
 
-export default function Answer({ data }: Test) {
+interface AnswerProps {
+  data: Test;
+}
+
+export default function Answer({ data }: AnswerProps) {
   const answerValue: AnswerState[] = useAppSelector(
     (state) => state.answerReducer
   );
@@ -11,8 +15,8 @@ export default function Answer({ data }: Test) {
     <>
       {data.parts.map(({ name, data }) => (
         <div key={name} className="flex flex-col gap-2">
-          <h3 className="font-medium capitalize">{name}</h3>
-          <ul className="grid grid-cols-5 gap-2 text-[0.75rem]">
+          <h3 className="font-medium md:text-sm text-xs capitalize ">{name}</h3>
+          <ul className="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-10 gap-2 text-[0.75rem]">
             {data.map(({ number }) => (
               <li
                 key={number}

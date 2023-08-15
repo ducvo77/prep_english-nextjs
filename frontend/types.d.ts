@@ -1,30 +1,28 @@
 type Test = {
-  data: {
+  id: number;
+  title: string;
+  time: number;
+  part_number: number;
+  question_number: number;
+  hastags: string[];
+  test_kit: { id: number; label: string };
+  parts: {
     id: number;
-    title: string;
-    time: number;
-    part_number: number;
-    question_number: number;
-    hastags: string[];
-    test_kit: { id: number; label: string };
-    parts: {
-      id: number;
-      name: string;
-      topic: {
-        content: string;
-        transcript: string;
-      };
-      data: {
-        number: string;
-        answer: string;
-        explain: string;
-        question: string[];
-      }[];
-      audio?: {
-        url: string;
-      }[];
+    name: string;
+    topic: {
+      content: string;
+      transcript: string;
+    };
+    data: {
+      number: string;
+      answer: string;
+      explain: string;
+      question: string[];
     }[];
-  };
+    audio?: {
+      url: string;
+    }[];
+  }[];
 };
 
 type TestKit = {
@@ -111,33 +109,6 @@ type InfoTestStates = {
   correct_amount?: number;
 };
 
-type TestTest = {
-  id: number;
-  title: string;
-  time: number;
-  part_number: number;
-  question_number: number;
-  hastags: string[];
-  test_kit: { id: number; label: string };
-  parts: {
-    id: number;
-    name: string;
-    topic: {
-      content: string;
-      transcript: string;
-    };
-    data: {
-      number: string;
-      answer: string;
-      explain: string;
-      question: string[];
-    }[];
-    audio?: {
-      url: string;
-    }[];
-  }[];
-};
-
 type UserAssignment = {
   data: {
     id: number;
@@ -155,5 +126,28 @@ type UserAssignment = {
           name: string;
         }[]
       | null;
+  };
+};
+
+type Blog = {
+  id: number;
+  author: string;
+  title: string;
+  conclusion: {
+    content: string;
+  };
+  content: {
+    content: string;
+    sectionTitle: string;
+    subsections: {
+      title: string;
+      content: string;
+    }[];
+  }[];
+  imageURL: {
+    url: string;
+  }[];
+  introduction: {
+    content: string;
   };
 };

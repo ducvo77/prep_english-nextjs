@@ -51,3 +51,20 @@ body {
 #transcript p {
   padding-bottom: 12px;
 }
+
+/* blog */
+.description-blog {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#blog ul {
+  margin-top: 12px;
+}
+
+#blog li {
+  list-style: disc;
+  margin-left: 40px;
+}

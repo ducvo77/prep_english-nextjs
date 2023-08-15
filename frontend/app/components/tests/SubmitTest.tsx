@@ -6,7 +6,12 @@ import { useEffect, useState } from "react";
 import ButtonOutPage from "../ButtonOutPage";
 import { useRouter } from "next/navigation";
 
-export default function SubmitTest({ data }: Test) {
+interface SubmitTestProps {
+  data: Test;
+  userAssignment: UserAssignment | undefined;
+}
+
+export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
   const router = useRouter();
 
   const infoData: InfoTestStates = useAppSelector(
@@ -39,13 +44,17 @@ export default function SubmitTest({ data }: Test) {
   };
 
   useEffect(() => {
+    if (userAssignment) return;
+
     const interval = setInterval(() => {
       setElapsedTime(elapsedTime + 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [elapsedTime]);
+  }, [elapsedTime, userAssignment]);
 
   useEffect(() => {
+    if (userAssignment) return;
+
     const hours = Math.floor(elapsedTime / 3600);
     const minutes = Math.floor((elapsedTime % 3600) / 60);
     const remainingSeconds = elapsedTime % 60;
@@ -57,28 +66,39 @@ export default function SubmitTest({ data }: Test) {
     } else {
       setTime(`${formattedMinutes}:${formattedSeconds}`);
     }
-  }, [elapsedTime]);
+  }, [elapsedTime, userAssignment]);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
+    if (userAssignment) return;
+
     dispatch(getTimeTest({ time }));
-  }, [time, dispatch]);
+  }, [time, dispatch, userAssignment]);
 
   return (
     <>
       <div className="flex flex-col gap-2">
         <span>Thời gian làm</span>
-        <p className="font-semibold text-xl">{infoData.time || "00:00"}</p>
+        <p className="font-semibold text-xl">
+          {userAssignment ? userAssignment.data.time : infoData.time || "00:00"}
+        </p>
       </div>
-      <ButtonOutPage
-        title="Bạn muốn nộp bài?"
-        subTitle="Kết quả của bạn sẽ được lưu"
-        variant="outlined"
-        className="text-lg hover:opacity-100 hover:bg-blue-800 hover:text-white"
-        onClick={handleSubmitTest}
-      >
-        <span>Nộp bài</span>
-      </ButtonOutPage>
+      {userAssignment ? (
+        <span className="text-green-700 font-semibold text-center border py-3 border-gray-600 text-lg">
+          Đúng:{" "}
+          {infoData.correct_amount + "/" + userAssignment.data.total_sentences}
+        </span>
+      ) : (
+        <ButtonOutPage
+          title="Bạn muốn nộp bài?"
+          subTitle="Kết quả của bạn sẽ được lưu"
+          variant="outlined"
+          className="md:text-lg text-sm hover:opacity-100 hover:bg-blue-800 hover:text-white"
+          onClick={handleSubmitTest}
+        >
+          <span>Nộp bài</span>
+        </ButtonOutPage>
+      )}
     </>
   );
 }

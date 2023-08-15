@@ -5,6 +5,6 @@ export default async function getTest(testId: string) {
       // cache: "no-cache",
     }
   );
-  if (!res.ok) throw new Error("Failed to fetch data");
+  if (!res.ok) return null;
   return res.json();
 }

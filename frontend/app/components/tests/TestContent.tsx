@@ -18,7 +18,7 @@ import Transcript from "./Transcript";
 import { useCallback, useState } from "react";
 
 interface TestHeaderProp {
-  data: TestTest;
+  data: Test;
   userAssignment?: UserAssignment;
 }
 
@@ -35,18 +35,18 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
   );
 
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-6 sm:flex-row flex-col">
       <Tabs
         value={activeTab}
         className="border rounded-lg p-5 flex gap-4 flex-col flex-grow"
       >
-        <TabsHeader className="flex py-2 bg-white opacity w-1/2 border">
+        <TabsHeader className="flex md:flex-row flex-col py-2 bg-white opacity xl:w-1/2 w-full border">
           {data.parts.map(({ name }) => (
             <Tab
               onClick={() => handleClickTab(name)}
               key={name}
               value={name}
-              className="text-sm capitalize font-semibold text-[#1A56DB] test"
+              className="text-sm capitalize font-semibold text-[#1A56DB] test "
             >
               {name}
             </Tab>
@@ -67,16 +67,17 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
             >
               {part.audio && (
                 <audio
+                  className="w-full"
                   controls
                   src={process.env.NEXT_PUBLIC_SOURCE_URL + part.audio[0].url}
                 />
               )}
               {userAssignment && <Transcript data={part} />}
               <div className="flex flex-col ">
-                <div className="flex gap-5 max-h-[750px]">
+                <div className="flex lg:flex-row flex-col gap-5 max-h-[750px]">
                   <div
                     id="topic"
-                    className="w-2/3 bg-gray-100 text-gray-900 p-4 font-medium rounded-md overflow-y-scroll"
+                    className="lg:w-2/3 w-full bg-gray-100 text-gray-900 p-4 font-medium rounded-md overflow-y-scroll"
                   >
                     <Topic data={part} />
                   </div>
@@ -100,8 +101,8 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
           ))}
         </TabsBody>
       </Tabs>
-      <div className="w-[200px] border p-3 flex flex-col gap-4 flex-shrink-0">
-        {!userAssignment && <SubmitTest data={data} />}
+      <div className="md:w-[200px] sm:w-[100px] w-full border p-3 flex flex-col gap-4 flex-shrink-0">
+        <SubmitTest userAssignment={userAssignment} data={data} />
         <Answer data={data} />
       </div>
     </div>

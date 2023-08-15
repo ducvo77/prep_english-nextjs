@@ -19,7 +19,7 @@ const MENU_LIST = [
   },
   {
     label: "Tài liệu tham khảo",
-    href: "/#references",
+    href: "/#blogs",
   },
   {
     label: <Button>Đăng nhập</Button>,

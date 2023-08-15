@@ -3,16 +3,20 @@ import TestContent from "@/app/components/tests/TestContent";
 import getTest from "@/app/lib/getTest";
 import { Metadata } from "next";
 
-type TestPageProps = {
+interface TestPageProps {
   params: {
     testId: string;
   };
-};
+}
+
+interface TestDataType {
+  data: Test;
+}
 
 export async function generateMetadata({
   params: { testId },
 }: TestPageProps): Promise<Metadata> {
-  const testData: Promise<Test> = getTest(testId);
+  const testData: Promise<TestDataType> = getTest(testId);
   const test = await testData;
   return {
     title: test.data.title,
@@ -20,7 +24,7 @@ export async function generateMetadata({
 }
 
 export default async function TestPage({ params: { testId } }: TestPageProps) {
-  const testData: Promise<Test> = getTest(testId);
+  const testData: Promise<TestDataType> = getTest(testId);
   const test = await testData;
 
   return (

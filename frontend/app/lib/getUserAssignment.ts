@@ -5,6 +5,7 @@ export default async function getUserAssignment(testId: string) {
       // cache: "no-cache",
     }
   );
-  if (!res.ok) throw new Error("Failed to fetch data");
+  if (!res.ok) return null;
+
   return res.json();
 }

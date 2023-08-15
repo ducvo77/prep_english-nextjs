@@ -4,9 +4,10 @@ import { Button } from "@material-tailwind/react";
 
 import { useRouter } from "next/navigation";
 import { Fragment, useCallback } from "react";
-import { getInfoTest } from "../redux/features/infoTestSlice";
-import { useAppDispatch } from "../redux/hook";
-import ButtonOutPage from "./ButtonOutPage";
+import { getInfoTest } from "../../redux/features/infoTestSlice";
+import { useAppDispatch } from "../../redux/hook";
+import ButtonOutPage from "../ButtonOutPage";
+import ContainerGrid from "../ContainerGrid";
 
 export default function TestList({ data }: TestKit) {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function TestList({ data }: TestKit) {
   );
 
   return (
-    <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-6 lg:gap-4 md:gap-2 gap-1">
+    <ContainerGrid>
       {data.map(({ id, label, tests }) => (
         <Fragment key={id}>
           {tests.map(
@@ -70,6 +71,6 @@ export default function TestList({ data }: TestKit) {
           )}
         </Fragment>
       ))}
-    </div>
+    </ContainerGrid>
   );
 }
