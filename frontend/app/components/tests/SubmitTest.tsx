@@ -1,10 +1,14 @@
 import submitTest from "@/app/lib/submitTest";
-import { getTimeTest } from "@/app/redux/features/infoTestSlice";
+import {
+  getCorrectAmount,
+  getTimeTest,
+} from "@/app/redux/features/infoTestSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import ButtonOutPage from "../ButtonOutPage";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface SubmitTestProps {
   data: Test;
@@ -12,7 +16,9 @@ interface SubmitTestProps {
 }
 
 export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
+  const answer: AnswerState[] = useAppSelector((state) => state.answerReducer);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const infoData: InfoTestStates = useAppSelector(
     (state) => state.infoTestReducer
@@ -40,8 +46,32 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
       answerData
     );
 
-    if (res) router.push(`/tests/${data.id}/results/${res.data.data.id}`);
+    if (res) {
+      toast.success("Nộp bài thành công!!");
+      router.push(`/tests/${data.id}/results/${res.data.data.id}`);
+    } else {
+      toast.error("Nộp bài thất bại!!");
+    }
   };
+
+  useEffect(() => {
+    const valueResult = data.parts
+      .map((item) =>
+        item.data.map((item) => ({
+          number: Number(item.number),
+          answer: item.answer,
+        }))
+      )
+      .flat();
+    const valueAnswer = answer.map((item) => item.content).flat();
+    const correct_amount = valueResult.filter((value) =>
+      valueAnswer.some(
+        (item) => value.number === item.number && value.answer === item.answer
+      )
+    ).length;
+
+    dispatch(getCorrectAmount({ correct_amount }));
+  }, [data, answer, dispatch]);
 
   useEffect(() => {
     if (userAssignment) return;
@@ -68,7 +98,6 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     }
   }, [elapsedTime, userAssignment]);
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
     if (userAssignment) return;
 
@@ -86,7 +115,9 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
       {userAssignment ? (
         <span className="text-green-700 font-semibold text-center border py-3 border-gray-600 text-lg">
           Đúng:{" "}
-          {infoData.correct_amount + "/" + userAssignment.data.total_sentences}
+          {userAssignment.data.number_correct +
+            "/" +
+            userAssignment.data.total_sentences}
         </span>
       ) : (
         <ButtonOutPage

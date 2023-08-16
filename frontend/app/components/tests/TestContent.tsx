@@ -1,6 +1,6 @@
 "use client";
 
-import Questions from "@/app/components/tests/Questions";
+import QuestionLS from "@/app/components/tests/QuestionLS";
 import {
   Tab,
   TabPanel,
@@ -16,6 +16,7 @@ import SubmitTest from "./SubmitTest";
 import Answer from "./Answer";
 import Transcript from "./Transcript";
 import { useCallback, useState } from "react";
+import QuestionRW from "./QuestionRW";
 
 interface TestHeaderProp {
   data: Test;
@@ -81,11 +82,20 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                   >
                     <Topic data={part} />
                   </div>
-                  <Questions
-                    data={part}
-                    part={index}
-                    userAssignment={userAssignment}
-                  />
+                  {data.title.includes("listening") ||
+                  data.title.includes("speaking") ? (
+                    <QuestionLS
+                      data={part}
+                      part={index}
+                      userAssignment={userAssignment}
+                    />
+                  ) : (
+                    <QuestionRW
+                      data={part}
+                      part={index}
+                      userAssignment={userAssignment}
+                    />
+                  )}
                 </div>
               </div>
               {/* <div className="flex justify-end border-t pt-6"> */}

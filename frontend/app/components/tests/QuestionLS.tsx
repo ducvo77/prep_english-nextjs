@@ -5,21 +5,19 @@ import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Radio } from "@material-tailwind/react";
 import { useCallback, useEffect, useState } from "react";
 import ExplainAnswer from "./ExplainAnswer";
-import { getCorrectAmount } from "@/app/redux/features/infoTestSlice";
 
-interface QuestionsProps {
+interface QuestionLSProps {
   data: Question;
   part: number;
   userAssignment?: UserAssignment;
 }
 
-export default function Questions({
+export default function QuestionLS({
   data,
   part,
   userAssignment,
-}: QuestionsProps) {
+}: QuestionLSProps) {
   const [valueInput, setValueInput] = useState<{ [key: number]: string }>({});
-
   const [isRightAnswer, setIsRightAnswer] = useState<{
     [key: number]: boolean;
   }>({});
@@ -77,13 +75,11 @@ export default function Questions({
     const newArrayData = [...data.data];
 
     newArrayUserAssignment?.map((item) => {
-      let count = 0;
       const isCorrect = newArrayData.filter(
         (item2) => item2.number === item.number && item2.answer === item.answer
       )[0]?.answer;
 
       if (isCorrect) {
-        count++;
         setIsRightAnswer((prevState) => ({
           ...prevState,
           [item.number]: true,
@@ -94,9 +90,8 @@ export default function Questions({
           [item.number]: false,
         }));
       }
-      dispatch(getCorrectAmount({ correct_amount: count }));
     });
-  }, [userAssignment, data, dispatch]);
+  }, [userAssignment, data]);
 
   return (
     <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 lg:w-1/3 w-full h-full max-h-[750px]">

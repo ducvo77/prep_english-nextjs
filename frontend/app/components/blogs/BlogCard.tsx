@@ -8,8 +8,8 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface BlogCardProps {
   data: Blog;
@@ -22,10 +22,13 @@ export default function BlogCard({ data }: BlogCardProps) {
     <Card className="mt-6">
       <CardHeader color="blue-gray" className="relative h-auto">
         <Image
-          src="/images/blog-card.jpeg"
+          src={process.env.NEXT_PUBLIC_SOURCE_URL + data.imageURL[0].url}
+          unoptimized={true}
           width={500}
           height={500}
-          alt="Picture of the author"
+          priority
+          alt={data.title}
+          className="w-full"
         />
       </CardHeader>
       <CardBody>

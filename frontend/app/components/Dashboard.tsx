@@ -1,9 +1,11 @@
 "use client";
 
 import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import deleteTestHistory from "../lib/deleteTestHistory";
+import toast from "react-hot-toast";
 
 const TABLE_HEAD = [
   "STT",
@@ -20,6 +22,7 @@ interface DashboardProps {
 
 export default function Dashboard({ data }: DashboardProps) {
   const [active, setActive] = useState(1);
+  const router = useRouter();
 
   const getItemProps = (index: number) =>
     ({
@@ -28,7 +31,18 @@ export default function Dashboard({ data }: DashboardProps) {
       onClick: () => setActive(index),
       className: "rounded-full",
     } as any);
-
+  const handleDeleteTestHistory = useCallback(
+    async (id: number) => {
+      const res = await deleteTestHistory(id);
+      if (res?.status === 200) {
+        router.refresh();
+        toast.success("Xóa thành công!!");
+      } else {
+        toast.error("Xóa thất bại!!");
+      }
+    },
+    [router]
+  );
   const next = () => {
     if (active === Math.ceil(data.training_histories.length / 5)) return;
     setActive(active + 1);
@@ -65,6 +79,7 @@ export default function Dashboard({ data }: DashboardProps) {
             ))}
           </tr>
         </thead>
+
         <tbody>
           {sortData.map(
             (
@@ -121,13 +136,20 @@ export default function Dashboard({ data }: DashboardProps) {
                     </td>
                     <td className="p-4">
                       <Typography
-                        as={Link}
-                        href={`/tests/${testId}/results/${id}`}
                         variant="small"
                         color="blue"
-                        className="font-medium"
+                        className="font-medium flex gap-6"
                       >
-                        Xem lại
+                        <button
+                          onClick={() =>
+                            router.push(`/tests/${testId}/results/${id}`)
+                          }
+                        >
+                          Xem lại
+                        </button>
+                        <button onClick={() => handleDeleteTestHistory(id)}>
+                          Xóa
+                        </button>
                       </Typography>
                     </td>
                   </tr>
@@ -164,7 +186,10 @@ export default function Dashboard({ data }: DashboardProps) {
           color="blue-gray"
           className="sm:flex hidden items-center gap-2 rounded-full"
           onClick={next}
-          disabled={active === Math.ceil(data.training_histories.length / 5)}
+          disabled={
+            active === Math.ceil(data.training_histories.length / 5) ||
+            data.training_histories.length === 0
+          }
         >
           Trang sau
           <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />

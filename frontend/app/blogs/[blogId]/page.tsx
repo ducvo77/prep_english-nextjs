@@ -35,14 +35,15 @@ export default async function BlogPage({ params: { blogId } }: BlogPageProps) {
         {blog.data.introduction.content}
       </p>
       <Image
-        src={"/images/blog-card.jpeg"}
+        src={process.env.SOURCE_URL + blog.data.imageURL[0].url}
         width={10000}
         height={10000}
         alt="Banner Blog"
+        unoptimized
       />
 
       {blog.data.content.map((item, index) => (
-        <div key={item.sectionTitle}>
+        <div key={item.sectionTitle + index}>
           <h2 className="font-extrabold text-2xl my-6">
             {index + 1 + ". " + item.sectionTitle}
           </h2>

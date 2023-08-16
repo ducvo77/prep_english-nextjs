@@ -51,12 +51,13 @@ export default function ContainerAuthen() {
             <Button
               key={label}
               variant="outlined"
-              className="flex gap-3 font-normal normal-case text-sm border-gray-300 items-center "
+              className="flex gap-3 normal-case text-sm border-gray-300 items-center text-black font-medium"
               onClick={() => {
                 signIn(name);
               }}
             >
-              {<Icon size={20} />}
+              {<Icon size={24} />}
+              <div className="w-[1px] h-6 bg-gray-300"></div>
               <span className="text-ellipsis overflow-hidden whitespace-nowrap">
                 {label}
               </span>
@@ -65,7 +66,7 @@ export default function ContainerAuthen() {
         </div>
         <div className="flex gap-5 justify-between items-center">
           <div className="h-[2px] bg-gray-400 w-full"></div>
-          <span>or</span>
+          <span>Hoặc</span>
           <div className="h-[2px] bg-gray-400 w-full"></div>
         </div>
         <div className="flex flex-col gap-3">

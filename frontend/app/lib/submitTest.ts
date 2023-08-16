@@ -13,7 +13,7 @@ const submitTest = (
           title: infoData.title,
           label: infoData.label,
           time: infoData.time,
-          number_correct: 10,
+          number_correct: infoData.correct_amount,
           total_sentences: infoData.question_number,
           user_name: userId,
           data: answer,
