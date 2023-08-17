@@ -1,4 +1,7 @@
+import BlogDetail from "@/app/components/blogs/BlogDetail";
+import SideBarBlog from "@/app/components/blogs/SideBarBlog";
 import getBlog from "@/app/lib/getBlog";
+import getBlogList from "@/app/lib/getBlogList";
 import { Metadata } from "next";
 import Image from "next/image";
 
@@ -10,6 +13,10 @@ interface BlogPageProps {
 
 interface BlogDataType {
   data: Blog;
+}
+
+interface BlogListDataType {
+  data: Blog[];
 }
 
 export async function generateMetadata({
@@ -24,46 +31,13 @@ export async function generateMetadata({
 
 export default async function BlogPage({ params: { blogId } }: BlogPageProps) {
   const blogData: Promise<BlogDataType> = getBlog(blogId);
-  const blog = await blogData;
+  const blogListData: Promise<BlogListDataType> = getBlogList();
+  const [blog, blogList] = await Promise.all([blogData, blogListData]);
 
   return (
-    <div id="blog" className="py-4">
-      <h1 className="uppercase font-semibold text-center text-3xl mb-10">
-        {blog.data.title}
-      </h1>
-      <p className="italic text-justify mb-1">
-        {blog.data.introduction.content}
-      </p>
-      <Image
-        src={process.env.SOURCE_URL + blog.data.imageURL[0].url}
-        width={10000}
-        height={10000}
-        alt="Banner Blog"
-        unoptimized
-      />
-
-      {blog.data.content.map((item, index) => (
-        <div key={item.sectionTitle + index}>
-          <h2 className="font-extrabold text-2xl my-6">
-            {index + 1 + ". " + item.sectionTitle}
-          </h2>
-          <p
-            dangerouslySetInnerHTML={{ __html: item.content }}
-            className="text-justify"
-          />
-          {item.subsections.map((item, index2) => (
-            <div key={item.title}>
-              <h3 className="font-bold text-lg my-4">
-                {index + 1 + (index2 + 1) / 10 + ". " + item.title}
-              </h3>
-              <p
-                dangerouslySetInnerHTML={{ __html: item.content }}
-                className="text-justify"
-              />
-            </div>
-          ))}
-        </div>
-      ))}
+    <div className="relative py-4 ">
+      <SideBarBlog data={blogList.data} />
+      <BlogDetail data={blog.data} />
     </div>
   );
 }

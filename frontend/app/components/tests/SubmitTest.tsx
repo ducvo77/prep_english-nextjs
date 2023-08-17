@@ -54,23 +54,34 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     }
   };
 
-  useEffect(() => {
-    const valueResult = data.parts
-      .map((item) =>
-        item.data.map((item) => ({
-          number: Number(item.number),
-          answer: item.answer,
-        }))
-      )
-      .flat();
-    const valueAnswer = answer.map((item) => item.content).flat();
-    const correct_amount = valueResult.filter((value) =>
-      valueAnswer.some(
-        (item) => value.number === item.number && value.answer === item.answer
-      )
-    ).length;
+  console.log(data.title);
 
-    dispatch(getCorrectAmount({ correct_amount }));
+  useEffect(() => {
+    if (data.title.includes("speaking")) {
+      dispatch(getCorrectAmount({ correct_amount: 3 }));
+    }
+
+    if (data.title.includes("writing")) {
+      dispatch(getCorrectAmount({ correct_amount: 2 }));
+    } else {
+      const valueResult = data.parts
+        .map((item) =>
+          item.data.map((item) => ({
+            number: Number(item.number),
+            answer: item.answer,
+          }))
+        )
+        .flat();
+      const valueAnswer = answer.map((item) => item.content).flat();
+
+      const correct_amount = valueResult.filter((value) =>
+        valueAnswer.some(
+          (item) => value.number === item.number && value.answer === item.answer
+        )
+      ).length;
+
+      dispatch(getCorrectAmount({ correct_amount }));
+    }
   }, [data, answer, dispatch]);
 
   useEffect(() => {

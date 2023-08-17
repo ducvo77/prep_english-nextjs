@@ -1,6 +1,5 @@
 "use client";
 
-import QuestionLS from "@/app/components/tests/QuestionLS";
 import {
   Tab,
   TabPanel,
@@ -16,7 +15,7 @@ import SubmitTest from "./SubmitTest";
 import Answer from "./Answer";
 import Transcript from "./Transcript";
 import { useCallback, useState } from "react";
-import QuestionRW from "./QuestionRW";
+import Question from "./question/Question";
 
 interface TestHeaderProp {
   data: Test;
@@ -73,7 +72,11 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                   src={process.env.NEXT_PUBLIC_SOURCE_URL + part.audio[0].url}
                 />
               )}
-              {userAssignment && <Transcript data={part} />}
+              {userAssignment &&
+                (data.title.includes("reading") ||
+                  data.title.includes("listening")) && (
+                  <Transcript data={part} />
+                )}
               <div className="flex flex-col ">
                 <div className="flex lg:flex-row flex-col gap-5 max-h-[750px]">
                   <div
@@ -82,15 +85,12 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                   >
                     <Topic data={part} />
                   </div>
-                  {data.title.includes("listening") ||
-                  data.title.includes("speaking") ? (
-                    <QuestionLS
-                      data={part}
-                      part={index}
-                      userAssignment={userAssignment}
-                    />
-                  ) : (
-                    <QuestionRW
+                  {!data.title.includes("speaking") && (
+                    <Question
+                      isLR={
+                        data.title.includes("listening") ||
+                        data.title.includes("reading")
+                      }
                       data={part}
                       part={index}
                       userAssignment={userAssignment}

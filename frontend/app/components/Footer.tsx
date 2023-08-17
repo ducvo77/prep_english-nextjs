@@ -1,23 +1,45 @@
 "use client";
 
 import { Typography } from "@material-tailwind/react";
+import Image from "next/image";
 
 const SITEMAP = [
   {
-    title: "Company",
-    links: ["About Us", "Careers", "Our Team", "Projects"],
+    title: "Công ty",
+    links: [
+      {
+        label: (
+          <Image
+            width={192}
+            height={100}
+            src="/images/logo.png"
+            alt="Logo"
+            priority
+            sizes="(max-width: 500px) 100px"
+          />
+        ),
+        link: "/",
+      },
+    ],
   },
   {
-    title: "Help Center",
-    links: ["Discord", "Twitter", "GitHub", "Contact Us"],
+    title: "Bài tập",
+    links: [
+      { label: "Listening", link: "/#practice" },
+      { label: "Reading", link: "/#practice" },
+      { label: "Speaking", link: "/#practice" },
+      { label: "Writing", link: "/#practice" },
+    ],
   },
+
   {
-    title: "Resources",
-    links: ["Blog", "Newsletter", "Free Products", "Affiliate Program"],
-  },
-  {
-    title: "Products",
-    links: ["Templates", "UI Kits", "Icons", "Mockups"],
+    title: "Trang",
+    links: [
+      { label: "Trang chủ", link: "/#" },
+      { label: "Bài tập", link: "/#practice" },
+      { label: "ChatGPT", link: "/#chatgpt" },
+      { label: "Tài liệu tham khảo", link: "/#blogs" },
+    ],
   },
 ];
 
@@ -27,29 +49,29 @@ export default function Footer() {
   return (
     <footer className="relative w-full">
       <div className="mx-auto w-full max-w-7xl px-8">
-        <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-4 border-t">
+        <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3 border-t">
           {SITEMAP.map(({ title, links }, key) => (
             <div key={key} className="w-full sm:text-left text-center">
               <Typography
                 variant="small"
                 color="blue-gray"
-                className="mb-4 font-bold uppercase opacity-50"
+                className="mb-4 font-bold uppercase text-gray-900"
               >
                 {title}
               </Typography>
               <ul className="space-y-1">
-                {links.map((link, key) => (
+                {links.map(({ label, link }, index) => (
                   <Typography
-                    key={key}
+                    key={index}
                     as="li"
                     color="blue-gray"
                     className="font-normal"
                   >
                     <a
-                      href="#"
+                      href={link}
                       className="inline-block py-1 pr-2 transition-transform hover:scale-105"
                     >
-                      {link}
+                      {label}
                     </a>
                   </Typography>
                 ))}
