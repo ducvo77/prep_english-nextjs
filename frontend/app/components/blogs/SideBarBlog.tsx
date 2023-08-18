@@ -2,28 +2,34 @@
 
 import { Card, List, ListItem } from "@material-tailwind/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useParams } from "next/navigation";
 
 interface SideBarBlogProps {
   data: Blog[];
 }
 
 export default function SideBarBlog({ data }: SideBarBlogProps) {
-  const [active, setActive] = useState(true);
+  const params = useParams();
+
   return (
-    <div className="h-auto border w-[300px] fixed top-[100px]">
-      <Card className="w-full">
-        <h2 className="text-center text-lg font-semibold text-gray-900">
+    <div className="h-auto w-[300px] fixed top-[100px] max-h-[50vh] overflow-y-scroll shadow-md">
+      <Card className="w-full py-4">
+        <h2 className="text-center text-xl font-semibold text-red-700">
           Bài viết liên quan
         </h2>
         <List>
           {data.map((blog, index) => (
-            <Link
-              key={blog.id}
-              href={`/blogs/${blog.id}`}
-              className="text-light-blue-500"
-            >
-              <ListItem>{index + 1 + ". " + blog.title}</ListItem>
+            <Link key={blog.id} href={`/blogs/${blog.id}`} className="">
+              <ListItem
+                selected={blog.id === Number(params?.blogId)}
+                className={`text-gray-900 ${
+                  blog.id === Number(params?.blogId)
+                    ? "text-blue-900 bg-gray-100"
+                    : ""
+                }`}
+              >
+                {index + 1 + ". " + blog.title}
+              </ListItem>
             </Link>
           ))}
         </List>

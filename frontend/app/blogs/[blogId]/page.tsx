@@ -25,7 +25,7 @@ export async function generateMetadata({
   const blogData: Promise<BlogDataType> = getBlog(blogId);
   const blog = await blogData;
   return {
-    title: blog.data.title,
+    title: "Bài viết: " + blog.data.title,
   };
 }
 

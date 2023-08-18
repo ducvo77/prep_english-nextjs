@@ -4,7 +4,7 @@ import { enteredAnswer } from "@/app/redux/features/answerSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useCallback, useEffect, useState } from "react";
 import LR from "./LR";
-import WS from "./Writing";
+import WS from "./WS";
 
 interface QuestionProps {
   data: Question;
@@ -19,7 +19,18 @@ export default function Question({
   userAssignment,
   isLR,
 }: QuestionProps) {
-  const [valueInput, setValueInput] = useState<{ [key: number]: string }>({});
+  // Khởi tạo giá trị ban đầu cho valueinput
+  const initialValue: { [key: string]: string } = {};
+  const initialValueInput = data.data
+    .map((item) => item.number)
+    .reduce((acc, currentValue) => {
+      acc[currentValue] = "";
+      return acc;
+    }, initialValue);
+
+  const [valueInput, setValueInput] = useState<{ [key: number]: string }>(
+    initialValueInput
+  );
   const [isRightAnswer, setIsRightAnswer] = useState<{
     [key: number]: boolean;
   }>({});

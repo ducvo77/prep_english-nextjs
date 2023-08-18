@@ -54,8 +54,6 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     }
   };
 
-  console.log(data.title);
-
   useEffect(() => {
     if (data.title.includes("speaking")) {
       dispatch(getCorrectAmount({ correct_amount: 3 }));

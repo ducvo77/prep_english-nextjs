@@ -19,10 +19,14 @@ export default function BlogCard({ data }: BlogCardProps) {
   const router = useRouter();
 
   return (
-    <Card className="mt-6">
+    <Card id="blog-card" className="mt-6">
       <CardHeader color="blue-gray" className="relative h-auto">
         <Image
-          src={process.env.NEXT_PUBLIC_SOURCE_URL + data.imageURL[0].url}
+          src={
+            data.imageURL
+              ? process.env.NEXT_PUBLIC_SOURCE_URL + data.imageURL[0].url
+              : "/images/logo.png"
+          }
           unoptimized={true}
           width={500}
           height={500}
@@ -35,8 +39,10 @@ export default function BlogCard({ data }: BlogCardProps) {
         <Typography variant="h5" color="blue-gray" className="mb-2 text-base">
           {data.title}
         </Typography>
-        <Typography className="description-blog text-sm text-gray-900">
-          {data.introduction.content}
+        <Typography className="description-blog text-sm text-gray-900 text-justify font-normal">
+          <span
+            dangerouslySetInnerHTML={{ __html: data.introduction.content }}
+          />
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">

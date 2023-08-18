@@ -19,7 +19,7 @@ export async function generateMetadata({
   const testData: Promise<TestDataType> = getTest(testId);
   const test = await testData;
   return {
-    title: test.data.title,
+    title: "Bài kiểm tra: " + test.data.title,
   };
 }
 

@@ -1,7 +1,7 @@
 "use client";
-
 import { Button, Textarea } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
+import Recording from "../audio/Recording";
 
 interface WSProps {
   data: {
@@ -45,6 +45,7 @@ export default function WS({
         <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">
           {data.number}
         </strong>
+
         {!userAssignment && (
           <Button
             variant="outlined"
@@ -66,23 +67,34 @@ export default function WS({
         />
       )}
 
-      <Textarea
-        resize
-        label={userAssignment ? "Essay của bạn" : "Viết essay tại đây..."}
-        className="w-full h-auto min-h-[360px]"
-        value={valueInput[Number(data.number)]}
-        onChange={(e) =>
-          handleValueInput(e.target.value, Number(data.number), numberQuestion)
-        }
-        onBlur={() =>
-          handleChangeInput(
-            valueInput[Number(data.number)],
-            Number(data.number),
-            name
-          )
-        }
-      />
-      <span className="text-gray-900 text-base">Word count: {count || 0}</span>
+      {false && (
+        <Textarea
+          resize
+          label={userAssignment ? "Essay của bạn" : "Viết essay tại đây..."}
+          className="w-full h-auto min-h-[360px]"
+          value={valueInput[Number(data.number)]}
+          onChange={(e) =>
+            handleValueInput(
+              e.target.value,
+              Number(data.number),
+              numberQuestion
+            )
+          }
+          onBlur={() =>
+            handleChangeInput(
+              valueInput[Number(data.number)],
+              Number(data.number),
+              name
+            )
+          }
+        />
+      )}
+      <Recording />
+      {false && (
+        <span className="text-gray-900 text-base">
+          Word count: {count || 0}
+        </span>
+      )}
     </div>
   );
 }

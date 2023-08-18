@@ -131,20 +131,20 @@ type UserAssignment = {
 
 type Blog = {
   id: number;
-  author: string;
+  author?: string;
   title: string;
-  conclusion: {
+  conclusion?: {
     content: string;
   };
-  content: {
-    content: string;
+  content?: {
+    content?: string;
     sectionTitle: string;
-    subsections: {
+    subsections?: {
       title: string;
       content: string;
     }[];
   }[];
-  imageURL: {
+  imageURL?: {
     url: string;
   }[];
   introduction: {

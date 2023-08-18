@@ -33,6 +33,14 @@ const SITEMAP = [
   },
 
   {
+    title: "Liên hệ",
+    links: [
+      { label: "Email: congductp1@gmail.com", link: null },
+      { label: "Tel: 0375382487", link: null },
+      { label: "Đ/c: Tuy Phước, Bình Định", link: null },
+    ],
+  },
+  {
     title: "Trang",
     links: [
       { label: "Trang chủ", link: "/#" },
@@ -49,7 +57,7 @@ export default function Footer() {
   return (
     <footer className="relative w-full">
       <div className="mx-auto w-full max-w-7xl px-8">
-        <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3 border-t">
+        <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-4 border-t">
           {SITEMAP.map(({ title, links }, key) => (
             <div key={key} className="w-full sm:text-left text-center">
               <Typography
@@ -67,12 +75,18 @@ export default function Footer() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    <a
-                      href={link}
-                      className="inline-block py-1 pr-2 transition-transform hover:scale-105"
-                    >
-                      {label}
-                    </a>
+                    {link ? (
+                      <a
+                        href={link}
+                        className="inline-block py-1 pr-2 transition-transform hover:scale-105"
+                      >
+                        {label}
+                      </a>
+                    ) : (
+                      <span className="inline-block py-1 pr-2 transition-transform hover:scale-105">
+                        {label}
+                      </span>
+                    )}
                   </Typography>
                 ))}
               </ul>

@@ -68,3 +68,15 @@ body {
   list-style: disc;
   margin-left: 40px;
 }
+
+#blog p,
+blog li {
+  padding: 10px 0;
+}
+
+#blog-card h5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

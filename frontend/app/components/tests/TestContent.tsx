@@ -40,13 +40,16 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
         value={activeTab}
         className="border rounded-lg p-5 flex gap-4 flex-col flex-grow"
       >
-        <TabsHeader className="flex md:flex-row flex-col py-2 bg-white opacity xl:w-1/2 w-full border">
+        <TabsHeader
+          aria-selected={activeTab}
+          className="flex md:flex-row flex-col py-2 bg-white opacity xl:w-1/2 w-full border"
+        >
           {data.parts.map(({ name }) => (
             <Tab
               onClick={() => handleClickTab(name)}
               key={name}
               value={name}
-              className="text-sm capitalize font-semibold text-[#1A56DB] test "
+              className="text-sm capitalize font-semibold text-[#1A56DB] test"
             >
               {name}
             </Tab>
@@ -85,7 +88,7 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                   >
                     <Topic data={part} />
                   </div>
-                  {!data.title.includes("speaking") && (
+                  {
                     <Question
                       isLR={
                         data.title.includes("listening") ||
@@ -95,18 +98,18 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                       part={index}
                       userAssignment={userAssignment}
                     />
-                  )}
+                  }
                 </div>
               </div>
-              {/* <div className="flex justify-end border-t pt-6"> */}
-              {/* <button
+              {/* <div className="flex justify-end border-t pt-6">
+                <button
                   onClick={() => setActiveTab(data.parts[0].name)}
                   className="uppercase font-medium text-blue-900 flex gap-1 items-center"
                 >
                   <span>Tiếp theo</span>
                   <IoIosArrowForward size={20} />
-                </button> */}
-              {/* </div> */}
+                </button>
+              </div> */}
             </TabPanel>
           ))}
         </TabsBody>
