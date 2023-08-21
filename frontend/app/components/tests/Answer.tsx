@@ -24,7 +24,7 @@ export default function Answer({ data }: AnswerProps) {
                   answerValue.find((item) =>
                     item.content.find((item) => item.number === Number(number))
                   )
-                    ? "bg-blue-800 text-white"
+                    ? "bg-primary border-primary text-white"
                     : ""
                 } border border-gray-800 w-6 h-6 rounded-sm flex items-center justify-center cursor-pointer`}
               >

@@ -2,22 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.primary-color {
-  color: #ffeb3b;
-}
-
-.primary-bg {
-  background-color: #ffeb3b;
-}
-
-.second-color {
-  color: #1a56db;
-}
-
-.second-bg {
-  background-color: #1a56db;
-}
-
 /* Tab Group */
 
 .MuiTabs-flexContainer.css-heg063-MuiTabs-flexContainer {

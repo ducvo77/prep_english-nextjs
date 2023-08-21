@@ -33,7 +33,7 @@ export default function Transcript({ data }: TranscriptProps) {
       >
         <AccordionHeader
           onClick={handleOpen}
-          className="text-base font-normal text-blue-700 hover:text-blue-700"
+          className="text-base font-normal text-primary hover:text-primary"
         >
           {open ? "Ẩn Transcript" : "Hiện Transcript"}
         </AccordionHeader>

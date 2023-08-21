@@ -1,12 +1,12 @@
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Header from "./components/header";
-import Container from "./components/Container";
-import Footer from "./components/Footer";
-import BackToTop from "./components/BackToTop";
-import { Providers } from "./redux/provider";
-import { NextAuthProvider } from "./components/NextAuthProvider";
+import Header from "../components/header";
+import Container from "../components/Container";
+import Footer from "../components/Footer";
+import BackToTop from "../components/BackToTop";
+import { Providers } from "../redux/provider";
+import { NextAuthProvider } from "../components/NextAuthProvider";
 import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -29,7 +29,7 @@ export default function ExplainAnswer({ explain }: { explain: string }) {
       >
         <AccordionHeader
           onClick={handleOpen}
-          className="text-sm font-normal text-blue-700 hover:text-blue-700 border-none p-0 justify-start"
+          className="text-sm font-normal text-primary hover:text-primary border-none p-0 justify-start"
         >
           Trích đoạn chứa đáp án
         </AccordionHeader>

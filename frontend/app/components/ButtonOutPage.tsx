@@ -11,8 +11,8 @@ interface ButtonOutPageProps {
   title: string;
   subTitle: string;
   children: React.ReactElement;
-  variant: "outlined";
-  className: string;
+  variant?: "outlined";
+  className?: string;
   onClick: () => void;
 }
 

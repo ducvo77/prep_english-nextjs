@@ -3,7 +3,7 @@ import axios from "axios";
 const submitTest = (
   infoData: InfoTestStates,
   userId: number,
-  answer: AnswerState
+  answer: AnswerState[]
 ) => {
   return axios
     .post(

@@ -32,7 +32,7 @@ export default function BlogCard({ data }: BlogCardProps) {
           height={500}
           priority
           alt={data.title}
-          className="w-full"
+          className="w-full h-[164px]"
         />
       </CardHeader>
       <CardBody>
@@ -46,7 +46,10 @@ export default function BlogCard({ data }: BlogCardProps) {
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button onClick={() => router.push(`/blogs/${data.id}`)}>
+        <Button
+          onClick={() => router.push(`/blogs/${data.id}`)}
+          className="bg-primary"
+        >
           Đọc thêm
         </Button>
       </CardFooter>

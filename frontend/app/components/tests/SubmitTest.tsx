@@ -16,14 +16,14 @@ interface SubmitTestProps {
 }
 
 export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
-  const answer: AnswerState[] = useAppSelector((state) => state.answerReducer);
+  // const answer: AnswerState[] = useAppSelector((state) => state.answerReducer);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const infoData: InfoTestStates = useAppSelector(
     (state) => state.infoTestReducer
   );
-  const answerData: AnswerState = useAppSelector(
+  const answerData: AnswerState[] = useAppSelector(
     (state) => state.answerReducer
   );
   const { data: session }: any = useSession();
@@ -54,13 +54,13 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     }
   };
 
-  useEffect(() => {
-    if (data.title.includes("speaking")) {
-      dispatch(getCorrectAmount({ correct_amount: 3 }));
-    }
+  // console.log(answerData);
 
-    if (data.title.includes("writing")) {
-      dispatch(getCorrectAmount({ correct_amount: 2 }));
+  useEffect(() => {
+    const contentLength = answerData.map((item) => item.content).length;
+
+    if (data.title.includes("writing") || data.title.includes("speaking")) {
+      dispatch(getCorrectAmount({ correct_amount: contentLength }));
     } else {
       const valueResult = data.parts
         .map((item) =>
@@ -70,7 +70,7 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
           }))
         )
         .flat();
-      const valueAnswer = answer.map((item) => item.content).flat();
+      const valueAnswer = answerData.map((item) => item.content).flat();
 
       const correct_amount = valueResult.filter((value) =>
         valueAnswer.some(
@@ -80,7 +80,7 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
 
       dispatch(getCorrectAmount({ correct_amount }));
     }
-  }, [data, answer, dispatch]);
+  }, [data, dispatch, answerData]);
 
   useEffect(() => {
     if (userAssignment) return;
@@ -133,7 +133,7 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
           title="Bạn muốn nộp bài?"
           subTitle="Kết quả của bạn sẽ được lưu"
           variant="outlined"
-          className="md:text-lg text-sm hover:opacity-100 hover:bg-blue-800 hover:text-white"
+          className="md:text-lg text-sm  hover:bg-primary text-primary hover:opacity-100 hover:text-white"
           onClick={handleSubmitTest}
         >
           <span>Nộp bài</span>

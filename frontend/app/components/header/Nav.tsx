@@ -40,7 +40,7 @@ export default function Nav({ show }: { show: boolean }) {
             (session ? index !== 4 : index !== 5) && (
               <li
                 key={`item ${index}`}
-                className={`hover:text-[#1A56DB] font-semibold white flex ${
+                className={`hover:text-primary font-semibold white flex ${
                   index === MENU_LIST.length - 1 ||
                   index === MENU_LIST.length - 2
                     ? "lg:hidden block"

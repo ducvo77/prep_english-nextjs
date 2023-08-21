@@ -34,9 +34,9 @@ export default function LR({
 }: LRPRops) {
   return (
     <li className="flex gap-2">
-      <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">
-        {data.number}
-      </strong>
+      <div className="min-w-[32px] h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center cursor-pointer">
+        <strong>{data.number}</strong>
+      </div>
       <div className="flex flex-col w-full gap-2">
         {data.question.length > 1 ? (
           <div className="flex flex-col text-gray-900 font-normal text-sm">

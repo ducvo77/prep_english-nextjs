@@ -34,7 +34,7 @@
     },
     "introduction": {
       "type": "json",
-      "required": true
+      "required": false
     },
     "conclusion": {
       "type": "json"

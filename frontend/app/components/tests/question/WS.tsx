@@ -1,7 +1,7 @@
 "use client";
-import { Button, Textarea } from "@material-tailwind/react";
+import { Button, Collapse, Textarea } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import Recording from "../audio/Recording";
+import Recording from "../Recording";
 
 interface WSProps {
   data: {
@@ -15,6 +15,7 @@ interface WSProps {
   valueInput: { [key: number]: string };
   name: string;
   numberQuestion: number;
+  isSpeaking: boolean;
   handleValueInput: (value: string, number: number, index: number) => void;
   handleChangeInput: (value: string, number: number, name: string) => void;
 }
@@ -25,6 +26,7 @@ export default function WS({
   valueInput,
   name,
   numberQuestion,
+  isSpeaking,
   handleValueInput,
   handleChangeInput,
 }: WSProps) {
@@ -49,7 +51,7 @@ export default function WS({
         {!userAssignment && (
           <Button
             variant="outlined"
-            className="text-[#1A56DB] border-[#1A56DB] capitalize w-[200px]"
+            className="text-primary border-prtext-primary capitalize w-[200px]"
             onClick={() => setShow(!show)}
           >
             Thêm ghi chú / dàn ý
@@ -67,7 +69,7 @@ export default function WS({
         />
       )}
 
-      {false && (
+      {!isSpeaking && (
         <Textarea
           resize
           label={userAssignment ? "Essay của bạn" : "Viết essay tại đây..."}
@@ -89,8 +91,14 @@ export default function WS({
           }
         />
       )}
-      <Recording />
-      {false && (
+      {isSpeaking && (
+        <Recording
+          userAssignment={userAssignment}
+          name={name}
+          number={Number(data.number)}
+        />
+      )}
+      {!isSpeaking && (
         <span className="text-gray-900 text-base">
           Word count: {count || 0}
         </span>

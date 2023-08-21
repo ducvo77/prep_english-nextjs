@@ -11,6 +11,7 @@ interface QuestionProps {
   part: number;
   userAssignment?: UserAssignment;
   isLR: boolean;
+  isSpeaking: boolean;
 }
 
 export default function Question({
@@ -18,6 +19,7 @@ export default function Question({
   part,
   userAssignment,
   isLR,
+  isSpeaking,
 }: QuestionProps) {
   // Khởi tạo giá trị ban đầu cho valueinput
   const initialValue: { [key: string]: string } = {};
@@ -230,6 +232,7 @@ export default function Question({
           />
         ) : (
           <WS
+            isSpeaking={isSpeaking}
             key={number}
             data={{ number, answer, explain, question, index }}
             userAssignment={userAssignment}
@@ -247,7 +250,7 @@ export default function Question({
           //     {!userAssignment && (
           //       <Button
           //         variant="outlined"
-          //         className="text-[#1A56DB] border-[#1A56DB] capitalize w-[200px]"
+          //         className="text-primary border-pritext-primary capitalize w-[200px]"
           //         onClick={() => setShow(!show)}
           //       >
           //         Thêm ghi chú / dàn ý

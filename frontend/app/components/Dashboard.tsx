@@ -6,6 +6,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import deleteTestHistory from "../lib/deleteTestHistory";
 import toast from "react-hot-toast";
+import ButtonOutPage from "./ButtonOutPage";
 
 const TABLE_HEAD = [
   "STT",
@@ -57,7 +58,7 @@ export default function Dashboard({ data }: DashboardProps) {
   const sortData = data.training_histories.sort((a, b) => b.id - a.id);
 
   return (
-    <Card className="h-full w-full min-h-[400px] overflow-x-scroll">
+    <Card className="h-full w-full min-h-[500px] overflow-x-scroll">
       <table className="w-full min-w-max table-auto text-center">
         <thead>
           <tr>
@@ -131,25 +132,31 @@ export default function Dashboard({ data }: DashboardProps) {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {(number_correct / total_sentences) * 100 + "%"}
+                        {((number_correct / total_sentences) * 100).toFixed(0) +
+                          "%"}
                       </Typography>
                     </td>
                     <td className="p-4">
                       <Typography
                         variant="small"
-                        color="blue"
-                        className="font-medium flex gap-6"
+                        className="font-medium flex gap-6 text-primary"
                       >
-                        <button
+                        <Button
                           onClick={() =>
                             router.push(`/tests/${testId}/results/${id}`)
                           }
+                          className="py-3 px-5"
                         >
                           Xem lại
-                        </button>
-                        <button onClick={() => handleDeleteTestHistory(id)}>
-                          Xóa
-                        </button>
+                        </Button>
+                        <ButtonOutPage
+                          title="Bạn chắc chắn muốn xóa?"
+                          subTitle="Lịch sử sẽ không được khôi phục?"
+                          onClick={() => handleDeleteTestHistory(id)}
+                          className="bg-red-600 py-3 px-5"
+                        >
+                          <span>Xóa</span>
+                        </ButtonOutPage>
                       </Typography>
                     </td>
                   </tr>
@@ -175,6 +182,11 @@ export default function Dashboard({ data }: DashboardProps) {
                 <IconButton
                   key={id}
                   {...getItemProps(Math.ceil((index + 1) / 5))}
+                  className={`rounded-full text-sm text-white ${
+                    active === Math.ceil((index + 1) / 5)
+                      ? "bg-primary hover:bg-primary "
+                      : "bg-second hover:bg-primary"
+                  }`}
                 >
                   {Math.ceil((index + 1) / 5)}
                 </IconButton>

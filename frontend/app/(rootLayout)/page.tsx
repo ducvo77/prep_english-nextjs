@@ -1,13 +1,13 @@
-import Section from "./components/Section";
-import PromptChatgpt from "./components/PromptChatgpt";
-import TestList from "./components/tests/TestList";
-import BlogList from "./components/blogs/BlogList";
-import Dashboard from "./components/Dashboard";
-import getTestKits from "./lib/getTestKits";
-import getTestHistory from "./lib/getTestHistory";
+import Section from "../components/Section";
+import PromptChatgpt from "../components/promptChatgpt";
+import TestList from "../components/tests/TestList";
+import BlogList from "../components/blogs/BlogList";
+import Dashboard from "../components/Dashboard";
+import getTestKits from "../lib/getTestKits";
+import getTestHistory from "../lib/getTestHistory";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import getBlogList from "./lib/getBlogList";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import getBlogList from "../lib/getBlogList";
 
 interface BlogListDataType {
   data: Blog[];

@@ -49,7 +49,7 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
               onClick={() => handleClickTab(name)}
               key={name}
               value={name}
-              className="text-sm capitalize font-semibold text-[#1A56DB] test"
+              className="text-sm capitalize font-semibold text-primary test"
             >
               {name}
             </Tab>
@@ -94,6 +94,7 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                         data.title.includes("listening") ||
                         data.title.includes("reading")
                       }
+                      isSpeaking={data.title.includes("speaking")}
                       data={part}
                       part={index}
                       userAssignment={userAssignment}
@@ -104,7 +105,7 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
               {/* <div className="flex justify-end border-t pt-6">
                 <button
                   onClick={() => setActiveTab(data.parts[0].name)}
-                  className="uppercase font-medium text-blue-900 flex gap-1 items-center"
+                  className="uppercase font-medium text-primary flex gap-1 items-center"
                 >
                   <span>Tiếp theo</span>
                   <IoIosArrowForward size={20} />

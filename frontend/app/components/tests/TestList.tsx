@@ -49,7 +49,7 @@ export default function TestList({ data }: TestKit) {
                   {hastags.map((hastag, index) => (
                     <span
                       key={index}
-                      className="text-[0.75rem] text-[#1A56DB] cursor-pointer uppercase"
+                      className="text-[0.75rem] text-link cursor-pointer uppercase"
                     >
                       {hastag}
                     </span>
@@ -60,7 +60,7 @@ export default function TestList({ data }: TestKit) {
                     handleClickTest(id, title, label, question_number)
                   }
                   variant="outlined"
-                  className="font-semibold second-color border-[#1A56DB] hover:bg-[#1A56DB] hover:text-white py-2"
+                  className="font-semibold border-primary hover:bg-primary py-2 hover:text-white text-primary hover:opacity-100"
                   title="Bạn muốn làm bài kiểm tra?"
                   subTitle={`Bài kiểm tra: ${title}`}
                 >

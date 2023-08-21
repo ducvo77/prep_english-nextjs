@@ -24,7 +24,7 @@ export default function SideBarBlog({ data }: SideBarBlogProps) {
                 selected={blog.id === Number(params?.blogId)}
                 className={`text-gray-900 ${
                   blog.id === Number(params?.blogId)
-                    ? "text-blue-900 bg-gray-100"
+                    ? "text-primary bg-gray-100"
                     : ""
                 }`}
               >
