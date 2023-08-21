@@ -1,10 +1,9 @@
 "use client";
 
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { clearInfoTest } from "../redux/features/infoTestSlice";
 import { clearAnswer } from "../redux/features/answerSlice";
-import { useSession } from "next-auth/react";
 import { useAppDispatch } from "../redux/hook";
 
 interface ContainerProps {
@@ -14,7 +13,6 @@ interface ContainerProps {
 export default function Container({ children }: ContainerProps) {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
-  const { data: session } = useSession();
 
   useEffect(() => {
     if (!pathname?.startsWith("/tests") || pathname.includes("results")) {
@@ -26,15 +24,6 @@ export default function Container({ children }: ContainerProps) {
   const isActive = useMemo(() => {
     return pathname?.startsWith("/tests");
   }, [pathname]);
-
-  useEffect(() => {
-    if (
-      session?.user?.email &&
-      (pathname === "/login" || pathname === "/register")
-    ) {
-      redirect("/");
-    }
-  }, [session, pathname]);
 
   return (
     <main
