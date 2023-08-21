@@ -1,5 +1,5 @@
 import Section from "../components/Section";
-import PromptChatgpt from "../components/promptChatgpt";
+import PromptChatgpt from "../components/PromptChatgpt";
 import TestList from "../components/tests/TestList";
 import BlogList from "../components/blogs/BlogList";
 import Dashboard from "../components/Dashboard";
