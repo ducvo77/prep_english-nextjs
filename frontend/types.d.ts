@@ -25,7 +25,7 @@ type Test = {
   }[];
 };
 
-type TestKit = {
+type TestList = {
   data: {
     id: number;
     label: string;

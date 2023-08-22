@@ -16,6 +16,7 @@
 html,
 body {
   scroll-behavior: smooth; /* Tạo hiệu ứng cuộn mượt */
+  /* box-sizing: border-box; */
 }
 
 #topic p,

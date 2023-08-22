@@ -3,39 +3,57 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegment } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { AiOutlineHome, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineFileAdd, AiOutlineHome, AiOutlineMenu } from "react-icons/ai";
 import { BsPostcardHeart } from "react-icons/bs";
+import { CiLogout } from "react-icons/ci";
 import { GoWorkflow } from "react-icons/go";
+import { MdPostAdd } from "react-icons/md";
 
 const menu_list = [
   {
     label: "Dashboard",
     Icon: AiOutlineHome,
-    slug: "",
+    href: "/admin",
   },
   {
-    label: "Khóa học",
+    label: "Đề thi",
     Icon: GoWorkflow,
-    slug: "courses",
+    href: "/admin/tests",
   },
   {
     label: "Bài viết",
     Icon: BsPostcardHeart,
-    slug: "blogs",
+    href: "/admin/blogs",
+  },
+
+  {
+    label: "Thêm đề thi",
+    Icon: AiOutlineFileAdd,
+    href: "/admin/addtest",
+  },
+
+  {
+    label: "Thêm Bài viết",
+    Icon: MdPostAdd,
+    href: "/admin/addblog",
+  },
+  {
+    label: "Thoát",
+    Icon: CiLogout,
+    href: "/",
   },
 ];
 
 export default function SideBar() {
-  const segment = useSelectedLayoutSegment();
+  const pathname = usePathname();
 
   return (
-    <div className="border w-[300px] p-10 flex flex-col gap-6">
+    <div className="w-[260px] p-10 flex flex-col gap-6 relative overflow-y-scroll bg-[#1F2A40]">
       <div className="flex justify-between items-center">
         <Link href={"/admin"}>
-          <h1 className="text-2xl">ADMIN</h1>
+          <h1 className="text-2xl uppercase">prep english</h1>
         </Link>
-        <button className="flex justify-center items-center w-10 h-10 hover:bg-[#303B4E] cursor-pointer rounded-full transition-all">
+        <button className="flex justify-center items-center w-10 min-w-[40px] h-10 hover:bg-[#303B4E] cursor-pointer rounded-full transition-all">
           <AiOutlineMenu />
         </button>
       </div>
@@ -54,15 +72,15 @@ export default function SideBar() {
       </div>
 
       <ul>
-        {menu_list.map(({ label, Icon, slug }) => (
+        {menu_list.map(({ label, Icon, href }) => (
           <Link
-            href={"/admin/" + slug}
+            href={href}
             key={label}
-            className={`flex gap-3 items-center py-2 text-sm ${
-              slug === (segment || "") ? "text-[#6770FA]" : ""
+            className={`flex gap-3 items-center py-3 text-sm hover:text-[#6770FA] ${
+              href === pathname ? "text-[#6770FA]" : ""
             }`}
           >
-            <Icon />
+            <Icon size={15} />
             <span>{label}</span>
           </Link>
         ))}

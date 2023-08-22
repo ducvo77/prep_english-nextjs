@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import deleteTestHistory from "../lib/deleteTestHistory";
 import toast from "react-hot-toast";
 import ButtonOutPage from "./ButtonOutPage";
+import { useSession } from "next-auth/react";
 
 const TABLE_HEAD = [
   "STT",
@@ -24,6 +25,7 @@ interface DashboardProps {
 export default function Dashboard({ data }: DashboardProps) {
   const [active, setActive] = useState(1);
   const router = useRouter();
+  const { data: session }: any = useSession();
 
   const getItemProps = (index: number) =>
     ({
@@ -34,7 +36,7 @@ export default function Dashboard({ data }: DashboardProps) {
     } as any);
   const handleDeleteTestHistory = useCallback(
     async (id: number) => {
-      const res = await deleteTestHistory(id);
+      const res = await deleteTestHistory(id, session.user.jwt);
       if (res?.status === 200) {
         router.refresh();
         toast.success("Xóa thành công!!");
@@ -42,7 +44,7 @@ export default function Dashboard({ data }: DashboardProps) {
         toast.error("Xóa thất bại!!");
       }
     },
-    [router]
+    [router, session]
   );
   const next = () => {
     if (active === Math.ceil(data.training_histories.length / 5)) return;

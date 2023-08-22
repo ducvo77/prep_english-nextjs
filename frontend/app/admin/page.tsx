@@ -1,13 +1,15 @@
+import { Metadata } from "next";
+import Chart from "../components/admin/Chart";
+
 // https://github.com/jyotiv2023/admindash?ref=reactjsexample.com
-
-import Main from "../components/admin/Main";
-
-const Admin = () => {
-  return (
-    <>
-      <Main />
-    </>
-  );
+export const metadata: Metadata = {
+  title: "Admin - Dashboard",
 };
 
-export default Admin;
+export default async function Page() {
+  return (
+    <div>
+      <Chart />
+    </div>
+  );
+}

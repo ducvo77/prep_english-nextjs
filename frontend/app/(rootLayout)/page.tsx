@@ -3,27 +3,27 @@ import PromptChatgpt from "../components/PromptChatgpt";
 import TestList from "../components/tests/TestList";
 import BlogList from "../components/blogs/BlogList";
 import Dashboard from "../components/Dashboard";
-import getTestKits from "../lib/getTestKits";
+import getTestList from "../lib/getTestList";
 import getTestHistory from "../lib/getTestHistory";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import getBlogList from "../lib/getBlogList";
 
 interface BlogListDataType {
-  data: Blog[];
+  data: [];
 }
 
 export default async function Page() {
   const session: any = await getServerSession(authOptions);
 
-  const testKitsData: Promise<TestKit> = getTestKits();
+  const testListData: Promise<TestList> = getTestList();
   const testHistoryData: Promise<TestHistory> | null = session
     ? getTestHistory(session?.user?.id || Number(session?.user?.sub))
     : null;
   const blogListData: Promise<BlogListDataType> = getBlogList();
 
-  const [testKits, testHistory, blogList] = await Promise.all([
-    testKitsData,
+  const [testList, testHistory, blogList] = await Promise.all([
+    testListData,
     testHistoryData,
     blogListData,
   ]);
@@ -36,7 +36,7 @@ export default async function Page() {
         </Section>
       )}
       <Section id="practice" label="Bài tập mới nhất">
-        <TestList data={testKits.data} />
+        <TestList data={testList.data} />
       </Section>
       <Section id="chatgpt" label="Luyện English cùng ChatGPT">
         <PromptChatgpt />

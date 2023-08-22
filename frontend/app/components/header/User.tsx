@@ -58,13 +58,13 @@ export default function User() {
           </MenuItem>
         ) : (
           <MenuItem className="p-0">
-            <button
+            {/* <button
               onClick={() => router.push("/admin")}
               className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
             >
               <SiAdminer size={20} />
               <span>Admin</span>
-            </button>
+            </button> */}
             <button
               onClick={() => signOut()}
               className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"

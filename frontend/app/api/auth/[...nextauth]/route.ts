@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
@@ -33,13 +34,12 @@ export const authOptions: NextAuthOptions = {
                 return response.data;
               })
               .catch((error) => {
-                console.log(error.response);
                 throw new Error(error.response.data.message);
               })) || null;
 
           return { jwt, ...user };
         } catch (error) {
-          console.warn(error);
+          return null;
         }
       },
     }),
@@ -48,13 +48,15 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async session({ user, session, token }: any) {
+    session: async ({ session, token }: any) => {
       session.user = token as any;
       session.user.id = token ? token.id : null;
       return Promise.resolve(session);
     },
 
-    async jwt({ token, user, account }: any) {
+    jwt: async ({ token, user, account }: any) => {
+      // console.log(user);
+
       const isSignIn = user ? true : false;
       if (isSignIn && account) {
         try {
@@ -74,6 +76,9 @@ export const authOptions: NextAuthOptions = {
   },
 
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login",
+  },
 };
 
 const handler = NextAuth(authOptions);
