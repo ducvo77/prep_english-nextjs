@@ -1,5 +1,9 @@
-"use client";
+import { Metadata } from "next";
 
-export default function page() {
+export const metadata: Metadata = {
+  title: "Admin - Add Test",
+};
+
+export default function Page() {
   return <div>Thêm đề thi</div>;
 }

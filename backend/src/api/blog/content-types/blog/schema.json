@@ -31,13 +31,6 @@
     "author": {
       "type": "string",
       "required": true
-    },
-    "introduction": {
-      "type": "json",
-      "required": false
-    },
-    "conclusion": {
-      "type": "json"
     }
   }
 }

@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useSelectedLayoutSegment } from "next/navigation";
-import { AiOutlineFileAdd, AiOutlineHome, AiOutlineMenu } from "react-icons/ai";
+import { usePathname } from "next/navigation";
+import { AiOutlineFileAdd, AiOutlineMenu } from "react-icons/ai";
 import { BsPostcardHeart } from "react-icons/bs";
+import { RxDashboard } from "react-icons/rx";
 import { CiLogout } from "react-icons/ci";
 import { GoWorkflow } from "react-icons/go";
 import { MdPostAdd } from "react-icons/md";
@@ -12,33 +13,33 @@ import { MdPostAdd } from "react-icons/md";
 const menu_list = [
   {
     label: "Dashboard",
-    Icon: AiOutlineHome,
+    Icon: RxDashboard,
     href: "/admin",
   },
   {
-    label: "Đề thi",
+    label: "Tests",
     Icon: GoWorkflow,
     href: "/admin/tests",
   },
   {
-    label: "Bài viết",
+    label: "BLogs",
     Icon: BsPostcardHeart,
     href: "/admin/blogs",
   },
 
   {
-    label: "Thêm đề thi",
+    label: "Add Test",
     Icon: AiOutlineFileAdd,
     href: "/admin/addtest",
   },
 
   {
-    label: "Thêm Bài viết",
+    label: "Add Blog",
     Icon: MdPostAdd,
     href: "/admin/addblog",
   },
   {
-    label: "Thoát",
+    label: "Log Out",
     Icon: CiLogout,
     href: "/",
   },
@@ -48,7 +49,7 @@ export default function SideBar() {
   const pathname = usePathname();
 
   return (
-    <div className="w-[260px] p-10 flex flex-col gap-6 relative overflow-y-scroll bg-[#1F2A40]">
+    <div className="w-[260px] p-10 flex flex-shrink-0 flex-col gap-6 relative overflow-y-scroll bg-[#1F2A40]">
       <div className="flex justify-between items-center">
         <Link href={"/admin"}>
           <h1 className="text-2xl uppercase">prep english</h1>

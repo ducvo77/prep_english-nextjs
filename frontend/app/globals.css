@@ -65,3 +65,11 @@ blog li {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Css cho quill */
+
+.ql-container.ql-snow,
+.ql-editor.ql-blank {
+  height: 500px;
+  overflow-y: scroll;
+}

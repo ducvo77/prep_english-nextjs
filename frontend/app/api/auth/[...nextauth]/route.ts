@@ -55,8 +55,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     jwt: async ({ token, user, account }: any) => {
-      // console.log(user);
-
       const isSignIn = user ? true : false;
       if (isSignIn && account) {
         try {

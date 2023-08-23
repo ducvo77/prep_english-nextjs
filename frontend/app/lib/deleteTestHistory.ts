@@ -1,18 +1,17 @@
-import axios from "axios";
-
-export default async function deleteTestHistory(id: number, token: string) {
+export default async function deleteTestHistory(id: number, jwt: string) {
   try {
-    const res = await axios.delete(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/training-histories/${id}`,
       {
+        method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${jwt}`,
         },
       }
     );
+
     return res;
-  } catch (error) {
-    console.error("Error deleting test history:", error);
+  } catch (err) {
     return null;
   }
 }

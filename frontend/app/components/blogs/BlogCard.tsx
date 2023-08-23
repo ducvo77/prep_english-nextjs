@@ -40,9 +40,7 @@ export default function BlogCard({ data }: BlogCardProps) {
           {data.title}
         </Typography>
         <Typography className="description-blog text-sm text-gray-900 text-justify font-normal">
-          <span
-            dangerouslySetInnerHTML={{ __html: data.introduction.content }}
-          />
+          <span dangerouslySetInnerHTML={{ __html: data.content }} />
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">

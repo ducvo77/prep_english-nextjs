@@ -54,8 +54,6 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     }
   };
 
-  // console.log(answerData);
-
   useEffect(() => {
     const contentLength = answerData.map((item) => item.content).length;
 

@@ -1,11 +1,16 @@
 import BlogList from "@/app/components/admin/BlogList";
 import getBlogList from "@/app/lib/getBlogList";
+import { Metadata } from "next";
 
 interface BlogListData {
   data: Blog[];
 }
 
-export default async function Page() {
+export const metadata: Metadata = {
+  title: "Admin - Blogs",
+};
+
+export default async function Blogs() {
   const blogListData: Promise<BlogListData> = getBlogList();
   const blogList = await blogListData;
 

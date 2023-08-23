@@ -6,9 +6,9 @@ import { redirect, usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import register from "@/app/lib/auth/register";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const LOGIN_SOCIAL: { name: string; label: string; Icon: IconType }[] = [
@@ -23,7 +23,6 @@ export default function ContainerAuthen() {
   const [isFailure, setIsFailure] = useState(false);
   const pathname = usePathname();
   const isLoginPage = useMemo(() => pathname === "/login", [pathname]);
-  const { data: session } = useSession();
 
   const router = useRouter();
 
@@ -39,11 +38,6 @@ export default function ContainerAuthen() {
       setIsFailure(true);
     }
   };
-  useEffect(() => {
-    if (session && (pathname === "/login" || pathname === "/register")) {
-      redirect("/");
-    }
-  }, [session, pathname]);
 
   return (
     <div className="flex justify-center items-center h-[90vh">

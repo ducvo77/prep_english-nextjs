@@ -82,13 +82,28 @@ type TestHistory = {
 };
 
 type User = {
-  blocked: boolean;
-  confirmed: boolean;
-  email: string;
+  user: {
+    name: string;
+    email: string;
+    picture: string;
+    sub: string;
+    jwt: string;
+    id: number;
+    iat: number;
+    exp: number;
+    jti: string;
+  };
+};
+
+type CurrentUser = {
   id: number;
-  picture: string | null;
-  provider: "local" | "google" | "facebook" | "github";
   username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  picture: null | string;
+  role: { id: number; name: string; description: string; type: string };
 };
 
 type AnswerState = {
@@ -133,21 +148,8 @@ type Blog = {
   id: number;
   author?: string;
   title: string;
-  conclusion?: {
-    content: string;
-  };
-  content?: {
-    content?: string;
-    sectionTitle: string;
-    subsections?: {
-      title: string;
-      content: string;
-    }[];
-  }[];
+  content: "";
   imageURL?: {
     url: string;
   }[];
-  introduction: {
-    content: string;
-  };
 };
