@@ -1,3 +1,4 @@
+import ContainerContent from "@/app/components/admin/ContainerContent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,5 +6,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <div>Thêm đề thi</div>;
+  return (
+    <ContainerContent label="Add test">
+      <div></div>
+    </ContainerContent>
+  );
 }

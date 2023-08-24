@@ -73,6 +73,9 @@
     },
     "picture": {
       "type": "string"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }

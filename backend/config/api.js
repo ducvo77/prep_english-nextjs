@@ -4,8 +4,7 @@ module.exports = ({ env }) => ({
     privateAttributes: [
       "_v",
       "id",
-      "created_at",
-      "createdAt",
+      // "createdAt",
       "updatedAt",
       "publishedAt",
     ],

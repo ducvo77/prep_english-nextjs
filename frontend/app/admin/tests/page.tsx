@@ -1,4 +1,5 @@
-import DataList from "@/app/components/admin/TestList";
+import ContainerContent from "@/app/components/admin/ContainerContent";
+import DataList from "@/app/components/admin/DataList";
 import getTestList from "@/app/lib/getTestList";
 import { Metadata } from "next";
 
@@ -7,12 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const testListData: Promise<TestList> = getTestList();
+  const testListData: Promise<TestKit> = getTestList();
   const testList = await testListData;
 
   return (
-    <div className="flex">
-      <DataList data={testList.data} />
-    </div>
+    <ContainerContent label="test list">
+      <DataList testList={testList.data.map((item) => item.tests).flat()} />
+    </ContainerContent>
   );
 }

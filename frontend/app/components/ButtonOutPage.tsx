@@ -14,6 +14,7 @@ interface ButtonOutPageProps {
   variant?: "outlined";
   className?: string;
   onClick: () => void;
+  color?: "red";
 }
 
 export default function ButtonOutPage({
@@ -22,6 +23,7 @@ export default function ButtonOutPage({
   subTitle,
   variant,
   className,
+  color,
   onClick,
 }: ButtonOutPageProps) {
   const [open, setOpen] = useState(false);
@@ -36,7 +38,12 @@ export default function ButtonOutPage({
   }, [open]);
   return (
     <>
-      <Button variant={variant} className={className} onClick={handleOpen}>
+      <Button
+        variant={variant}
+        color={color}
+        className={className}
+        onClick={handleOpen}
+      >
         {children}
       </Button>
       <Dialog open={open} handler={handleOpen}>

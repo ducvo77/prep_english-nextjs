@@ -43,6 +43,9 @@
       "relation": "oneToMany",
       "target": "api::part.part",
       "mappedBy": "test"
+    },
+    "author": {
+      "type": "string"
     }
   }
 }

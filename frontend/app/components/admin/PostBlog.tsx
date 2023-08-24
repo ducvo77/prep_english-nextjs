@@ -5,11 +5,15 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-import addBlog from "@/app/lib/addBlog";
+import addBlog from "@/app/lib/admin/addBlog";
 import { useSession } from "next-auth/react";
-import uploadImg from "@/app/lib/uploadImg";
+import uploadImg from "@/app/lib/admin/uploadImg";
 import toast from "react-hot-toast";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import editUploadImg from "@/app/lib/admin/editUploadImg";
+import editBlog from "@/app/lib/admin/editBlog";
+import deleteImg from "@/app/lib/admin/deleteImg";
+import { useRouter } from "next/navigation";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export const modules = {
@@ -25,16 +29,21 @@ export const modules = {
     ["link", "image", "video"],
     ["clean"],
   ],
-  // table: true, // disable table module
 };
 
-export default function PostBlog() {
+interface PostBlogProps {
+  data?: Blog;
+  blogId?: string;
+}
+
+export default function PostBlog({ blogId, data }: PostBlogProps) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState({});
   const [isError, setIsError] = useState(false);
   const { data: session }: any = useSession();
+  const router = useRouter();
   const handleSelectImg = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files[0]) {
@@ -46,14 +55,20 @@ export default function PostBlog() {
   );
 
   const handlePostBlog = useCallback(async () => {
-    if (!title || !content || !session || !imageFile) {
+    if (
+      !title ||
+      !content ||
+      content === "<p><br></p>" ||
+      !session ||
+      !imageUrl
+    ) {
       toast.error("Thất bại!!");
       setIsError(true);
       return;
     }
-    const res1 = await uploadImg(imageFile);
+    const res1 = await uploadImg(imageFile, session?.user.jwt);
     if (!res1) {
-      toast.error("Thất bại!!");
+      toast.error("Chưa thay đổi!!");
       return;
     }
     const res2 = await addBlog(
@@ -70,7 +85,42 @@ export default function PostBlog() {
       setImageUrl("");
       toast.success("Thành công!!");
     }
-  }, [imageFile, title, content, session]);
+  }, [imageFile, title, content, session, imageUrl]);
+
+  const handleEditBlog = useCallback(async () => {
+    if (!title && !imageUrl && !content) {
+      toast.error("Thất bại !!");
+      setIsError(true);
+      return;
+    }
+    if (data && blogId) {
+      let res1 = undefined;
+      if (imageUrl) {
+        res1 = await editUploadImg(imageFile, session?.user.jwt);
+      }
+      if (title || content || res1) {
+        if (res1) {
+          const res = await deleteImg(data?.imageURL[0].id, session?.user.jwt);
+        }
+        const res2 = await editBlog(
+          blogId,
+          title || data.title,
+          content || data.content,
+          session?.user.name,
+          res1?.data[0].id || data.imageURL[0].id,
+          session?.user.jwt
+        );
+        if (res2) {
+          toast.success("Thành công");
+          setTitle("");
+          setContent("");
+          setImageUrl("");
+          router.refresh();
+          setIsError(false);
+        }
+      }
+    }
+  }, [content, imageFile, title, session, imageUrl, blogId, data, router]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -79,10 +129,10 @@ export default function PostBlog() {
         label="Title"
         className="text-white "
         onChange={(e) => setTitle(e.target.value)}
-        value={title}
+        value={data && !title ? data.title : title}
       />
       <ReactQuill
-        value={content}
+        value={data && !content ? data.content : content}
         onChange={setContent}
         theme="snow"
         modules={modules}
@@ -98,27 +148,34 @@ export default function PostBlog() {
         <label
           htmlFor="blog-img"
           className={`w-[250px] h-[250px] border ${
-            imageUrl ? "border-solid" : "border-dashed"
-          } flex items-center justify-center cursor-pointer overflow-hidden`}
+            imageUrl || data ? "border-solid" : "border-dashed"
+          } flex items-center justify-center cursor-pointer overflow-hidden rounded-sm`}
         >
-          {!imageUrl && <AiOutlineCloudUpload size={30} />}
-          {imageUrl && (
+          {!imageUrl && !data && <AiOutlineCloudUpload size={40} />}
+          {(imageUrl || data) && (
             <Image
               alt="Banner bài viết"
-              src={imageUrl}
+              src={
+                data && !imageUrl
+                  ? process.env.NEXT_PUBLIC_SOURCE_URL + data.imageURL[0].url
+                  : imageUrl
+              }
               width={100}
               height={100}
-              className="w-full"
+              className="w-full bg-[]"
+              unoptimized={true}
             />
           )}
         </label>
       </div>
       {isError && (
         <span className="text-center italic text-red-300">
-          Vui lòng nhập đủ dữ liệu
+          {data ? "Chưa có sự thay đổi" : " Vui lòng nhập đủ dữ liệu"}
         </span>
       )}
-      <Button onClick={handlePostBlog}>Post Blog</Button>
+      <Button onClick={data ? handleEditBlog : handlePostBlog}>
+        {data ? "Edit" : "Post Blog"}
+      </Button>
     </div>
   );
 }

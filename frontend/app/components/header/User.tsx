@@ -8,11 +8,9 @@ import {
 } from "@material-tailwind/react";
 import Image from "next/image";
 import React from "react";
-import { AiOutlineMenu, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlineMenu } from "react-icons/ai";
 import { GoSignOut } from "react-icons/go";
-import { SiAdminer } from "react-icons/si";
 import { signOut, useSession } from "next-auth/react";
-import { CiLogin } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 
 export default function User() {
@@ -22,7 +20,7 @@ export default function User() {
   return (
     <Menu>
       <MenuHandler>
-        <button className="p-2 flex items-center gap-3 rounded-full border shadow-sm hover:shadow-lg">
+        <div className="p-2 flex items-center gap-3 rounded-full border shadow-sm hover:shadow-lg">
           <AiOutlineMenu size={20} />
           <Image
             src={
@@ -35,43 +33,34 @@ export default function User() {
             alt="user"
             className="rounded-full"
           />
-        </button>
+        </div>
       </MenuHandler>
 
       <MenuList className="flex flex-col rounded-lg p-0 min-w-[120px]">
         {!session?.user ? (
           <MenuItem className="p-0">
-            <button
+            <div
               onClick={() => router.push("/login")}
               className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
             >
-              {/* <CiLogin size={20} /> */}
               <span>Đăng nhập</span>
-            </button>
-            <button
+            </div>
+            <div
               onClick={() => router.push("/register")}
               className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
             >
-              {/* <AiOutlinePlusCircle size={20} /> */}
               <span>Đăng ký</span>
-            </button>
+            </div>
           </MenuItem>
         ) : (
           <MenuItem className="p-0">
-            {/* <button
-              onClick={() => router.push("/admin")}
-              className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
-            >
-              <SiAdminer size={20} />
-              <span>Admin</span>
-            </button> */}
-            <button
+            <div
               onClick={() => signOut()}
               className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
             >
               <GoSignOut size={20} />
               <span>Đăng xuất</span>
-            </button>
+            </div>
           </MenuItem>
         )}
       </MenuList>

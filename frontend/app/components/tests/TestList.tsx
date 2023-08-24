@@ -9,7 +9,7 @@ import { useAppDispatch } from "../../redux/hook";
 import ButtonOutPage from "../ButtonOutPage";
 import ContainerGrid from "../ContainerGrid";
 
-export default function TestList({ data }: TestList) {
+export default function TestList({ data }: TestKit) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 

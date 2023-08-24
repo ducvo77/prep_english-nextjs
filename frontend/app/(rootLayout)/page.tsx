@@ -16,7 +16,7 @@ interface BlogListDataType {
 export default async function Page() {
   const session: any = await getServerSession(authOptions);
 
-  const testListData: Promise<TestList> = getTestList();
+  const testListData: Promise<TestKit> = getTestList();
   const testHistoryData: Promise<TestHistory> | null = session
     ? getTestHistory(session?.user?.id || Number(session?.user?.sub))
     : null;

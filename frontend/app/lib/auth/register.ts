@@ -1,8 +1,14 @@
 import axios from "axios";
 
-const register = (username: string, email: string, password: string) => {
+const register = async (
+  name: string,
+  username: string,
+  email: string,
+  password: string
+) => {
   return axios
     .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/local/register`, {
+      name,
       username,
       email,
       password,

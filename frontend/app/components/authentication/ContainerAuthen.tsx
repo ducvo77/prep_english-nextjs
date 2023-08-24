@@ -17,6 +17,7 @@ const LOGIN_SOCIAL: { name: string; label: string; Icon: IconType }[] = [
 ];
 
 export default function ContainerAuthen() {
+  const [name, setName] = useState("");
   const [username, setUserName] = useState("");
   const [email, setEmaill] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +32,7 @@ export default function ContainerAuthen() {
       return setIsFailure(true);
     }
 
-    const res = await register(username, email, password);
+    const res = await register(name, username, email, password);
     if (res.status === 200) {
       return router.push("/login");
     } else {
@@ -73,7 +74,13 @@ export default function ContainerAuthen() {
             <>
               <Input
                 type="text"
-                label="Tên tài khoản"
+                label="Họ và tên"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <Input
+                type="text"
+                label="Username"
                 value={username}
                 onChange={(e) => setUserName(e.target.value)}
               />

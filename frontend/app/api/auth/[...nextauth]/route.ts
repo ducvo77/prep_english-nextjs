@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }: any) => {
       session.user = token as any;
       session.user.id = token ? token.id : null;
+
       return Promise.resolve(session);
     },
 
@@ -62,7 +63,6 @@ export const authOptions: NextAuthOptions = {
             `${process.env.API_URL}/auth/${account.provider}/callback?access_token=${account?.access_token}`
           );
           const data = await response.json();
-
           token.jwt = data.jwt;
           token.id = data.user.id;
         } catch (error) {

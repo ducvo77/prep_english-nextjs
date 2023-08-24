@@ -1,4 +1,5 @@
-import BlogList from "@/app/components/admin/BlogList";
+import ContainerContent from "@/app/components/admin/ContainerContent";
+import DataList from "@/app/components/admin/DataList";
 import getBlogList from "@/app/lib/getBlogList";
 import { Metadata } from "next";
 
@@ -15,11 +16,8 @@ export default async function Blogs() {
   const blogList = await blogListData;
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-center text-3xl font-semibold uppercase">
-        Tổng hợp đề thi
-      </h1>
-      <BlogList data={blogList.data} />
-    </div>
+    <ContainerContent label="blog list">
+      <DataList blogList={blogList.data} />
+    </ContainerContent>
   );
 }

@@ -45,18 +45,23 @@ body {
   overflow: hidden;
 }
 
-#blog ul {
-  margin-top: 12px;
+#blog-detail h2,
+#blog-detail h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 12px 0;
 }
 
-#blog li {
-  list-style: disc;
-  margin-left: 40px;
+#blog-detail h3,
+#blog-detail strong {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 8px 0;
 }
 
-#blog p,
-blog li {
-  padding: 10px 0;
+#blog-detail p {
+  padding: 6px 0;
+  line-height: 1.8rem;
 }
 
 #blog-card h5 {
@@ -72,4 +77,29 @@ blog li {
 .ql-editor.ql-blank {
   height: 500px;
   overflow-y: scroll;
+}
+
+.ql-picker-label {
+  color: #4cceac;
+}
+
+.ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active {
+  color: #6770fa !important;
+}
+
+.ql-snow .ql-stroke {
+  stroke: #4cceac !important;
+}
+
+.ql-snow .ql-fill {
+  fill: #4cceac !important;
+}
+.ql-snow.ql-toolbar button.ql-active .ql-stroke {
+  stroke: #6770fa !important;
+}
+
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill {
+  fill: #6770fa !important;
 }

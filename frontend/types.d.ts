@@ -25,7 +25,7 @@ type Test = {
   }[];
 };
 
-type TestList = {
+type TestKit = {
   data: {
     id: number;
     label: string;
@@ -36,8 +36,21 @@ type TestList = {
       part_number: number;
       question_number: number;
       hastags: [string];
+      author: string;
+      createdAt: string;
     }[];
   }[];
+};
+
+type TestList = {
+  id: number;
+  title: string;
+  time: number;
+  part_number: number;
+  question_number: number;
+  hastags: [string];
+  author: string;
+  createdAt: string;
 };
 
 type Question = {
@@ -97,6 +110,7 @@ type User = {
 
 type CurrentUser = {
   id: number;
+  name: string;
   username: string;
   email: string;
   provider: string;
@@ -148,8 +162,10 @@ type Blog = {
   id: number;
   author?: string;
   title: string;
-  content: "";
-  imageURL?: {
+  content: string;
+  createdAt: string;
+  imageURL: {
+    id: number;
     url: string;
   }[];
 };

@@ -1,13 +1,18 @@
 import axios from "axios";
 
-const uploadImg = async (imageFile: any) => {
+const editUploadImg = async (imageFile: any, jwt: string) => {
   const formData = new FormData();
   formData.append("files", imageFile);
   formData.append("name", "testfile.png");
   formData.append("type", "image/png");
 
   return axios
-    .post(`${process.env.NEXT_PUBLIC_API_URL}/upload`, formData)
+    .post(`${process.env.NEXT_PUBLIC_API_URL}/upload`, formData, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
     .then((response) => {
       return response;
     })
@@ -16,4 +21,4 @@ const uploadImg = async (imageFile: any) => {
     });
 };
 
-export default uploadImg;
+export default editUploadImg;
