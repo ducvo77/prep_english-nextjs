@@ -44,7 +44,7 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
   const [isError, setIsError] = useState(false);
   const { data: session }: any = useSession();
   const jwt = useMemo(() => session?.user.jwt, [session]);
-  const author = useMemo(() => session.user.name, [session]);
+  const author = useMemo(() => session?.user.name, [session]);
 
   const router = useRouter();
   const handleSelectImg = useCallback(

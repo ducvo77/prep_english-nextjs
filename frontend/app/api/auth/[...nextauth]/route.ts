@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }: any) => {
       session.user = token as any;
       session.user.id = token ? token.id : null;
+      session.user.name = token ? token.name : null;
 
       return Promise.resolve(session);
     },
@@ -63,8 +64,12 @@ export const authOptions: NextAuthOptions = {
             `${process.env.API_URL}/auth/${account.provider}/callback?access_token=${account?.access_token}`
           );
           const data = await response.json();
-          token.jwt = data.jwt;
-          token.id = data.user.id;
+
+          token.jwt = data?.data !== null ? data.jwt : user.jwt;
+          token.id = data?.data !== null ? data.user.id : user.id;
+          token.provider =
+            data?.data !== null ? data.user.provider : user.provider;
+          if (data?.data === null) token.name = user.name;
         } catch (error) {
           console.error("Fetch failed:", error);
         }

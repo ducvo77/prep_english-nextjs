@@ -22,7 +22,7 @@ export default async function Page() {
 
   const testListData: Promise<TopicListDataType> = getTopics();
   const testHistoryData: Promise<TestHistory> | null = session
-    ? getTestHistory(session?.user?.id || Number(session?.user?.sub))
+    ? getTestHistory(session?.user?.id)
     : null;
   const blogListData: Promise<BlogListDataType> = getBlogList();
 

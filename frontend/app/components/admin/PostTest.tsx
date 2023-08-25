@@ -26,7 +26,7 @@ export default function PostTest({ topicList, testList }: PostTestProps) {
 
   const { data: session }: any = useSession();
   const jwt = useMemo(() => session?.user.jwt, [session]);
-  const author = useMemo(() => session.user.name, [session]);
+  const author = useMemo(() => session?.user.name, [session]);
 
   const router = useRouter();
 
@@ -63,7 +63,6 @@ export default function PostTest({ topicList, testList }: PostTestProps) {
       topicId,
       jwt
     );
-    console.log(res);
 
     if (res) {
       toast.success("Thành công !!");

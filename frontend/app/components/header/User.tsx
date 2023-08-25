@@ -25,7 +25,7 @@ export default function User() {
           <Image
             src={
               session?.user.picture
-                ? session.user.picture
+                ? session?.user.picture
                 : "/images/user-default.jpg"
             }
             width="28"

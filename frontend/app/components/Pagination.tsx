@@ -68,7 +68,7 @@ export default function Pagination({
         variant="text"
         className="flex items-center gap-2 rounded-full"
         onClick={next}
-        disabled={active === Math.ceil(length / count)}
+        disabled={active === Math.ceil(length / count) || length === 0}
       >
         Next
         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
