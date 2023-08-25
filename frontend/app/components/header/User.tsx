@@ -20,7 +20,7 @@ export default function User() {
   return (
     <Menu>
       <MenuHandler>
-        <div className="p-2 flex items-center gap-3 rounded-full border shadow-sm hover:shadow-lg">
+        <div className="p-2 flex items-center gap-3 rounded-full border shadow-sm hover:shadow-lg cursor-pointer">
           <AiOutlineMenu size={20} />
           <Image
             src={

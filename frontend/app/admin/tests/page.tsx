@@ -7,13 +7,17 @@ export const metadata: Metadata = {
   title: "Admin - Tests",
 };
 
+interface TestListDataType {
+  data: Test[];
+}
+
 export default async function Page() {
-  const testListData: Promise<TestKit> = getTestList();
+  const testListData: Promise<TestListDataType> = getTestList();
   const testList = await testListData;
 
   return (
     <ContainerContent label="test list">
-      <DataList testList={testList.data.map((item) => item.tests).flat()} />
+      <DataList testList={testList.data} />
     </ContainerContent>
   );
 }

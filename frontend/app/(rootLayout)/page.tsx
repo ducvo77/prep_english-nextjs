@@ -3,20 +3,24 @@ import PromptChatgpt from "../components/PromptChatgpt";
 import TestList from "../components/tests/TestList";
 import BlogList from "../components/blogs/BlogList";
 import Dashboard from "../components/Dashboard";
-import getTestList from "../lib/getTestList";
+import getTopics from "../lib/getTopics";
 import getTestHistory from "../lib/getTestHistory";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import getBlogList from "../lib/getBlogList";
 
 interface BlogListDataType {
-  data: [];
+  data: Blog[];
+}
+
+interface TopicListDataType {
+  data: Topic[];
 }
 
 export default async function Page() {
   const session: any = await getServerSession(authOptions);
 
-  const testListData: Promise<TestKit> = getTestList();
+  const testListData: Promise<TopicListDataType> = getTopics();
   const testHistoryData: Promise<TestHistory> | null = session
     ? getTestHistory(session?.user?.id || Number(session?.user?.sub))
     : null;

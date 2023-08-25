@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * test-kit controller
+ * topic controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::test-kit.test-kit');
+module.exports = createCoreController('api::topic.topic');

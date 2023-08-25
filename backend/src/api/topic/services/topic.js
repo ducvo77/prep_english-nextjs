@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * test-kit service
+ * topic service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::test-kit.test-kit');
+module.exports = createCoreService('api::topic.topic');

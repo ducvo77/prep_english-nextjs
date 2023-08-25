@@ -3,12 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AiOutlineFileAdd, AiOutlineMenu } from "react-icons/ai";
+import {
+  AiOutlineFileAdd,
+  AiOutlineFolderAdd,
+  AiOutlineMenu,
+} from "react-icons/ai";
 import { BsPostcardHeart } from "react-icons/bs";
 import { RxDashboard } from "react-icons/rx";
 import { CiLogout } from "react-icons/ci";
 import { GoWorkflow } from "react-icons/go";
 import { MdPostAdd } from "react-icons/md";
+import { RiFileListLine } from "react-icons/ri";
 import { useState } from "react";
 import { Tooltip } from "@material-tailwind/react";
 
@@ -17,6 +22,11 @@ const menu_list = [
     label: "Dashboard",
     Icon: RxDashboard,
     href: "/admin",
+  },
+  {
+    label: "Topics",
+    Icon: RiFileListLine,
+    href: "/admin/topics",
   },
   {
     label: "Tests",
@@ -28,7 +38,11 @@ const menu_list = [
     Icon: BsPostcardHeart,
     href: "/admin/blogs",
   },
-
+  // {
+  //   label: "Add Topic",
+  //   Icon: AiOutlineFolderAdd,
+  //   href: "/admin/addtopic",
+  // },
   {
     label: "Add Test",
     Icon: AiOutlineFileAdd,
@@ -87,7 +101,9 @@ export default function SideBar({ user }: SideBarProps) {
 
           <div className="flex flex-col gap-1 items-center">
             <span className="font-semibold text-xl">{user.name}</span>
-            <span className="text-sm text-[#4cceac]">Admin</span>
+            <span className="text-sm text-[#4cceac] capitalize">
+              {user.role.type}
+            </span>
           </div>
         </div>
       )}
@@ -106,11 +122,11 @@ export default function SideBar({ user }: SideBarProps) {
           >
             <Link
               href={href}
-              className={`flex gap-3 items-center py-3 text-base hover:text-[#6770FA] ${
+              className={`flex gap-3 items-center py-3 text-sm hover:text-[#6770FA] ${
                 href === pathname ? "text-[#6770FA]" : ""
               }`}
             >
-              <Icon size={20} />
+              <Icon size={16} />
               {!active && <span>{label}</span>}
             </Link>
           </Tooltip>

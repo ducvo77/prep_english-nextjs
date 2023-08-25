@@ -4,8 +4,7 @@ type Test = {
   time: number;
   part_number: number;
   question_number: number;
-  hastags: string[];
-  test_kit: { id: number; label: string };
+  topic: { id: number; title: string };
   parts: {
     id: number;
     name: string;
@@ -25,20 +24,17 @@ type Test = {
   }[];
 };
 
-type TestKit = {
-  data: {
+type Topic = {
+  id: number;
+  title: string;
+  tests: {
     id: number;
-    label: string;
-    tests: {
-      id: number;
-      title: string;
-      time: number;
-      part_number: number;
-      question_number: number;
-      hastags: [string];
-      author: string;
-      createdAt: string;
-    }[];
+    title: string;
+    time: number;
+    part_number: number;
+    question_number: number;
+    author: string;
+    createdAt: string;
   }[];
 };
 
@@ -48,7 +44,6 @@ type TestList = {
   time: number;
   part_number: number;
   question_number: number;
-  hastags: [string];
   author: string;
   createdAt: string;
 };

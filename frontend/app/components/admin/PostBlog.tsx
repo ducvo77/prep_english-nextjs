@@ -2,17 +2,17 @@
 
 import { Button, Input } from "@material-tailwind/react";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-import addBlog from "@/app/lib/admin/addBlog";
+import addBlog from "@/app/lib/admin/blog/addBlog";
 import { useSession } from "next-auth/react";
-import uploadImg from "@/app/lib/admin/uploadImg";
+import uploadImg from "@/app/lib/admin/img/uploadImg";
 import toast from "react-hot-toast";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import editUploadImg from "@/app/lib/admin/editUploadImg";
-import editBlog from "@/app/lib/admin/editBlog";
-import deleteImg from "@/app/lib/admin/deleteImg";
+import editUploadImg from "@/app/lib/admin/img/editUploadImg";
+import editBlog from "@/app/lib/admin/blog/editBlog";
+import deleteImg from "@/app/lib/admin/img/deleteImg";
 import { useRouter } from "next/navigation";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -43,6 +43,9 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
   const [imageFile, setImageFile] = useState({});
   const [isError, setIsError] = useState(false);
   const { data: session }: any = useSession();
+  const jwt = useMemo(() => session?.user.jwt, [session]);
+  const author = useMemo(() => session.user.name, [session]);
+
   const router = useRouter();
   const handleSelectImg = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,29 +58,17 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
   );
 
   const handlePostBlog = useCallback(async () => {
-    if (
-      !title ||
-      !content ||
-      content === "<p><br></p>" ||
-      !session ||
-      !imageUrl
-    ) {
+    if (!title || !content || content === "<p><br></p>" || !imageUrl) {
       toast.error("Thất bại!!");
       setIsError(true);
       return;
     }
-    const res1 = await uploadImg(imageFile, session?.user.jwt);
+    const res1 = await uploadImg(imageFile, jwt);
     if (!res1) {
       toast.error("Chưa thay đổi!!");
       return;
     }
-    const res2 = await addBlog(
-      title,
-      content,
-      session?.user.name,
-      res1.data[0].id,
-      session?.user.jwt
-    );
+    const res2 = await addBlog(title, content, author, res1.data[0].id, jwt);
     if (res2) {
       setIsError(false);
       setTitle("");
@@ -85,7 +76,7 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
       setImageUrl("");
       toast.success("Thành công!!");
     }
-  }, [imageFile, title, content, session, imageUrl]);
+  }, [imageFile, title, content, jwt, author, imageUrl]);
 
   const handleEditBlog = useCallback(async () => {
     if (!title && !imageUrl && !content) {
@@ -96,19 +87,19 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
     if (data && blogId) {
       let res1 = undefined;
       if (imageUrl) {
-        res1 = await editUploadImg(imageFile, session?.user.jwt);
+        res1 = await editUploadImg(imageFile, jwt);
       }
       if (title || content || res1) {
         if (res1) {
-          const res = await deleteImg(data?.imageURL[0].id, session?.user.jwt);
+          const res = await deleteImg(data?.imageURL[0].id, jwt);
         }
         const res2 = await editBlog(
           blogId,
           title || data.title,
           content || data.content,
-          session?.user.name,
+          author,
           res1?.data[0].id || data.imageURL[0].id,
-          session?.user.jwt
+          jwt
         );
         if (res2) {
           toast.success("Thành công");
@@ -120,14 +111,14 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
         }
       }
     }
-  }, [content, imageFile, title, session, imageUrl, blogId, data, router]);
+  }, [content, imageFile, title, jwt, author, imageUrl, blogId, data, router]);
 
   return (
     <div className="flex flex-col gap-6">
       <Input
         type="text"
         label="Title"
-        className="text-white "
+        className="text-white"
         onChange={(e) => setTitle(e.target.value)}
         value={data && !title ? data.title : title}
       />

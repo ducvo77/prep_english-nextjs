@@ -28,16 +28,6 @@
       "type": "integer",
       "required": true
     },
-    "hastags": {
-      "type": "json",
-      "required": true
-    },
-    "test_kit": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::test-kit.test-kit",
-      "inversedBy": "tests"
-    },
     "parts": {
       "type": "relation",
       "relation": "oneToMany",
@@ -46,6 +36,12 @@
     },
     "author": {
       "type": "string"
+    },
+    "topic": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::topic.topic",
+      "inversedBy": "tests"
     }
   }
 }

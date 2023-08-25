@@ -1,13 +1,14 @@
 "use client";
 
 import { Button, Card, IconButton, Typography } from "@material-tailwind/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import deleteTestHistory from "../lib/deleteTestHistory";
 import toast from "react-hot-toast";
 import ButtonOutPage from "./ButtonOutPage";
 import { useSession } from "next-auth/react";
+import Pagination from "./Pagination";
 
 const TABLE_HEAD = [
   "STT",
@@ -26,17 +27,11 @@ export default function Dashboard({ data }: DashboardProps) {
   const [active, setActive] = useState(1);
   const router = useRouter();
   const { data: session }: any = useSession();
+  const jwt = useMemo(() => session?.user.jwt, [session]);
 
-  const getItemProps = (index: number) =>
-    ({
-      variant: active === index ? "filled" : "text",
-      color: active === index ? "blue" : "blue-gray",
-      onClick: () => setActive(index),
-      className: "rounded-full",
-    } as any);
   const handleDeleteTestHistory = useCallback(
     async (id: number) => {
-      const res = await deleteTestHistory(id, session.user.jwt);
+      const res = await deleteTestHistory(id, jwt);
       if (res?.status === 200) {
         router.refresh();
         toast.success("Xóa thành công!!");
@@ -44,23 +39,13 @@ export default function Dashboard({ data }: DashboardProps) {
         toast.error("Xóa thất bại!!");
       }
     },
-    [router, session]
+    [router, jwt]
   );
-  const next = () => {
-    if (active === Math.ceil(data.training_histories.length / 5)) return;
-    setActive(active + 1);
-  };
-
-  const prev = () => {
-    if (active === 1) return;
-
-    setActive(active - 1);
-  };
 
   const sortData = data.training_histories.sort((a, b) => b.id - a.id);
 
   return (
-    <Card className="h-full w-full min-h-[500px] overflow-x-scroll">
+    <Card className="h-full w-full overflow-x-scroll">
       <table className="w-full min-w-max table-auto text-center">
         <thead>
           <tr>
@@ -167,48 +152,12 @@ export default function Dashboard({ data }: DashboardProps) {
           )}
         </tbody>
       </table>
-      <div className="flex items-center gap-4 justify-center py-3 absolute bottom-0 left-0 right-0">
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="sm:flex hidden items-center gap-2 rounded-full"
-          onClick={prev}
-          disabled={active === 1}
-        >
-          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Trang trước
-        </Button>
-        <div className="flex items-center gap-2">
-          {data.training_histories.map(
-            ({ id }, index) =>
-              index % 5 === 0 && (
-                <IconButton
-                  key={id}
-                  {...getItemProps(Math.ceil((index + 1) / 5))}
-                  className={`rounded-full text-sm text-white ${
-                    active === Math.ceil((index + 1) / 5)
-                      ? "bg-primary hover:bg-primary "
-                      : "bg-second hover:bg-primary"
-                  }`}
-                >
-                  {Math.ceil((index + 1) / 5)}
-                </IconButton>
-              )
-          )}
-        </div>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="sm:flex hidden items-center gap-2 rounded-full"
-          onClick={next}
-          disabled={
-            active === Math.ceil(data.training_histories.length / 5) ||
-            data.training_histories.length === 0
-          }
-        >
-          Trang sau
-          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-        </Button>
-      </div>
+      <Pagination
+        active={active}
+        setActive={setActive}
+        length={sortData.length}
+        count={5}
+      />
     </Card>
   );
 }

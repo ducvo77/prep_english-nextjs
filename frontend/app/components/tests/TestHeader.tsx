@@ -24,7 +24,7 @@ export default function HeaderTest({ data }: HeaderTestProps) {
           <span>Thoát</span>
         </ButtonOutPage>
       </div>
-      <p>{data.test_kit.label}</p>
+      <p>{data.topic.title}</p>
     </div>
   );
 }
