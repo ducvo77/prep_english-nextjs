@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function deleteImg(id: number, jwt: string) {
+export default async function deleteFile(id: number, jwt: string) {
   try {
     const res = await axios.delete(
       `${process.env.NEXT_PUBLIC_API_URL}/upload/files/${id}`,

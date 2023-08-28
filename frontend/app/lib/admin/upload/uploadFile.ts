@@ -1,11 +1,8 @@
 import axios from "axios";
 
-const editUploadImg = async (imageFile: any, jwt: string) => {
+const uploadFile = async (file: any, jwt: string) => {
   const formData = new FormData();
-  formData.append("files", imageFile);
-  formData.append("name", "testfile.png");
-  formData.append("type", "image/png");
-
+  formData.append("files", file);
   return axios
     .post(`${process.env.NEXT_PUBLIC_API_URL}/upload`, formData, {
       headers: {
@@ -21,4 +18,4 @@ const editUploadImg = async (imageFile: any, jwt: string) => {
     });
 };
 
-export default editUploadImg;
+export default uploadFile;

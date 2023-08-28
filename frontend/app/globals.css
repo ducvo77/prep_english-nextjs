@@ -53,13 +53,14 @@ body {
 }
 
 #blog-detail h3,
-#blog-detail strong {
+#blog-detail h3 strong {
   font-size: 1.3rem;
   font-weight: 600;
   padding: 8px 0;
 }
 
-#blog-detail p {
+#blog-detail p,
+#blog-detail li {
   padding: 6px 0;
   line-height: 1.8rem;
 }
@@ -71,7 +72,19 @@ body {
   overflow: hidden;
 }
 
+#blog-detail ul {
+  margin-left: 40px;
+}
+
+#blog-detail li {
+  list-style: disc;
+}
+
 /* Css cho quill */
+.ql-editor {
+  line-height: 1.6;
+  font-size: 15px;
+}
 
 .ql-container.ql-snow,
 .ql-editor.ql-blank {

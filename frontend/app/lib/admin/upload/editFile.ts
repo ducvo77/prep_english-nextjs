@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const uploadImg = async (imageFile: any, jwt: string) => {
+const editFile = async (imageFile: any, jwt: string) => {
   const formData = new FormData();
   formData.append("files", imageFile);
   formData.append("name", "testfile.png");
@@ -21,4 +21,4 @@ const uploadImg = async (imageFile: any, jwt: string) => {
     });
 };
 
-export default uploadImg;
+export default editFile;

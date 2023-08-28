@@ -7,12 +7,12 @@ import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import addBlog from "@/app/lib/admin/blog/addBlog";
 import { useSession } from "next-auth/react";
-import uploadImg from "@/app/lib/admin/img/uploadImg";
+import uploadFile from "@/app/lib/admin/upload/uploadFile";
 import toast from "react-hot-toast";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import editUploadImg from "@/app/lib/admin/img/editUploadImg";
+import editFile from "@/app/lib/admin/upload/editFile";
 import editBlog from "@/app/lib/admin/blog/editBlog";
-import deleteImg from "@/app/lib/admin/img/deleteImg";
+import deleteFile from "@/app/lib/admin/upload/deleteFile";
 import { useRouter } from "next/navigation";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -63,7 +63,7 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
       setIsError(true);
       return;
     }
-    const res1 = await uploadImg(imageFile, jwt);
+    const res1 = await uploadFile(imageFile, jwt);
     if (!res1) {
       toast.error("Chưa thay đổi!!");
       return;
@@ -75,8 +75,9 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
       setContent("");
       setImageUrl("");
       toast.success("Thành công!!");
+      router.refresh();
     }
-  }, [imageFile, title, content, jwt, author, imageUrl]);
+  }, [imageFile, title, content, jwt, author, imageUrl, router]);
 
   const handleEditBlog = useCallback(async () => {
     if (!title && !imageUrl && !content) {
@@ -87,11 +88,11 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
     if (data && blogId) {
       let res1 = undefined;
       if (imageUrl) {
-        res1 = await editUploadImg(imageFile, jwt);
+        res1 = await editFile(imageFile, jwt);
       }
       if (title || content || res1) {
         if (res1) {
-          const res = await deleteImg(data?.imageURL[0].id, jwt);
+          const res = await deleteFile(data?.imageURL[0].id, jwt);
         }
         const res2 = await editBlog(
           blogId,

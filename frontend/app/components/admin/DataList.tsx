@@ -1,7 +1,7 @@
 "use client";
 
 import deleteBlog from "@/app/lib/admin/blog/deleteBlog";
-import deleteImg from "@/app/lib/admin/img/deleteImg";
+import deleteImg from "@/app/lib/admin/upload/deleteFile";
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -86,7 +86,7 @@ export default function DataList({
 
   const sortData = data.sort((a, b) => b.id - a.id);
 
-  if (data.length === 0) return <div>Loading...</div>;
+  if (data.length === 0) return <div>Chưa có thông tin.</div>;
 
   return (
     <Card className="h-full w-full overflow-scroll text-[#E0E0E0]">

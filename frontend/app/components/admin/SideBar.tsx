@@ -16,6 +16,8 @@ import { MdPostAdd } from "react-icons/md";
 import { RiFileListLine } from "react-icons/ri";
 import { useState } from "react";
 import { Tooltip } from "@material-tailwind/react";
+import { signOut } from "next-auth/react";
+import ButtonOutPage from "../ButtonOutPage";
 
 const menu_list = [
   {
@@ -54,11 +56,11 @@ const menu_list = [
     Icon: MdPostAdd,
     href: "/admin/addblog",
   },
-  {
-    label: "Log Out",
-    Icon: CiLogout,
-    href: "/",
-  },
+  // {
+  //   label: "Log Out",
+  //   Icon: CiLogout,
+  //   href: "/",
+  // },
 ];
 
 interface SideBarProps {
@@ -68,6 +70,7 @@ interface SideBarProps {
 export default function SideBar({ user }: SideBarProps) {
   const pathname = usePathname();
   const [active, setActive] = useState(false);
+
   return (
     <div
       className={`${
@@ -90,7 +93,7 @@ export default function SideBar({ user }: SideBarProps) {
         </button>
       </div>
       {!active && (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-6">
           <Image
             src="/images/user-default.jpg"
             width={100}
@@ -111,7 +114,7 @@ export default function SideBar({ user }: SideBarProps) {
       <ul className={`flex flex-col ${active ? "items-center" : "pl-6"}`}>
         {menu_list.map(({ label, Icon, href }) => (
           <Tooltip
-            placement="right-end"
+            placement="right"
             key={label}
             content={label}
             animate={{
@@ -122,7 +125,7 @@ export default function SideBar({ user }: SideBarProps) {
           >
             <Link
               href={href}
-              className={`flex gap-3 items-center py-3 text-sm hover:text-[#6770FA] ${
+              className={`flex gap-3 items-center py-3 text-sm hover:text-[#6770FA] cursor-pointer ${
                 href === pathname ? "text-[#6770FA]" : ""
               }`}
             >
@@ -132,6 +135,33 @@ export default function SideBar({ user }: SideBarProps) {
           </Tooltip>
         ))}
       </ul>
+
+      <ButtonOutPage
+        onClick={() => signOut()}
+        className={`p-0 border-0 focus:ring-0 text-[#E0E0E0] flex gap-3 ${
+          active ? " justify-center" : "pl-6"
+        } items-center text-sm hover:text-[#6770FA]`}
+        title="Thoát?"
+        subTitle="Bạn muốn thoát trang Admin?"
+        variant="outlined"
+      >
+        <Tooltip
+          placement="right"
+          content={"Log out"}
+          animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0, y: 25 },
+          }}
+          className={`${!active ? "hidden" : ""}`}
+        >
+          <div className="flex gap-3 items-center">
+            <CiLogout size={16} />
+            {!active && (
+              <span className="text-sm capitalize font-normal">Log out</span>
+            )}
+          </div>
+        </Tooltip>
+      </ButtonOutPage>
     </div>
   );
 }

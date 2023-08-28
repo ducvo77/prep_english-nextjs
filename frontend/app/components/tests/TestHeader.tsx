@@ -18,7 +18,7 @@ export default function HeaderTest({ data }: HeaderTestProps) {
           variant="outlined"
           className="p-2 text-xs capitalize border-primary text-primary hover:bg-primary hover:text-white hover:opacity-100"
           title="Bạn muốn thoát?"
-          subTitle="Những thay đổi bạn đã thực hiện có thể không được lưu."
+          subTitle="Những thay đổi bạn đã thực hiện có thể không được lưu!!"
           onClick={() => router.push("/")}
         >
           <span>Thoát</span>
