@@ -1,56 +1,69 @@
 "use client";
 
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
-  Line,
-  LineChart,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+interface ChartProps {
+  totalUser: number;
+  totalTests: number;
+  totalTestHistory: number;
+  totalBlog: number;
+}
 
-const data = [
-  {
-    id: 1,
-    year: 2016,
-    userGain: 80000,
-    userLost: 823,
-  },
-  {
-    id: 2,
-    year: 2017,
-    userGain: 45677,
-    userLost: 345,
-  },
-  {
-    id: 3,
-    year: 2018,
-    userGain: 78888,
-    userLost: 555,
-  },
-  {
-    id: 4,
-    year: 2019,
-    userGain: 90000,
-    userLost: 4555,
-  },
-  {
-    id: 5,
-    year: 2020,
-    userGain: 4300,
-    userLost: 234,
-  },
-];
-
-export default function Chart() {
+export default function Chart({
+  totalTests,
+  totalTestHistory,
+  totalBlog,
+  totalUser,
+}: ChartProps) {
+  const data = [
+    {
+      name: "User",
+      total: totalUser,
+    },
+    {
+      name: "Test",
+      total: totalTests,
+    },
+    {
+      name: "Test Done",
+      total: totalTestHistory,
+    },
+    {
+      name: "Blog",
+      total: totalBlog,
+    },
+  ];
   return (
-    // <LineChart width={500} height={300} data={data}>
-    //   <XAxis dataKey="name" />
-    //   <YAxis />
-    //   <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-    //   <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-    //   <Line type="monotone" dataKey="pv" stroke="#82ca9d" />
-    // </LineChart>
-    <div></div>
+    <div className="bg-[#fff] p-6 w-full h-[400px] rounded-lg">
+      <ResponsiveContainer>
+        <AreaChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="total"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

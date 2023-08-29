@@ -10,6 +10,7 @@ import Image from "next/image";
 import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { GoSignOut } from "react-icons/go";
+import { CgProfile } from "react-icons/cg";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -54,6 +55,13 @@ export default function User() {
           </MenuItem>
         ) : (
           <MenuItem className="p-0">
+            <div
+              onClick={() => router.push("/profile")}
+              className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
+            >
+              <CgProfile size={20} />
+              <span>Thông tin cá nhân</span>
+            </div>
             <div
               onClick={() => signOut()}
               className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"

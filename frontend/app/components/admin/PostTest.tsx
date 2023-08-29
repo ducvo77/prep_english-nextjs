@@ -166,7 +166,7 @@ export default function PostTest({ topicList, testList }: PostTestProps) {
 
         <Button onClick={handlePostTest}>Post</Button>
       </div>
-      <div className="flex flex-col gap-6">
+      {/* <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <h3 className="font-medium text-lg">3. Add Test Part </h3>
           <div className="flex flex-col gap-6">
@@ -226,7 +226,7 @@ export default function PostTest({ topicList, testList }: PostTestProps) {
           </div>
         </div>
         <Button onClick={handlePostPartTest}>Post</Button>
-      </div>
+      </div> */}
     </div>
   );
 }

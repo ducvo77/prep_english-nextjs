@@ -16,7 +16,7 @@ import { MdPostAdd } from "react-icons/md";
 import { RiFileListLine } from "react-icons/ri";
 import { useState } from "react";
 import { Tooltip } from "@material-tailwind/react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import ButtonOutPage from "../ButtonOutPage";
 
 const menu_list = [
@@ -70,6 +70,8 @@ interface SideBarProps {
 export default function SideBar({ user }: SideBarProps) {
   const pathname = usePathname();
   const [active, setActive] = useState(false);
+  const { data: session }: any = useSession();
+  const avatar = session?.user?.picture || user.picture;
 
   return (
     <div
@@ -95,7 +97,7 @@ export default function SideBar({ user }: SideBarProps) {
       {!active && (
         <div className="flex flex-col items-center gap-6">
           <Image
-            src="/images/user-default.jpg"
+            src={avatar ? avatar : "/images/user-default.jpg"}
             width={100}
             height={100}
             alt="Avatar"

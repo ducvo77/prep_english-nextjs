@@ -1,6 +1,5 @@
 "use client";
 
-import { Radio } from "@material-tailwind/react";
 import ExplainAnswer from "../ExplainAnswer";
 
 interface LRPRops {
@@ -48,7 +47,7 @@ export default function LR({
                     key={item}
                     className="flex items-center justify-start text-red-600"
                   >
-                    <Radio
+                    {/* <Radio
                       disabled={!!userAssignment}
                       onChange={(e) =>
                         handleValueInput(
@@ -86,7 +85,48 @@ export default function LR({
                               }`
                         }`,
                       }}
+                    /> */}
+                    <input
+                      type="radio"
+                      disabled={!!userAssignment}
+                      checked={item === valueInput[Number(data.number)]}
+                      id={item}
+                      name={item}
+                      value={item}
+                      onChange={(e) =>
+                        handleValueInput(
+                          e.target.value,
+                          Number(data.number),
+                          numberQuestion
+                        )
+                      }
+                      onBlur={() =>
+                        handleChangeInput(
+                          valueInput[Number(data.number)],
+                          Number(data.number),
+                          name
+                        )
+                      }
+                      className="cursor-pointer"
                     />
+                    <label
+                      htmlFor={item}
+                      className={`cursor-pointer px-2 py-1 font-normal text-gray-900 ${
+                        !userAssignment
+                          ? ""
+                          : `${
+                              isRightAnswer[Number(data.number)] &&
+                              item === valueInput[Number(data.number)] &&
+                              "bg-green-200"
+                            } ${
+                              !isRightAnswer[Number(data.number)] &&
+                              item === valueInput[Number(data.number)] &&
+                              "bg-red-200"
+                            }`
+                      }`}
+                    >
+                      {item}
+                    </label>
                   </div>
                 )
             )}
