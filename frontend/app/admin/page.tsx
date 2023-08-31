@@ -3,15 +3,14 @@
 import Chart from "../components/admin/Chart";
 import InformationAnalysis from "../components/admin/InformationAnalysis";
 import getUser from "../lib/getUser";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
 import getTestList from "../lib/getTestList";
 import getTestHistoryList from "../lib/getTestHistoryList";
 import getBlogList from "../lib/getBlogList";
+import { getSession } from "../lib/getSession";
 
 export default async function Admin() {
-  const session: any = await getServerSession(authOptions);
-  const jwt = session.user.jwt;
+  const session: User = await getSession();
+  const jwt = session?.user?.jwt;
 
   const [userData, testListData, testHistoryListData, BlogListData] =
     await Promise.all([

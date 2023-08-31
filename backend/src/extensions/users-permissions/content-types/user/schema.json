@@ -75,7 +75,20 @@
       "type": "string"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": false
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "bio": {
+      "type": "string",
+      "required": false
     }
   }
 }

@@ -20,14 +20,14 @@ const TABLE_HEAD = [
 ];
 
 interface DashboardProps {
-  data: TestHistory;
+  userData: CurrentUser;
 }
 
-export default function Dashboard({ data }: DashboardProps) {
+export default function Dashboard({ userData }: DashboardProps) {
   const [active, setActive] = useState(1);
   const router = useRouter();
   const { data: session }: any = useSession();
-  const jwt = useMemo(() => session?.user.jwt, [session]);
+  const jwt = useMemo(() => session?.user?.jwt, [session]);
 
   const handleDeleteTestHistory = useCallback(
     async (id: number) => {
@@ -42,7 +42,7 @@ export default function Dashboard({ data }: DashboardProps) {
     [router, jwt]
   );
 
-  const sortData = data.training_histories.sort((a, b) => b.id - a.id);
+  const sortData = userData.training_histories?.sort((a, b) => b.id - a.id);
 
   return (
     <Card className="h-full w-full overflow-x-scroll">
@@ -69,7 +69,7 @@ export default function Dashboard({ data }: DashboardProps) {
         </thead>
 
         <tbody>
-          {sortData.map(
+          {sortData?.map(
             (
               { id, title, time, number_correct, total_sentences, testId },
               index
@@ -155,7 +155,7 @@ export default function Dashboard({ data }: DashboardProps) {
       <Pagination
         active={active}
         setActive={setActive}
-        length={sortData.length}
+        length={sortData?.length || 0}
         count={5}
       />
     </Card>

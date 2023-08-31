@@ -46,6 +46,12 @@ type TestList = {
   question_number: number;
   author: string;
   createdAt: string;
+  topic: {
+    author: string;
+    createdAt: string;
+    id: number;
+    title: string;
+  } | null;
 };
 
 type Question = {
@@ -90,29 +96,49 @@ type TestHistory = {
 };
 
 type User = {
-  user: {
+  user?: {
     name: string;
     email: string;
     picture: string;
     sub: string;
     jwt: string;
     id: number;
+    provider: string;
     iat: number;
     exp: number;
     jti: string;
   };
-};
+} | null;
 
 type CurrentUser = {
   id: number;
-  name: string;
+  name: string | null;
   username: string;
   email: string;
   provider: string;
   confirmed: boolean;
   blocked: boolean;
   picture: null | string;
+  bio: string | null;
   role: { id: number; name: string; description: string; type: string };
+  avatar:
+    | {
+        id: number;
+        url: string;
+      }[]
+    | null;
+  training_histories:
+    | {
+        createdAt: string;
+        id: number;
+        label: string;
+        number_correct: number;
+        testId: number;
+        time: string;
+        title: string;
+        total_sentences: number;
+      }[]
+    | undefined;
 };
 
 type AnswerState = {

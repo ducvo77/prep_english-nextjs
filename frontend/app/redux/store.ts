@@ -2,7 +2,6 @@ import { createWrapper } from "next-redux-wrapper";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import answerReducer from "./features/answerSlice";
 import infoTestReducer from "./features/infoTestSlice";
-import userReducer from "./features/userSlice";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
@@ -10,7 +9,6 @@ import thunk from "redux-thunk";
 const reducers = combineReducers({
   answerReducer,
   infoTestReducer,
-  userReducer,
 });
 
 const persistConfig = {

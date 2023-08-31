@@ -5,7 +5,11 @@ import Logo from "./Logo";
 import Nav from "./Nav";
 import { useState } from "react";
 
-export default function Header() {
+interface HeaderProps {
+  userData: CurrentUser;
+}
+
+export default function Header({ userData }: HeaderProps) {
   const [show, setShow] = useState(false);
   return (
     <header className="py-2 flex lg:flex-row flex-col  min-h-20 items-center justify-between shadow-lg fixed left-0 right-0 top-0 bg-white z-[99] xl:px-20 lg:px-10 md:px-5 px-2">
@@ -17,7 +21,7 @@ export default function Header() {
           onClick={() => setShow(!show)}
         />
       </div>
-      {<Nav show={show} />}
+      {<Nav show={show} userData={userData} />}
     </header>
   );
 }

@@ -29,8 +29,12 @@ const MENU_LIST = [
     label: <Button onClick={() => signOut()}>Đăng xuất</Button>,
   },
 ];
+interface NavProps {
+  show: boolean;
+  userData: CurrentUser;
+}
 
-export default function Nav({ show }: { show: boolean }) {
+export default function Nav({ show, userData }: NavProps) {
   const { data: session } = useSession();
   return (
     <div className={`${show ? "flex" : "lg:flex hidden"} gap-20`}>
@@ -57,7 +61,7 @@ export default function Nav({ show }: { show: boolean }) {
         )}
       </ul>
       <div className="lg:block hidden">
-        <User />
+        <User userData={userData} />
       </div>
     </div>
   );

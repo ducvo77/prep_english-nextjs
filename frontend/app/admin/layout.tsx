@@ -1,16 +1,16 @@
 import SideBar from "../components/admin/SideBar";
 import getCurrentUser from "../lib/getCurrentUser";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { getSession } from "../lib/getSession";
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const data: User | null = await getServerSession(authOptions);
-  const currentUser: CurrentUser = await getCurrentUser(data?.user.jwt);
+  const session: User = await getSession();
+
+  const currentUser: CurrentUser = await getCurrentUser(session?.user?.jwt);
 
   if (!currentUser || currentUser?.role?.type !== "admin") redirect("/");
 

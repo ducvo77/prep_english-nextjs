@@ -7,15 +7,17 @@ import {
   MenuList,
 } from "@material-tailwind/react";
 import Image from "next/image";
-import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { GoSignOut } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function User() {
-  const { data: session }: any = useSession();
+interface UserProps {
+  userData: CurrentUser;
+}
+
+export default function User({ userData }: UserProps) {
   const router = useRouter();
 
   return (
@@ -25,20 +27,21 @@ export default function User() {
           <AiOutlineMenu size={20} />
           <Image
             src={
-              session?.user.picture
-                ? session?.user.picture
+              userData?.avatar
+                ? process.env.NEXT_PUBLIC_SOURCE_URL + userData.avatar[0].url
                 : "/images/user-default.jpg"
             }
             width="28"
             height="28"
             alt="user"
-            className="rounded-full"
+            className="rounded-full w-8 h-8"
+            unoptimized
           />
         </div>
       </MenuHandler>
 
       <MenuList className="flex flex-col rounded-lg p-0 min-w-[120px]">
-        {!session?.user ? (
+        {!userData ? (
           <MenuItem className="p-0">
             <div
               onClick={() => router.push("/login")}
@@ -60,7 +63,7 @@ export default function User() {
               className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
             >
               <CgProfile size={20} />
-              <span>Thông tin cá nhân</span>
+              <span>Profile</span>
             </div>
             <div
               onClick={() => signOut()}

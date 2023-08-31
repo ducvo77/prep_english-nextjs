@@ -28,7 +28,7 @@ export default function DataList({
   const [active, setActive] = useState(1);
   const [data, setData] = useState<Blog[] | Test[] | Topic[]>([]);
   const { data: session }: any = useSession();
-  const jwt = useMemo(() => session?.user.jwt, [session]);
+  const jwt = useMemo(() => session?.user?.jwt, [session]);
   const router = useRouter();
   const pathname = usePathname();
   const isPageBlog = pathname?.includes("blogs");

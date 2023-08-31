@@ -4,10 +4,9 @@ import TestList from "../components/tests/TestList";
 import BlogList from "../components/blogs/BlogList";
 import Dashboard from "../components/Dashboard";
 import getTopics from "../lib/getTopics";
-import getTestHistory from "../lib/getTestHistory";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import getBlogList from "../lib/getBlogList";
+import { getSession } from "../lib/getSession";
+import getCurrentUser from "../lib/getCurrentUser";
 
 interface BlogListDataType {
   data: Blog[];
@@ -18,25 +17,25 @@ interface TopicListDataType {
 }
 
 export default async function Page() {
-  const session: any = await getServerSession(authOptions);
+  const session: User = await getSession();
 
   const testListData: Promise<TopicListDataType> = getTopics();
-  const testHistoryData: Promise<TestHistory> | null = session
-    ? getTestHistory(session?.user?.id)
-    : null;
+  const currentUserData: Promise<CurrentUser> = getCurrentUser(
+    session?.user?.jwt
+  );
   const blogListData: Promise<BlogListDataType> = getBlogList();
 
-  const [testList, testHistory, blogList] = await Promise.all([
+  const [testList, userData, blogList] = await Promise.all([
     testListData,
-    testHistoryData,
+    currentUserData,
     blogListData,
   ]);
 
   return (
     <>
-      {testHistory && (
+      {userData && (
         <Section id="dashboard" label="Lịch sử luyện tập của bạn">
-          <Dashboard data={testHistory} />
+          <Dashboard userData={userData} />
         </Section>
       )}
       <Section id="practice" label="Bài tập mới nhất">

@@ -1,4 +1,4 @@
-export default async function getUser(jwt: string) {
+export default async function getUser(jwt: string | undefined) {
   try {
     const res = await fetch(`${process.env.API_URL}/users`, {
       headers: {

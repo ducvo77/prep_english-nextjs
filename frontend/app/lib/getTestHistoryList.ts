@@ -1,4 +1,4 @@
-export default async function getTestHistoryList(jwt: string) {
+export default async function getTestHistoryList(jwt: string | undefined) {
   try {
     const res = await fetch(`${process.env.API_URL}/training-histories`, {
       headers: {
