@@ -75,11 +75,9 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                   src={process.env.NEXT_PUBLIC_SOURCE_URL + part.audio[0].url}
                 />
               )}
-              {userAssignment &&
-                (data.title.includes("reading") ||
-                  data.title.includes("listening")) && (
-                  <Transcript data={part} />
-                )}
+              {userAssignment && data.title.includes("listening") && (
+                <Transcript data={part} />
+              )}
               <div className="flex flex-col ">
                 <div className="flex lg:flex-row flex-col gap-5 max-h-[750px]">
                   <div

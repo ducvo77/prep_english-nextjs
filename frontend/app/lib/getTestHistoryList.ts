@@ -5,7 +5,7 @@ export default async function getTestHistoryList(jwt: string | undefined) {
         Authorization: `Bearer ${jwt}`,
       },
     });
-    if (!res.ok) return undefined;
+    if (!res.ok) return null;
     return res.json();
   } catch (error) {
     return null;

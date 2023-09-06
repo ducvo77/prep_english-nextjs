@@ -118,7 +118,7 @@ type CurrentUser = {
   provider: string;
   confirmed: boolean;
   blocked: boolean;
-  picture: null | string;
+  picture: string | null;
   bio: string | null;
   role: { id: number; name: string; description: string; type: string };
   avatar:

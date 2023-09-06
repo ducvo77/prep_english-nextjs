@@ -90,8 +90,8 @@ export default function LR({
                       type="radio"
                       disabled={!!userAssignment}
                       checked={item === valueInput[Number(data.number)]}
-                      id={item}
-                      name={item}
+                      id={item + data.number}
+                      name={item + data.number}
                       value={item}
                       onChange={(e) =>
                         handleValueInput(
@@ -110,7 +110,7 @@ export default function LR({
                       className="cursor-pointer"
                     />
                     <label
-                      htmlFor={item}
+                      htmlFor={item + data.number}
                       className={`cursor-pointer px-2 py-1 font-normal text-gray-900 ${
                         !userAssignment
                           ? ""

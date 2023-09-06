@@ -3,7 +3,12 @@
 import Content from "@/app/components/profile/Content";
 import getCurrentUser from "@/app/lib/getCurrentUser";
 import { getSession } from "@/app/lib/getSession";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Profile",
+};
 
 export default async function page() {
   const session: User = await getSession();
@@ -11,7 +16,7 @@ export default async function page() {
 
   if (!session) redirect("/");
   return (
-    <div className="py-10">
+    <div className="sm:py-10 py-0">
       <Content userData={currentUser} />
     </div>
   );

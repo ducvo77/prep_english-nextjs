@@ -34,7 +34,7 @@ export default function Content({ userData }: ContentProps) {
   );
 
   const handleSave = async () => {
-    if (!name && !bio && !imageUrl) {
+    if (name === userData.name && bio === userData.bio && !imageUrl) {
       toast.error("Chưa có sự thay đổi!");
       return;
     }
@@ -50,7 +50,7 @@ export default function Content({ userData }: ContentProps) {
     if (name || bio || resImage) {
       resInfo = await updateInfoCurrentUser(
         userData.id,
-        name || userData.name || "",
+        name || userData.name,
         bio || userData.bio,
         resImage?.data[0].id ||
           (userData.avatar ? userData.avatar[0].id : null),
@@ -59,22 +59,22 @@ export default function Content({ userData }: ContentProps) {
     }
     if (resInfo || resImage) {
       toast.success("Thành công!");
-      setName("");
-      setBio("");
-      setImageUrl("");
+      // setName("");
+      // setBio("");
+      // setImageUrl("");
       router.refresh();
     }
   };
 
   const handleCancel = () => {
-    setName("");
-    setBio("");
+    setName(userData.name || "");
+    setBio(userData.bio || "");
     setImageUrl("");
   };
 
   return (
-    <div className="flex flex-col mx-20 gap-10">
-      <div className="flex justify-between items-center ">
+    <div className="flex flex-col xl:mx-20 lg:mx-12 md:mx-6 sm:mx-4 mx-2  gap-10">
+      <div className="flex sm:flex-row flex-col gap-10 justify-between items-center ">
         <div className="flex items-center gap-3 px-10">
           <Image
             src={

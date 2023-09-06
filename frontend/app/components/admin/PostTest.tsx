@@ -144,7 +144,6 @@ export default function PostTest({
       }
     }
   };
-  console.log(testData);
 
   // const handleChangeAudio = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   if (event.target.files && event.target.files[0]) {
@@ -155,7 +154,7 @@ export default function PostTest({
 
   return (
     <div className="flex flex-col gap-6">
-      {topicData && (
+      {(topicData || (!testData && !topicData)) && (
         <div className="flex flex-col gap-6">
           {!topicData && <h3 className="font-medium text-lg">1. Add Topic </h3>}
           <div className="flex gap-6">
@@ -164,7 +163,7 @@ export default function PostTest({
               label="Title of topic"
               className="text-white"
               onChange={(e) => setTopic(e.target.value)}
-              value={topic || topicData.title}
+              value={topic || topicData?.title}
             />
             <Button onClick={topicData ? handleEditTopic : handlePostTopic}>
               {topicData ? "Edit" : "Post"}
@@ -172,7 +171,7 @@ export default function PostTest({
           </div>
         </div>
       )}
-      {testData && (
+      {(testData || (!testData && !topicData)) && (
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-6">
             {!testData && (
@@ -183,28 +182,28 @@ export default function PostTest({
                 type="text"
                 label="Title"
                 className="text-white"
-                value={testTitle || testData.title}
+                value={testTitle || testData?.title}
                 onChange={(e) => setTestTitle(e.target.value)}
               />
               <Input
                 type="number"
                 label="Time"
                 className="text-white"
-                value={testTime || testData.time}
+                value={testTime || testData?.time}
                 onChange={(e) => setTestTime(Number(e.target.value))}
               />
               <Input
                 type="number"
                 label="Part Number"
                 className="text-white"
-                value={testPartNumber || testData.part_number}
+                value={testPartNumber || testData?.part_number}
                 onChange={(e) => setTestPartNumber(Number(e.target.value))}
               />
               <Input
                 type="number"
                 label="Question Number"
                 className="text-white"
-                value={testQuestionNumber || testData.question_number}
+                value={testQuestionNumber || testData?.question_number}
                 onChange={(e) => setTestQuestionNumber(Number(e.target.value))}
               />
               <Select label="Topics" className="text-white">

@@ -2,8 +2,8 @@ import axios from "axios";
 
 const updateInfoCurrentUser = async (
   userId: number,
-  name: string,
-  bio: any,
+  name: string | null,
+  bio: string | null,
   avatar: number,
   jwt: string
 ) => {
