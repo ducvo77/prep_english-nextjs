@@ -8,7 +8,21 @@ export const answer = createSlice({
   initialState,
   reducers: {
     enteredAnswer: (state, action: PayloadAction<AnswerState>) => {
+      console.log(action.payload);
+
+      // Trường hợp câu đó rỗng và chưa có dữ liệu câu đó đó
+      if (
+        action.payload.content[0].answer === "" &&
+        state.every((item) =>
+          item.content.every(
+            (item) => item.number !== action.payload.content[0].number
+          )
+        )
+      ) {
+        return;
+      }
       //Trường hợp chưa có part đó trong mảng
+
       if (state.every((item) => item.name !== action.payload.name)) {
         return [
           ...state,

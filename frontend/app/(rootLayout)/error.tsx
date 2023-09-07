@@ -15,7 +15,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div>
+    <div className="min-h-[60vh]">
       <h2>Something went wrong!</h2>
       <button
         onClick={

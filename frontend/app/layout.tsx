@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Prep English",
-  description: "Initial App",
+  description: "Prep English - Luyện IELTS với ChatGPT",
 };
 interface RootLayoutProps {
   children: React.ReactNode;
