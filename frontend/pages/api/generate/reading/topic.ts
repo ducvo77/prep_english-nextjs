@@ -68,7 +68,7 @@ export default async function handler(
 }
 
 function generatePrompt(describe: string, passage: string, level: string) {
-  return `Hello! Please help me create an IELTS Reading, provide me with the topic and questions, in the following required IELT format:
+  return `Hello! Please create an IELTS Reading test, provide topics and questions so I can practice. You will give me the test in IELT format, the following required options:
   1. Subject: ${describe}
   2. Passage in IELTS test: ${passage}
   3. Easy difficulty level: ${level}

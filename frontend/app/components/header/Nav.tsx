@@ -18,7 +18,7 @@ const MENU_LIST = [
     href: "/#chatgpt",
   },
   {
-    label: "Tài liệu tham khảo",
+    label: "Bài viết",
     href: "/#blogs",
   },
   {

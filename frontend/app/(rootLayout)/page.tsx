@@ -44,7 +44,7 @@ export default async function Page() {
       <Section id="chatgpt" label="Luyện English cùng ChatGPT">
         <PromptChatgpt />
       </Section>
-      <Section id="blogs" label="Tài liệu tham khảo">
+      <Section id="blogs" label="Bài viết">
         <BlogList data={blogList.data} />
       </Section>
     </>

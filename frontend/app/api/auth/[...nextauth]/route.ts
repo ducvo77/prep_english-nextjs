@@ -20,8 +20,10 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
-        if (credentials == null) return null;
+        if (!credentials) return null;
+
         try {
           const { user, jwt } =
             (await axios
@@ -56,6 +58,8 @@ export const authOptions: NextAuthOptions = {
     },
 
     jwt: async ({ token, user, account }: any) => {
+      console.log(account);
+
       const isSignIn = user ? true : false;
       if (isSignIn && account) {
         try {
@@ -78,9 +82,6 @@ export const authOptions: NextAuthOptions = {
   },
 
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/login",
-  },
 };
 
 const handler = NextAuth(authOptions);

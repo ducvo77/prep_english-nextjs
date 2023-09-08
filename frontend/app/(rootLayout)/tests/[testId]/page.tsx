@@ -2,7 +2,6 @@ import TestHeader from "@/app/components/tests/TestHeader";
 import TestContent from "@/app/components/tests/TestContent";
 import getTest from "@/app/lib/getTest";
 import { Metadata } from "next";
-import { useRouter } from "next/router";
 
 interface TestPageProps {
   params: {

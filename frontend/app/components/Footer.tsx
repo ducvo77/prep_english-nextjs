@@ -46,7 +46,7 @@ const SITEMAP = [
       { label: "Trang chủ", link: "/#" },
       { label: "Bài tập", link: "/#practice" },
       { label: "ChatGPT", link: "/#chatgpt" },
-      { label: "Tài liệu tham khảo", link: "/#blogs" },
+      { label: "Bài viêt", link: "/#blogs" },
     ],
   },
 ];

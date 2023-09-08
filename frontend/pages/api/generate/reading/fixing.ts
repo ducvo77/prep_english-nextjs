@@ -67,7 +67,7 @@ export default async function handler(
 }
 
 function generatePrompt(topic: string, data: string) {
-  return `làm ơn sửa đổi và giải thích chi tiết giúp tôi trả lời câu hỏi của bài đọc ielt này, tôi sẽ gửi câu hỏi và câu trả lời cho bạn dưới đây:
+  return `Please edit and explain in detail to help me answer the question of this ielt reading passage, I will send the question and answer to you below:
   - Topic: ${topic}
   - The answer i do: ${data}
   `;
