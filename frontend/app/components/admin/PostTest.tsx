@@ -58,7 +58,7 @@ export default function PostTest({
 
   const handlePostTopic = async () => {
     if (!topic) {
-      toast.error("Thất bại !!");
+      toast.error("Vui lòng nhập đủ thông tin !!");
       return;
     }
     const res = await addTopic(topic, author, jwt);
@@ -91,7 +91,7 @@ export default function PostTest({
       !testQuestionNumber ||
       !topicId
     ) {
-      toast.error("Thất bại !!");
+      toast.error("Vui lòng nhập đủ thông tin !!");
       return;
     }
     const res = await addTest(
@@ -106,12 +106,12 @@ export default function PostTest({
 
     if (res) {
       toast.success("Thành công !!");
-      router.refresh();
-      setTopic("");
       setTestTitle("");
+      setTopicId(0);
       setTestTime(0);
       setTestPartNumber(0);
       setTestQuestionNumber(0);
+      router.refresh();
     }
   };
 
@@ -139,7 +139,11 @@ export default function PostTest({
 
       if (res) {
         toast.success("Thành công");
-        setTopic("");
+        setTestTitle("");
+        setTopicId(0);
+        setTestTime(0);
+        setTestPartNumber(0);
+        setTestQuestionNumber(0);
         router.refresh();
       }
     }
@@ -163,7 +167,7 @@ export default function PostTest({
               label="Title of topic"
               className="text-white"
               onChange={(e) => setTopic(e.target.value)}
-              value={topic || topicData?.title}
+              value={topic || topicData?.title || ""}
             />
             <Button onClick={topicData ? handleEditTopic : handlePostTopic}>
               {topicData ? "Edit" : "Post"}
@@ -182,33 +186,47 @@ export default function PostTest({
                 type="text"
                 label="Title"
                 className="text-white"
-                value={testTitle || testData?.title}
+                value={testTitle || testData?.title || ""}
                 onChange={(e) => setTestTitle(e.target.value)}
               />
               <Input
                 type="number"
                 label="Time"
                 className="text-white"
-                value={testTime || testData?.time}
+                value={testTime || testData?.time || 0}
                 onChange={(e) => setTestTime(Number(e.target.value))}
               />
               <Input
                 type="number"
                 label="Part Number"
                 className="text-white"
-                value={testPartNumber || testData?.part_number}
+                value={testPartNumber || testData?.part_number || 0}
                 onChange={(e) => setTestPartNumber(Number(e.target.value))}
               />
               <Input
                 type="number"
                 label="Question Number"
                 className="text-white"
-                value={testQuestionNumber || testData?.question_number}
+                value={testQuestionNumber || testData?.question_number || 0}
                 onChange={(e) => setTestQuestionNumber(Number(e.target.value))}
               />
-              <Select label="Topics" className="text-white">
+              <Select
+                label="Topics"
+                className="text-white"
+                value={
+                  topicList?.filter(
+                    (item) => item.id === testData?.topic?.id
+                  )[0]?.title
+                }
+                onChange={(value) => {
+                  setTopicId(
+                    topicList?.filter((item) => item.title === value)[0]?.id ||
+                      0
+                  );
+                }}
+              >
                 {topicList?.map(({ id, title }) => (
-                  <Option key={id} value={title} onClick={() => setTopicId(id)}>
+                  <Option key={id} value={title}>
                     {title}
                   </Option>
                 ))}
@@ -216,8 +234,8 @@ export default function PostTest({
             </div>
           </div>
 
-          <Button onClick={topicList ? handleEditTest : handlePostTest}>
-            {topicList ? "Edit" : "Post"}
+          <Button onClick={testData ? handleEditTest : handlePostTest}>
+            {testData ? "Edit" : "Post"}
           </Button>
         </div>
       )}

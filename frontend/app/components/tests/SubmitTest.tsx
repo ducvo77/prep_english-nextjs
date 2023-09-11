@@ -5,7 +5,7 @@ import {
 } from "@/app/redux/features/infoTestSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ButtonOutPage from "../ButtonOutPage";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -16,7 +16,6 @@ interface SubmitTestProps {
 }
 
 export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
-  // const answer: AnswerState[] = useAppSelector((state) => state.answerReducer);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -39,12 +38,8 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
   const [elapsedTime, setElapsedTime] = useState(timeTypeNumber);
   const [time, setTime] = useState("");
 
-  const handleSubmitTest = async () => {
-    const res = await submitTest(
-      infoData,
-      session?.user?.id || session?.user?.sub,
-      answerData
-    );
+  const handleSubmitTest = useCallback(async () => {
+    const res = await submitTest(infoData, session?.user?.id, answerData);
 
     if (res) {
       toast.success("Nộp bài thành công!!");
@@ -52,7 +47,14 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     } else {
       toast.error("Nộp bài thất bại!!");
     }
-  };
+  }, [answerData, data, infoData, router, session]);
+
+  useEffect(() => {
+    // Nộp bài khi hết thời gian
+    if (!userAssignment && data.time === elapsedTime / 60) {
+      handleSubmitTest();
+    }
+  }, [data, elapsedTime, handleSubmitTest, userAssignment]);
 
   useEffect(() => {
     const contentLength = answerData.map((item) => item.content).length;
@@ -107,7 +109,6 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
 
   useEffect(() => {
     if (userAssignment) return;
-
     dispatch(getTimeTest({ time }));
   }, [time, dispatch, userAssignment]);
 

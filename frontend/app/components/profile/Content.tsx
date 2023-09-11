@@ -7,7 +7,7 @@ import { Button, Input } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 interface ContentProps {
@@ -15,8 +15,8 @@ interface ContentProps {
 }
 
 export default function Content({ userData }: ContentProps) {
-  const [name, setName] = useState(userData.name || "");
-  const [bio, setBio] = useState(userData.bio || "");
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState({});
   const router = useRouter();
@@ -34,7 +34,12 @@ export default function Content({ userData }: ContentProps) {
   );
 
   const handleSave = async () => {
-    if (name === userData.name && bio === userData.bio && !imageUrl) {
+    if (
+      (name === userData.name &&
+        (bio === userData.bio || !userData.bio) &&
+        !imageUrl) ||
+      (!name && !bio && !imageUrl)
+    ) {
       toast.error("Chưa có sự thay đổi!");
       return;
     }
@@ -57,11 +62,12 @@ export default function Content({ userData }: ContentProps) {
         jwt
       );
     }
+
     if (resInfo || resImage) {
       toast.success("Thành công!");
-      // setName("");
-      // setBio("");
-      // setImageUrl("");
+      setName("");
+      setBio("");
+      setImageUrl("");
       router.refresh();
     }
   };
@@ -69,8 +75,17 @@ export default function Content({ userData }: ContentProps) {
   const handleCancel = () => {
     setName(userData.name || "");
     setBio(userData.bio || "");
-    setImageUrl("");
+    setImageUrl(
+      userData.avatar
+        ? process.env.NEXT_PUBLIC_SOURCE_URL + userData.avatar[0].url
+        : ""
+    );
   };
+
+  useEffect(() => {
+    setName(userData.name || "");
+    setBio(userData.bio || "");
+  }, [userData]);
 
   return (
     <div className="flex flex-col xl:mx-20 lg:mx-12 md:mx-6 sm:mx-4 mx-2  gap-10">

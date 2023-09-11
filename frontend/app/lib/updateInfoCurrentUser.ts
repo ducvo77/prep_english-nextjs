@@ -7,9 +7,11 @@ const updateInfoCurrentUser = async (
   avatar: number,
   jwt: string
 ) => {
+  console.log(name);
   return axios
     .put(
       `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`,
+
       {
         name,
         bio,

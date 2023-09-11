@@ -27,9 +27,9 @@ export default function TestList({ data }: TestListProps) {
   return (
     <>
       <ContainerGrid>
-        {data.map(({ id, tests }, index) => (
-          <Fragment key={id}>
-            {tests.map(
+        {data.map((topic, index) => (
+          <Fragment key={topic.id}>
+            {topic.tests.map(
               ({ id, title, time, part_number, question_number }, index2) => (
                 <div
                   key={id}
@@ -37,7 +37,7 @@ export default function TestList({ data }: TestListProps) {
                 >
                   <h3 className="font-semibold">{title}</h3>
                   <div className="flex flex-col gap-1 text-[#677788] text-sm font-medium">
-                    <span>{title}</span>
+                    <span>{topic.title}</span>
                     <div className="flex gap-1">
                       <span className=" border-r-2 border-[#677788] pr-1">
                         {time} phút
@@ -51,7 +51,7 @@ export default function TestList({ data }: TestListProps) {
 
                   <ButtonOutPage
                     onClick={() =>
-                      handleClickTest(id, title, title, question_number)
+                      handleClickTest(id, title, topic.title, question_number)
                     }
                     variant="outlined"
                     className="font-semibold border-primary hover:bg-primary py-2 hover:text-white text-primary hover:opacity-100"

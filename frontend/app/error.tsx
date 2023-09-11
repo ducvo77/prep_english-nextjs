@@ -16,14 +16,14 @@ export default function Error({
 
   return (
     <div className="min-h-[60vh]">
-      <h2>Something went wrong!</h2>
+      <h2>Có lỗi gì đó!</h2>
       <button
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
-        Try again
+        Thử lại sau
       </button>
     </div>
   );
