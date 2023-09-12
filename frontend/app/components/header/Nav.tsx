@@ -3,6 +3,8 @@
 import { Button } from "@material-tailwind/react";
 import User from "./User";
 import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const MENU_LIST = [
   {
@@ -36,6 +38,8 @@ interface NavProps {
 
 export default function Nav({ show, userData }: NavProps) {
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const Tag = pathname === "/" ? "a" : Link;
   return (
     <div className={`${show ? "flex" : "lg:flex hidden"} gap-20`}>
       <ul className="flex md:flex-row flex-col md:gap-10 gap-4 items-center">
@@ -52,7 +56,7 @@ export default function Nav({ show, userData }: NavProps) {
                 }`}
               >
                 {item.href ? (
-                  <a href={item.href}>{item.label}</a>
+                  <Tag href={item.href}>{item.label}</Tag>
                 ) : (
                   <>{item.label}</>
                 )}

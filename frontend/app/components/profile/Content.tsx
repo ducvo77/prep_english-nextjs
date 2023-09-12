@@ -18,7 +18,7 @@ export default function Content({ userData }: ContentProps) {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [imageFile, setImageFile] = useState({});
+  const [imageFile, setImageFile] = useState<any>(null);
   const router = useRouter();
   const { data: session }: any = useSession();
   const jwt = useMemo(() => session?.user?.jwt, [session]);
@@ -44,7 +44,7 @@ export default function Content({ userData }: ContentProps) {
       return;
     }
     let resImage = undefined;
-    if (imageUrl) {
+    if (imageFile) {
       resImage = await uploadFile(imageFile, jwt);
 
       if (resImage && userData.avatar) {

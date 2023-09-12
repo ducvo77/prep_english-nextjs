@@ -34,7 +34,7 @@ export default async function BlogPage({ params: { blogId } }: BlogPageProps) {
   const [blog, blogList] = await Promise.all([blogData, blogListData]);
 
   return (
-    <div className="relative py-4 min-h-[80vh]">
+    <div className="relative py-4 min-h-[80vh] flex flex-col-reverse sm:px-0 px-1">
       <SideBarBlog data={blogList.data} />
       <BlogDetail data={blog.data} />
     </div>

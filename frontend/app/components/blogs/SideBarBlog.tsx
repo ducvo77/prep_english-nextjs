@@ -12,7 +12,7 @@ export default function SideBarBlog({ data }: SideBarBlogProps) {
   const params = useParams();
 
   return (
-    <div className="h-auto w-[300px] fixed top-[100px] max-h-[50vh] overflow-y-scroll shadow-md">
+    <div className="h-auto md:w-[300px] sm:w-[200px] w-full sm:fixed top-[100px] max-h-[50vh] overflow-y-scroll shadow-md">
       <Card className="w-full py-4">
         <h2 className="text-center text-xl font-semibold text-red-700">
           Bài viết liên quan

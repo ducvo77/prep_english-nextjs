@@ -5,7 +5,7 @@ import {
 } from "@/app/redux/features/infoTestSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useSession } from "next-auth/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ButtonOutPage from "../ButtonOutPage";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -17,6 +17,8 @@ interface SubmitTestProps {
 
 export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
   const router = useRouter();
+  const { data: session }: any = useSession();
+  const jwt = useMemo(() => session?.user?.id, [session]);
   const dispatch = useAppDispatch();
 
   const infoData: InfoTestStates = useAppSelector(
@@ -25,7 +27,6 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
   const answerData: AnswerState[] = useAppSelector(
     (state) => state.answerReducer
   );
-  const { data: session }: any = useSession();
 
   const timeTypeNumber = () => {
     const [minutes, seconds] = infoData.time
@@ -38,8 +39,41 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
   const [elapsedTime, setElapsedTime] = useState(timeTypeNumber);
   const [time, setTime] = useState("");
 
-  const handleSubmitTest = useCallback(async () => {
-    const res = await submitTest(infoData, session?.user?.id, answerData);
+  useEffect(() => {
+    if (userAssignment) return;
+
+    const interval = setInterval(() => {
+      setElapsedTime(elapsedTime + 1);
+    }, 1000);
+    if (data.time === elapsedTime / 60) {
+      return () => clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [elapsedTime, userAssignment, data]);
+
+  useEffect(() => {
+    if (userAssignment) return;
+
+    const hours = Math.floor(elapsedTime / 3600);
+    const minutes = Math.floor((elapsedTime % 3600) / 60);
+    const remainingSeconds = elapsedTime % 60;
+    const formattedHours = String(hours).padStart(2, "0");
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+    if (hours > 0) {
+      setTime(`${formattedHours}:${formattedMinutes}:${formattedSeconds}`);
+    } else {
+      setTime(`${formattedMinutes}:${formattedSeconds}`);
+    }
+  }, [elapsedTime, userAssignment]);
+
+  useEffect(() => {
+    if (userAssignment) return;
+    dispatch(getTimeTest({ time }));
+  }, [time, dispatch, userAssignment]);
+
+  const handleSubmitTest = async () => {
+    const res = await submitTest(infoData, jwt, answerData);
 
     if (res) {
       toast.success("Nộp bài thành công!!");
@@ -47,14 +81,14 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     } else {
       toast.error("Nộp bài thất bại!!");
     }
-  }, [answerData, data, infoData, router, session]);
+  };
 
   useEffect(() => {
     // Nộp bài khi hết thời gian
-    if (!userAssignment && data.time === elapsedTime / 60) {
-      handleSubmitTest();
-    }
-  }, [data, elapsedTime, handleSubmitTest, userAssignment]);
+    if (userAssignment) return;
+    if (data.time === elapsedTime / 60) handleSubmitTest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, elapsedTime, userAssignment]);
 
   useEffect(() => {
     const contentLength = answerData.map((item) => item.content).length;
@@ -81,36 +115,6 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
       dispatch(getCorrectAmount({ correct_amount }));
     }
   }, [data, dispatch, answerData]);
-
-  useEffect(() => {
-    if (userAssignment) return;
-
-    const interval = setInterval(() => {
-      setElapsedTime(elapsedTime + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [elapsedTime, userAssignment]);
-
-  useEffect(() => {
-    if (userAssignment) return;
-
-    const hours = Math.floor(elapsedTime / 3600);
-    const minutes = Math.floor((elapsedTime % 3600) / 60);
-    const remainingSeconds = elapsedTime % 60;
-    const formattedHours = String(hours).padStart(2, "0");
-    const formattedMinutes = String(minutes).padStart(2, "0");
-    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
-    if (hours > 0) {
-      setTime(`${formattedHours}:${formattedMinutes}:${formattedSeconds}`);
-    } else {
-      setTime(`${formattedMinutes}:${formattedSeconds}`);
-    }
-  }, [elapsedTime, userAssignment]);
-
-  useEffect(() => {
-    if (userAssignment) return;
-    dispatch(getTimeTest({ time }));
-  }, [time, dispatch, userAssignment]);
 
   return (
     <>

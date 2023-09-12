@@ -115,7 +115,7 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
       </Tabs>
       <div className="md:w-[200px] sm:w-[100px] w-full border p-3 flex flex-col gap-4 flex-shrink-0">
         <SubmitTest userAssignment={userAssignment} data={data} />
-        <Answer data={data} />
+        <Answer userAssignment={userAssignment} data={data} />
       </div>
     </div>
   );
