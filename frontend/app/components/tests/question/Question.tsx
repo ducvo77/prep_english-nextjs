@@ -8,7 +8,7 @@ import WS from "./WS";
 
 interface QuestionProps {
   data: Question;
-  part: number;
+
   userAssignment?: UserAssignment;
   isLR: boolean;
   isSpeaking: boolean;
@@ -16,7 +16,6 @@ interface QuestionProps {
 
 export default function Question({
   data,
-  part,
   userAssignment,
   isLR,
   isSpeaking,
@@ -62,8 +61,9 @@ export default function Question({
   const handleValueInput = useCallback(
     (value: string, number: number, index: number) => {
       if (userAssignment) return;
+      console.log(index, number);
 
-      if (index + 1 === number) {
+      if (index === number) {
         setValueInput((prevState) => ({
           ...prevState,
           [number]: value,
@@ -79,7 +79,7 @@ export default function Question({
 
     arrayData?.map(({ content }) => {
       content.map((item) => {
-        setValueInput((prevState) => ({
+        return setValueInput((prevState) => ({
           ...prevState,
           [item.number]: item.answer,
         }));
@@ -117,108 +117,6 @@ export default function Question({
     <ul className="flex flex-col gap-10 overflow-y-scroll pb-10 lg:w-1/3 w-full h-full max-h-[750px]">
       {data.data.map(({ number, answer, explain, question }, index) =>
         isLR ? (
-          // <li key={number} className="flex gap-2">
-          //   <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">
-          //     {number}
-          //   </strong>
-          //   <div className="flex flex-col w-full gap-2">
-          //     {question.length > 1 ? (
-          //       <div className="flex flex-col text-gray-900 font-normal text-sm">
-          //         <h3>{question[0]}</h3>
-          //         {question.map(
-          //           (item, index2) =>
-          //             index2 >= 1 && (
-          //               <div
-          //                 key={item}
-          //                 className="flex items-center justify-start text-red-600"
-          //               >
-          //                 <Radio
-          //                   disabled={!!userAssignment}
-          //                   onChange={(e) =>
-          //                     handleValueInput(
-          //                       e.target.value,
-          //                       Number(number),
-          //                       part * data.data.length + index
-          //                     )
-          //                   }
-          //                   name={item}
-          //                   onBlur={() =>
-          //                     handleChangeInput(
-          //                       valueInput[Number(number)],
-          //                       Number(number),
-          //                       data.name
-          //                     )
-          //                   }
-          //                   value={item}
-          //                   checked={item === valueInput[Number(number)]}
-          //                   label={item}
-          //                   containerProps={{
-          //                     className: "p-0",
-          //                   }}
-          //                   labelProps={{
-          //                     className: `px-2 py-1 font-normal text-gray-900 ${
-          //                       !userAssignment
-          //                         ? ""
-          //                         : `${
-          //                             isRightAnswer[Number(number)] &&
-          //                             item === valueInput[Number(number)] &&
-          //                             "bg-green-200"
-          //                           } ${
-          //                             !isRightAnswer[Number(number)] &&
-          //                             item === valueInput[Number(number)] &&
-          //                             "bg-red-200"
-          //                           }`
-          //                     }`,
-          //                   }}
-          //                 />
-          //               </div>
-          //             )
-          //         )}
-          //       </div>
-          //     ) : (
-          //       <div className="flex flex-col text-black w-2/3">
-          //         <label className="mb-1 text-gray-900 font-normal text-sm">
-          //           {question}
-          //         </label>
-          //         <input
-          //           disabled={!!userAssignment}
-          //           onBlur={() =>
-          //             handleChangeInput(
-          //               valueInput[Number(number)],
-          //               Number(number),
-          //               data.name
-          //             )
-          //           }
-          //           type="text"
-          //           className={`border rounded-md focus:border-blue-700 focus:outline-none pl-2 text-black w-full ${
-          //             !userAssignment
-          //               ? "border-gray-500"
-          //               : isRightAnswer[Number(number)]
-          //               ? "border-green-200"
-          //               : "border-red-200"
-          //           }`}
-          //           value={valueInput[Number(number)]}
-          //           onChange={(e) =>
-          //             handleValueInput(
-          //               e.target.value,
-          //               Number(number),
-          //               part * data.data.length + index
-          //             )
-          //           }
-          //         />
-          //       </div>
-          //     )}
-          //     {userAssignment && (
-          //       <>
-          //         <div className="text-green-500 text-sm">
-          //           <strong>Đáp án đúng: </strong>
-          //           <span>{answer}</span>
-          //         </div>
-          //         <ExplainAnswer explain={explain} />
-          //       </>
-          //     )}
-          //   </div>
-          // </li>
           <LR
             key={number}
             data={{ number, answer, explain, question, index }}
@@ -226,7 +124,7 @@ export default function Question({
             valueInput={valueInput}
             isRightAnswer={isRightAnswer}
             name={data.name}
-            numberQuestion={part * data.data.length + index}
+            numberQuestion={Number(number)}
             handleValueInput={handleValueInput}
             handleChangeInput={handleChangeInput}
           />
@@ -238,60 +136,10 @@ export default function Question({
             userAssignment={userAssignment}
             valueInput={valueInput}
             name={data.name}
-            numberQuestion={part * data.data.length + index}
+            numberQuestion={Number(number)}
             handleValueInput={handleValueInput}
             handleChangeInput={handleChangeInput}
           />
-          // <div key={number} className="flex flex-col gap-6 w-full mt-1">
-          //   <div className="flex gap-2 items-center">
-          //     <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">
-          //       {number}
-          //     </strong>
-          //     {!userAssignment && (
-          //       <Button
-          //         variant="outlined"
-          //         className="text-primary border-pritext-primary capitalize w-[200px]"
-          //         onClick={() => setShow(!show)}
-          //       >
-          //         Thêm ghi chú / dàn ý
-          //       </Button>
-          //     )}
-          //   </div>
-
-          //   {show && (
-          //     <Textarea
-          //       resize
-          //       label="Thêm ghi chú tại đây..."
-          //       className={`w-full h-[84px] transition`}
-          //       value={note}
-          //       onChange={(e) => setNote(e.target.value)}
-          //     />
-          //   )}
-
-          //   <Textarea
-          //     resize
-          //     label="Viết essay tại đây..."
-          //     className="w-full h-auto min-h-[360px]"
-          //     value={valueInput[Number(number)]}
-          //     onChange={(e) =>
-          //       handleValueInput(
-          //         e.target.value,
-          //         Number(number),
-          //         part * data.data.length + index
-          //       )
-          //     }
-          //     onBlur={() =>
-          //       handleChangeInput(
-          //         valueInput[Number(number)],
-          //         Number(number),
-          //         data.name
-          //       )
-          //     }
-          //   />
-          //   <span className="text-gray-900 text-base">
-          //     Word count: {count || 0}
-          //   </span>
-          // </div>
         )
       )}
     </ul>

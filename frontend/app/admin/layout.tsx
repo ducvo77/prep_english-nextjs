@@ -3,11 +3,11 @@ import getCurrentUser from "../lib/getCurrentUser";
 import { redirect } from "next/navigation";
 import { getSession } from "../lib/getSession";
 
-interface RootLayoutProps {
+interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function AdminLayout({ children }: AdminLayoutProps) {
   const session: User = await getSession();
 
   const currentUser: CurrentUser = await getCurrentUser(session?.user?.jwt);

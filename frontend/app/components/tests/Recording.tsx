@@ -51,6 +51,7 @@ const Recording: React.FC<RecordingProps> = ({
 
   const handleRecordingStop = (blob: string) => {
     // Xử lý file audio blob sau khi ghi âm hoàn tất
+
     setUrlAudio((prev) => ({
       ...prev,
       [number]: blob,

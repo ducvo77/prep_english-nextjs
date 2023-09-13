@@ -12,11 +12,11 @@ export const metadata: Metadata = {
   title: "Prep English",
   description: "Prep English - Luyện IELTS với ChatGPT",
 };
-interface RootLayoutProps {
+interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function Layout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>

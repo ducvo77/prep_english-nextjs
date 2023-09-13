@@ -47,45 +47,6 @@ export default function LR({
                     key={item}
                     className="flex items-center justify-start text-red-600"
                   >
-                    {/* <Radio
-                      disabled={!!userAssignment}
-                      onChange={(e) =>
-                        handleValueInput(
-                          e.target.value,
-                          Number(data.number),
-                          numberQuestion
-                        )
-                      }
-                      name={item}
-                      onBlur={() =>
-                        handleChangeInput(
-                          valueInput[Number(data.number)],
-                          Number(data.number),
-                          name
-                        )
-                      }
-                      value={item}
-                      checked={item === valueInput[Number(data.number)]}
-                      label={item}
-                      containerProps={{
-                        className: "p-0",
-                      }}
-                      labelProps={{
-                        className: `px-2 py-1 font-normal text-gray-900 ${
-                          !userAssignment
-                            ? ""
-                            : `${
-                                isRightAnswer[Number(data.number)] &&
-                                item === valueInput[Number(data.number)] &&
-                                "bg-green-200"
-                              } ${
-                                !isRightAnswer[Number(data.number)] &&
-                                item === valueInput[Number(data.number)] &&
-                                "bg-red-200"
-                              }`
-                        }`,
-                      }}
-                    /> */}
                     <input
                       type="radio"
                       disabled={!!userAssignment}

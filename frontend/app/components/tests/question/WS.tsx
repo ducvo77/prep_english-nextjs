@@ -34,6 +34,7 @@ export default function WS({
   const [show, setShow] = useState(false);
   const [count, setCount] = useState(0);
   // Đếm số từ phần writing
+
   useEffect(() => {
     const number = name === "Task 1" ? 1 : 2;
     setCount(

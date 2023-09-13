@@ -23,7 +23,7 @@ export default function Answer({ data, userAssignment }: AnswerProps) {
             (item.number === number && item.answer === answer) ||
             ((data.title.includes("writing") ||
               data.title.includes("speaking")) &&
-              newArrayUserAssignment.find((item) => item.number === number))
+              newArrayUserAssignment.find((item) => item.number == number))
         )
       ) {
         return "bg-green-800 border-green-800 text-white";

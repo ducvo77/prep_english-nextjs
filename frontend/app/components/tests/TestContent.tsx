@@ -94,7 +94,6 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
                       }
                       isSpeaking={data.title.includes("speaking")}
                       data={part}
-                      part={index}
                       userAssignment={userAssignment}
                     />
                   }
