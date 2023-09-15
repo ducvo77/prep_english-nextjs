@@ -1,5 +1,7 @@
 "use client"; // Error components must be Client Components
 
+import { Button } from "@material-tailwind/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Error({
@@ -10,21 +12,21 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
   }, [error]);
-
+  const router = useRouter();
   return (
-    <div className="min-h-[60vh]">
-      <h2>Có lỗi gì đó!</h2>
-      <button
+    <div className="min-h-[100vh] text-center mt-[40vh]">
+      <h2 className="mb-2 text-xl">Có lỗi gì đó!</h2>
+      <Button
         onClick={
           // Attempt to recover by trying to re-render the segment
-          () => reset()
+          () => router.push("/")
         }
+        // className="block"
       >
-        Thử lại sau
-      </button>
+        Quan lại trang chủ
+      </Button>
     </div>
   );
 }

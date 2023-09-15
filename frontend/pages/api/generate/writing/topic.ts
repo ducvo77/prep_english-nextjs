@@ -68,9 +68,11 @@ export default async function handler(
 }
 
 function generatePrompt(describe: string, task: string, level: string) {
-  return `Hello! Can you help me create an IELTS Writing prompt and provide an outline for that writing task, by the following required IELT format:
+  return `Hello! Can you help me create an IELTS Writing prompt and provide an outline for that writing task, following the required IELTS format:
+  
   1. Subject: ${describe}
-  2. Task in IELTS test: ${task}
+  2. Task in the IELTS test: ${task}
   3. Easy difficulty level: ${level}
+  Please provide an outline for the writing task.
   `;
 }

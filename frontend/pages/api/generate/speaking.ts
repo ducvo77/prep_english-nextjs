@@ -39,11 +39,12 @@ export default async function handler(
   }
 
   const { describe, part, level } = req.body;
+  let prompt = generatePrompt(describe, part, level);
 
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(describe, part, level),
+      prompt,
       temperature: 0.6,
       max_tokens: 2048,
       frequency_penalty: 0.5,
@@ -68,11 +69,12 @@ export default async function handler(
 }
 
 function generatePrompt(describe: string, part: string, level: string) {
-  return `You are a teacher preparing for the IELTS Speaking test for your students. Help your students practice by giving the following required IELT format:
+  return `You are a teacher preparing your students for the IELTS Speaking test. Help them practice by providing the following required IELTS format:
+  
   1. Subject: ${describe}
-  2. Part in IELTS test: ${part}
+  2. Part in the IELTS test: ${part}
   3. Easy difficulty level: ${level}
   4. Suggestions for the above question
-  5. Sample answers you can refer to
+  5. Sample answers for reference  
   `;
 }

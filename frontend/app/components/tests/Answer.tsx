@@ -1,13 +1,14 @@
 "use client";
 
 import { useAppSelector } from "@/app/redux/hook";
+import { memo } from "react";
 
 interface AnswerProps {
   data: Test;
   userAssignment?: UserAssignment;
 }
 
-export default function Answer({ data, userAssignment }: AnswerProps) {
+function Answer({ data, userAssignment }: AnswerProps) {
   const answerValue: AnswerState[] = useAppSelector(
     (state) => state.answerReducer
   );
@@ -73,3 +74,5 @@ export default function Answer({ data, userAssignment }: AnswerProps) {
     </>
   );
 }
+
+export default memo(Answer);

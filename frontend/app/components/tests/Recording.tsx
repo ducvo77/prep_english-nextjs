@@ -3,7 +3,7 @@
 import { enteredAnswer } from "@/app/redux/features/answerSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@material-tailwind/react";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { BsFillMicFill } from "react-icons/bs";
 import { ImPause2 } from "react-icons/im";
 import { ReactMediaRecorder } from "react-media-recorder-2";
@@ -126,4 +126,4 @@ const Recording: React.FC<RecordingProps> = ({
   );
 };
 
-export default Recording;
+export default memo(Recording);

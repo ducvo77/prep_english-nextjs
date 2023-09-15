@@ -2,12 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import ButtonOutPage from "../ButtonOutPage";
+import { memo } from "react";
 
-interface HeaderTestProps {
+interface TestHeaderProps {
   data: Test;
 }
 
-export default function HeaderTest({ data }: HeaderTestProps) {
+function TestHeader({ data }: TestHeaderProps) {
   const router = useRouter();
 
   return (
@@ -28,3 +29,5 @@ export default function HeaderTest({ data }: HeaderTestProps) {
     </div>
   );
 }
+
+export default memo(TestHeader);

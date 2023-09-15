@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, memo, useCallback, useState } from "react";
 import { getInfoTest } from "../../redux/features/infoTestSlice";
 import { useAppDispatch } from "../../redux/hook";
 import ButtonOutPage from "../ButtonOutPage";
@@ -11,7 +11,7 @@ interface TestListProps {
   data: Topic[];
 }
 
-export default function TestList({ data }: TestListProps) {
+function TestList({ data }: TestListProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -69,3 +69,5 @@ export default function TestList({ data }: TestListProps) {
     </>
   );
 }
+
+export default memo(TestList);

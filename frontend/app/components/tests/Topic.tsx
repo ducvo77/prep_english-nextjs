@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 interface TopicProps {
   data: {
@@ -16,4 +16,4 @@ function Topic({ data }: TopicProps) {
   return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
 }
 
-export default Topic;
+export default memo(Topic);

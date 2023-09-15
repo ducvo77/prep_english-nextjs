@@ -5,7 +5,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 const CUSTOM_ANIMATION = {
@@ -13,7 +13,7 @@ const CUSTOM_ANIMATION = {
   unmount: { scale: 0.9 },
 };
 
-export default function ExplainAnswer({ explain }: { explain: string }) {
+function ExplainAnswer({ explain }: { explain: string }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
@@ -42,3 +42,5 @@ export default function ExplainAnswer({ explain }: { explain: string }) {
     </>
   );
 }
+
+export default memo(ExplainAnswer);

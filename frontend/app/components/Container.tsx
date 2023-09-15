@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { clearInfoTest } from "../redux/features/infoTestSlice";
 import { clearAnswer } from "../redux/features/answerSlice";
 import { useAppDispatch } from "../redux/hook";

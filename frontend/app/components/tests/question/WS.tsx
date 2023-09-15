@@ -1,6 +1,6 @@
 "use client";
 import { Button, Collapse, Textarea } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Recording from "../Recording";
 
 interface WSProps {
@@ -20,7 +20,7 @@ interface WSProps {
   handleChangeInput: (value: string, number: number, name: string) => void;
 }
 
-export default function WS({
+function WS({
   data,
   userAssignment,
   valueInput,
@@ -107,3 +107,5 @@ export default function WS({
     </div>
   );
 }
+
+export default memo(WS);

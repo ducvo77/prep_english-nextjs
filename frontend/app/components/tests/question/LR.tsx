@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import ExplainAnswer from "../ExplainAnswer";
 
 interface LRPRops {
@@ -21,7 +22,7 @@ interface LRPRops {
   handleChangeInput: (value: string, number: number, name: string) => void;
 }
 
-export default function LR({
+function LR({
   data,
   userAssignment,
   valueInput,
@@ -138,3 +139,5 @@ export default function LR({
     </li>
   );
 }
+
+export default memo(LR);

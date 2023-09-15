@@ -5,6 +5,10 @@ export default async function getBlog(id: string) {
       cache: "no-cache",
     }
   );
-  if (!res.ok) return null;
+  if (!res.ok) {
+    console.error("Invalid value!!");
+    return null;
+  }
+
   return res.json();
 }

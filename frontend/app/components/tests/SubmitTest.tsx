@@ -5,7 +5,7 @@ import {
 } from "@/app/redux/features/infoTestSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useSession } from "next-auth/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import ButtonOutPage from "../ButtonOutPage";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ interface SubmitTestProps {
   userAssignment: UserAssignment | undefined;
 }
 
-export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
+function SubmitTest({ data, userAssignment }: SubmitTestProps) {
   const router = useRouter();
   const { data: session }: any = useSession();
   const jwt = useMemo(() => session?.user?.id, [session]);
@@ -145,3 +145,5 @@ export default function SubmitTest({ data, userAssignment }: SubmitTestProps) {
     </>
   );
 }
+
+export default memo(SubmitTest);

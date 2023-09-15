@@ -66,8 +66,11 @@ export default async function handler(
 }
 
 function generatePrompt(topic: string, data: string) {
-  return `Please help me correct this article errors such as spelling, grammar, wording, ... fix all errors to make this IELT article the most complete, based on the topic and article information I provide below:
-  - Topic: ${topic}
-  - My article: ${data}
+  return `Please help me identify and correct errors in the following article. The article is based on the topic provided. Please underline any errors you find, explain the mistakes, and suggest corrections:
+  
+  Topic: ${topic}
+
+  Article:
+  ${data}
   `;
 }

@@ -21,7 +21,7 @@ export async function generateMetadata({
   const testData: Promise<TestDataType> = getTest(testId);
   const test = await testData;
   return {
-    title: "Đáp án chi tiết: " + test.data.title,
+    title: "Đáp án chi tiết: " + test.data?.title,
   };
 }
 

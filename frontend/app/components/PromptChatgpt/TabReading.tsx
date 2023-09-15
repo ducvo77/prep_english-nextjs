@@ -12,6 +12,7 @@ import TextareaOutput from "../input/TextareaOutput";
 import NoteUsing from "../NoteUsing";
 import { NextResponse } from "next/server";
 import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function TabReading() {
   const [describe, setDescribe] = useState("");
@@ -27,7 +28,7 @@ export default function TabReading() {
     async (event: React.SyntheticEvent<EventTarget>) => {
       event.preventDefault();
       setIsLoadingGenerate(true);
-
+      setResultTopic("");
       try {
         const response = await fetch("/api/generate/reading/topic", {
           method: "POST",
@@ -49,6 +50,7 @@ export default function TabReading() {
         return NextResponse.json(data);
       } catch (error) {
         console.error(error);
+        toast.error("Có lỗi!!");
       }
     },
     [describe, level, passage]
@@ -58,7 +60,7 @@ export default function TabReading() {
     async (event: React.SyntheticEvent<EventTarget>) => {
       event.preventDefault();
       setIsLoadingFixing(true);
-
+      setResultFixing("");
       try {
         const response = await fetch("/api/generate/reading/fixing", {
           method: "POST",
@@ -80,6 +82,7 @@ export default function TabReading() {
         return NextResponse.json(data);
       } catch (error) {
         console.error(error);
+        toast.error("Có lỗi!!");
       }
     },
     [reading, resultTopic]

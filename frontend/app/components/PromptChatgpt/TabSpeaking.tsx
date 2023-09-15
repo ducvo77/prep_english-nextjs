@@ -8,9 +8,10 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import { NextResponse } from "next/server";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import TextareaOutput from "../input/TextareaOutput";
 import NoteUsing from "../NoteUsing";
+import toast from "react-hot-toast";
 
 export default function TabSpeaking() {
   const [describe, setDescribe] = useState("");
@@ -18,12 +19,13 @@ export default function TabSpeaking() {
   const [level, setLevel] = useState("Easy");
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onSubmit = useCallback(
     async (event: React.SyntheticEvent<EventTarget>) => {
       event.preventDefault();
       setIsLoading(true);
-
+      setResult("");
       try {
         const response = await fetch("/api/generate/speaking", {
           method: "POST",
@@ -40,12 +42,13 @@ export default function TabSpeaking() {
             new Error(`Request failed with status ${response.status}`)
           );
         }
-
         setResult(data.result);
         setIsLoading(false);
+
         return NextResponse.json(data);
       } catch (error) {
         console.error(error);
+        toast.error("Có lỗi!!");
       }
     },
     [describe, level, part]

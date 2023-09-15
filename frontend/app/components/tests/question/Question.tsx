@@ -2,7 +2,7 @@
 
 import { enteredAnswer } from "@/app/redux/features/answerSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import LR from "./LR";
 import WS from "./WS";
 
@@ -14,12 +14,7 @@ interface QuestionProps {
   isSpeaking: boolean;
 }
 
-export default function Question({
-  data,
-  userAssignment,
-  isLR,
-  isSpeaking,
-}: QuestionProps) {
+function Question({ data, userAssignment, isLR, isSpeaking }: QuestionProps) {
   // Khởi tạo giá trị ban đầu cho valueinput
   const initialValue: { [key: string]: string } = {};
   const initialValueInput = data.data
@@ -145,3 +140,5 @@ export default function Question({
     </ul>
   );
 }
+
+export default memo(Question);

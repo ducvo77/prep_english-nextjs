@@ -5,6 +5,9 @@ export default async function getTest(testId: string) {
       cache: "no-cache",
     }
   );
-  if (!res.ok) return null;
+  if (!res.ok) {
+    console.error("Invalid value!!");
+    return null;
+  }
   return res.json();
 }

@@ -14,15 +14,15 @@ import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import SubmitTest from "./SubmitTest";
 import Answer from "./Answer";
 import Transcript from "./Transcript";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import Question from "./question/Question";
 
-interface TestHeaderProp {
+interface TestContentProps {
   data: Test;
   userAssignment?: UserAssignment;
 }
 
-export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
+function TestContent({ data, userAssignment }: TestContentProps) {
   const dispatch = useAppDispatch();
   const { part } = useAppSelector((state) => state.infoTestReducer);
   const [activeTab, setActiveTab] = useState(part || data.parts[0].name);
@@ -119,3 +119,5 @@ export default function TestHeader({ data, userAssignment }: TestHeaderProp) {
     </div>
   );
 }
+
+export default memo(TestContent);
