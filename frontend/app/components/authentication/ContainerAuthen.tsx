@@ -49,7 +49,6 @@ export default function ContainerAuthen() {
       email,
       password,
     });
-    console.log(result);
 
     if (result?.error) {
       toast.error("Có lỗi !!");

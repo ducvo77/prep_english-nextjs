@@ -56,7 +56,6 @@ function Question({ data, userAssignment, isLR, isSpeaking }: QuestionProps) {
   const handleValueInput = useCallback(
     (value: string, number: number, index: number) => {
       if (userAssignment) return;
-      console.log(index, number);
 
       if (index === number) {
         setValueInput((prevState) => ({
@@ -91,7 +90,9 @@ function Question({ data, userAssignment, isLR, isSpeaking }: QuestionProps) {
 
     newArrayUserAssignment?.map((item) => {
       const isCorrect = newArrayData.filter(
-        (item2) => item2.number === item.number && item2.answer === item.answer
+        (item2) =>
+          item2.number === item.number &&
+          item2.answer.toLowerCase() === item.answer.toLowerCase()
       )[0]?.answer;
 
       if (isCorrect) {

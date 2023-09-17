@@ -108,7 +108,9 @@ function SubmitTest({ data, userAssignment }: SubmitTestProps) {
 
       const correct_amount = valueResult.filter((value) =>
         valueAnswer.some(
-          (item) => value.number === item.number && value.answer === item.answer
+          (item) =>
+            value.number === item.number &&
+            value.answer.toLowerCase() === item.answer.toLowerCase()
         )
       ).length;
 

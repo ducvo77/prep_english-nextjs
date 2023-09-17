@@ -1,14 +1,15 @@
 "use client";
 
 import { useAppSelector } from "@/app/redux/hook";
-import { memo } from "react";
+import { Dispatch, SetStateAction, memo } from "react";
 
 interface AnswerProps {
   data: Test;
   userAssignment?: UserAssignment;
+  setActive: Dispatch<SetStateAction<number>>;
 }
 
-function Answer({ data, userAssignment }: AnswerProps) {
+function Answer({ data, userAssignment, setActive }: AnswerProps) {
   const answerValue: AnswerState[] = useAppSelector(
     (state) => state.answerReducer
   );
@@ -21,7 +22,8 @@ function Answer({ data, userAssignment }: AnswerProps) {
       if (
         newArrayUserAssignment.find(
           (item) =>
-            (item.number === number && item.answer === answer) ||
+            (item.number === number &&
+              item.answer.toLowerCase() === answer.toLowerCase()) ||
             ((data.title.includes("writing") ||
               data.title.includes("speaking")) &&
               newArrayUserAssignment.find((item) => item.number == number))
@@ -50,6 +52,11 @@ function Answer({ data, userAssignment }: AnswerProps) {
     }
   };
 
+  const handleActiveTab = (name: string) => {
+    const array = name.split(" ");
+    setActive(Number(array[array.length - 1]) - 1);
+  };
+
   return (
     <>
       {data.parts.map(({ name, data }) => (
@@ -58,6 +65,7 @@ function Answer({ data, userAssignment }: AnswerProps) {
           <ul className="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-10 gap-2 text-[0.75rem]">
             {data.map(({ number, answer }) => (
               <li
+                onClick={() => handleActiveTab(name)}
                 key={number}
                 className={
                   setClassName(number, answer) +

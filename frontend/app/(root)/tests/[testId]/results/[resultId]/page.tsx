@@ -37,7 +37,7 @@ export default async function Result({
   ]);
 
   return (
-    <div className="flex flex-col gap-2 py-10">
+    <div className="flex flex-col gap-2 sm:py-10 py-0">
       <TestHeader data={test.data} />
       <TestContent data={test.data} userAssignment={userAssignment} />
     </div>

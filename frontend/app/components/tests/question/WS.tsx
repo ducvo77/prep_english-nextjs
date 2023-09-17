@@ -1,5 +1,5 @@
 "use client";
-import { Button, Collapse, Textarea } from "@material-tailwind/react";
+import { Button, Textarea } from "@material-tailwind/react";
 import { memo, useEffect, useState } from "react";
 import Recording from "../Recording";
 
@@ -45,7 +45,7 @@ function WS({
   return (
     <div key={data.number} className="flex flex-col gap-6 w-full mt-1">
       <div className="flex gap-2 items-center">
-        <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center">
+        <strong className="w-8 h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center font-medium text-sm">
           {data.number}
         </strong>
 

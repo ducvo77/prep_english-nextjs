@@ -35,7 +35,7 @@ function LR({
   return (
     <li className="flex gap-2">
       <div className="min-w-[32px] h-8 rounded-full bg-[#E8F2FF] text-[#35509A] flex items-center justify-center cursor-pointer">
-        <strong>{data.number}</strong>
+        <span className="text-sm font-medium">{data.number}</span>
       </div>
       <div className="flex flex-col w-full gap-2">
         {data.question.length > 1 ? (
@@ -129,7 +129,7 @@ function LR({
         {userAssignment && (
           <>
             <div className="text-green-500 text-sm">
-              <strong>Đáp án đúng: </strong>
+              <span className="font-medium">Đáp án đúng: </span>
               <span>{data.answer}</span>
             </div>
             <ExplainAnswer explain={data.explain} />
