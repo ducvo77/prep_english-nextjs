@@ -96,9 +96,9 @@ export default function NoteUsing({
   writing,
 }: NoteUsingProps) {
   return (
-    <div className="bg-[#D8F0E2] p-4 rounded-lg">
+    <div className="bg-[#00DB9A] bg-opacity-30 p-4 rounded-lg">
       <FcIdea size={24} className="inline" />
-      <span className="text-[#1E5E38]">
+      <span className="text-black">
         {(speaking && speakingNote) ||
           (reading && readingNote) ||
           (writing && writingNote)}

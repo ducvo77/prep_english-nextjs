@@ -46,7 +46,7 @@ export default function BlogCard({ data }: BlogCardProps) {
       <CardFooter className="pt-0">
         <Button
           onClick={() => router.push(`/blogs/${data.id}`)}
-          className="bg-primary"
+          className="bg-secondary"
         >
           Đọc thêm
         </Button>

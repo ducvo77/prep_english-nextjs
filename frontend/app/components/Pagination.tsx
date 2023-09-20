@@ -44,33 +44,33 @@ export default function Pagination({
         {...getItemProps(i)}
         className={`rounded-full text-sm text-white ${
           active === i
-            ? "bg-primary hover:bg-primary "
-            : "bg-second hover:bg-primary"
+            ? "bg-secondary hover:bg-secondary "
+            : "bg-light hover:bg-secondary text-secondary hover:text-white"
         }`}
       >
         {i}
       </IconButton>
     );
   }
-
+  const buttonClass = "flex items-center gap-2 rounded-full text-secondary";
   return (
     <div className="flex items-center justify-center py-4 gap-4">
       <Button
         variant="text"
-        className="flex items-center gap-2 rounded-full"
+        className={buttonClass}
         onClick={prev}
         disabled={active === 1}
       >
-        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Trước
       </Button>
       <div className="flex items-center gap-2">{items}</div>
       <Button
         variant="text"
-        className="flex items-center gap-2 rounded-full"
+        className={buttonClass}
         onClick={next}
         disabled={active === Math.ceil(length / count) || length === 0}
       >
-        Next
+        Sau
         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
       </Button>
     </div>

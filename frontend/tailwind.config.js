@@ -17,9 +17,10 @@ module.exports = withMT({
     },
     colors: {
       primary: "#1450A3",
-      second: "#F7AD0C",
-      link: "#337CCF",
-      // hightlight: "000",
+      secondary: "#F7AE0B",
+      light: "#FFF8EE",
+      danger: "#e10000",
+      green: "#008060",
     },
   },
   plugins: [],

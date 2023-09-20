@@ -46,7 +46,7 @@ function LR({
                 index2 >= 1 && (
                   <div
                     key={item}
-                    className="flex items-center justify-start text-red-600"
+                    className="flex items-center justify-start text-danger"
                   >
                     <input
                       type="radio"
@@ -79,11 +79,11 @@ function LR({
                           : `${
                               isRightAnswer[Number(data.number)] &&
                               item === valueInput[Number(data.number)] &&
-                              "bg-green-200"
+                              "bg-green bg-opacity-70"
                             } ${
                               !isRightAnswer[Number(data.number)] &&
                               item === valueInput[Number(data.number)] &&
-                              "bg-red-200"
+                              "bg-danger bg-opacity-70"
                             }`
                       }`}
                     >
@@ -112,7 +112,7 @@ function LR({
                 !userAssignment
                   ? "border-gray-500"
                   : isRightAnswer[Number(data.number)]
-                  ? "border-green-200"
+                  ? "border-green"
                   : "border-red-200"
               }`}
               value={valueInput[Number(data.number)]}
@@ -128,7 +128,7 @@ function LR({
         )}
         {userAssignment && (
           <>
-            <div className="text-green-500 text-sm">
+            <div className="text-green text-sm">
               <span className="font-medium">Đáp án đúng: </span>
               <span>{data.answer}</span>
             </div>

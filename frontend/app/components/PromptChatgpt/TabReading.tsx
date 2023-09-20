@@ -131,7 +131,10 @@ export default function TabReading() {
             <Option value="Advanced">Advanced</Option>
           </Select>
         </div>
-        <Button type="submit" className="flex-[1] overflow-visible bg-primary">
+        <Button
+          type="submit"
+          className="flex-[1] overflow-visible bg-secondary"
+        >
           Generate
         </Button>
       </form>
@@ -150,7 +153,7 @@ export default function TabReading() {
           />
           <Button
             onClick={submitInputWriting}
-            className="flex-[1] overflow-visible bg-primary"
+            className="flex-[1] overflow-visible bg-secondary"
           >
             Submit
           </Button>

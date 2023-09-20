@@ -17,7 +17,7 @@ export default function Example() {
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
               href="/"
-              className="rounded-md bg-green-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800"
+              className="rounded-md bg-green px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800"
             >
               Qua lại trang chủ
             </Link>

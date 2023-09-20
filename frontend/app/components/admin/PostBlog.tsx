@@ -2,7 +2,7 @@
 
 import { Button, Input } from "@material-tailwind/react";
 import Image from "next/image";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import addBlog from "@/app/lib/admin/blog/addBlog";
@@ -46,6 +46,14 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
   const jwt = useMemo(() => session?.user?.jwt, [session]);
   const author = useMemo(() => session?.user?.name, [session]);
 
+  const url = useMemo(() => {
+    if (data?.imageURL) {
+      return process.env.NEXT_PUBLIC_SOURCE_URL + data?.imageURL[0].url;
+    } else {
+      return "";
+    }
+  }, [data]);
+
   const router = useRouter();
   const handleSelectImg = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +65,7 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
     []
   );
 
-  const handlePostBlog = useCallback(async () => {
+  const handlePostBlog = async () => {
     if (!title || !content || content === "<p><br></p>" || !imageUrl) {
       toast.error("Thất bại!!");
       setIsError(true);
@@ -77,17 +85,24 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
       toast.success("Thành công!!");
       router.refresh();
     }
-  }, [imageFile, title, content, jwt, author, imageUrl, router]);
+  };
 
-  const handleEditBlog = useCallback(async () => {
-    if (!title && !imageUrl && !content) {
+  const handleEditBlog = async () => {
+    if (
+      !title ||
+      !imageUrl ||
+      !content ||
+      (title === data?.title && content === data?.content && imageUrl === url)
+    ) {
       toast.error("Thất bại !!");
       setIsError(true);
+      console.log(1);
+
       return;
     }
     if (data && blogId) {
       let res1 = undefined;
-      if (imageUrl) {
+      if (imageUrl && imageUrl !== url) {
         res1 = await editFile(imageFile, jwt);
       }
       if (title || content || res1) {
@@ -104,15 +119,20 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
         );
         if (res2) {
           toast.success("Thành công");
-          setTitle("");
-          setContent("");
-          setImageUrl("");
           router.refresh();
           setIsError(false);
         }
       }
     }
-  }, [content, imageFile, title, jwt, author, imageUrl, blogId, data, router]);
+  };
+
+  useEffect(() => {
+    if (data) {
+      setTitle(data.title);
+      setContent(data.content);
+      setImageUrl(url);
+    }
+  }, [data, url]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -121,10 +141,10 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
         label="Title"
         className="text-white"
         onChange={(e) => setTitle(e.target.value)}
-        value={data && !title ? data.title : title}
+        value={title}
       />
       <ReactQuill
-        value={data && !content ? data.content : content}
+        value={content}
         onChange={setContent}
         theme="snow"
         modules={modules}
@@ -147,14 +167,10 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
           {(imageUrl || data) && (
             <Image
               alt="Banner bài viết"
-              src={
-                data && !imageUrl
-                  ? process.env.NEXT_PUBLIC_SOURCE_URL + data.imageURL[0].url
-                  : imageUrl
-              }
+              src={imageUrl}
               width={100}
               height={100}
-              className="w-full bg-[]"
+              className="w-full"
               unoptimized={true}
             />
           )}

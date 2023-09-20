@@ -127,7 +127,7 @@ function SubmitTest({ data, userAssignment }: SubmitTestProps) {
         </p>
       </div>
       {userAssignment ? (
-        <span className="text-green-700 font-semibold text-center border py-3 border-gray-600 text-lg">
+        <span className="text-green font-semibold text-center border py-3 border-gray-600 text-lg">
           Đúng:{" "}
           {userAssignment.data.number_correct +
             "/" +

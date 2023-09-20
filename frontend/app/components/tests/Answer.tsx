@@ -29,7 +29,7 @@ function Answer({ data, userAssignment, setActive }: AnswerProps) {
               newArrayUserAssignment.find((item) => item.number == number))
         )
       ) {
-        return "bg-green-800 border-green-800 text-white";
+        return "bg-green border-green text-white";
       }
 
       if (
@@ -37,10 +37,10 @@ function Answer({ data, userAssignment, setActive }: AnswerProps) {
           (item) => item.number === number && item.answer !== answer
         )
       ) {
-        return "bg-red-800 border-red-800 text-white";
+        return "bg-danger border-danger text-white";
       }
 
-      return "border-red-800";
+      return "border-danger";
     } else {
       if (
         answerValue.find((item) =>
@@ -48,6 +48,8 @@ function Answer({ data, userAssignment, setActive }: AnswerProps) {
         )
       ) {
         return "bg-primary border-primary text-white";
+      } else {
+        return "border-gray-800";
       }
     }
   };
@@ -61,16 +63,16 @@ function Answer({ data, userAssignment, setActive }: AnswerProps) {
     <>
       {data.parts.map(({ name, data }) => (
         <div key={name} className="flex flex-col gap-2">
-          <h3 className="font-medium md:text-sm text-xs capitalize ">{name}</h3>
+          <h3 className="font-medium md:text-sm text-xs capitalize">{name}</h3>
           <ul className="grid md:grid-cols-5 sm:grid-cols-2 grid-cols-10 gap-2 text-[0.75rem]">
             {data.map(({ number, answer }) => (
               <li
                 onClick={() => handleActiveTab(name)}
                 key={number}
                 className={
-                  setClassName(number, answer) +
+                  "border  w-6 h-6 rounded-sm flex items-center justify-center cursor-pointer" +
                   " " +
-                  "border border-gray-800 w-6 h-6 rounded-sm flex items-center justify-center cursor-pointer"
+                  setClassName(number, answer)
                 }
               >
                 {number}

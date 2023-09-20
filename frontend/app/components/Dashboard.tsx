@@ -52,14 +52,14 @@ export default function Dashboard({ userData }: DashboardProps) {
             {TABLE_HEAD.map((head, index) => (
               <th
                 key={head}
-                className={`border-b border-blue-gray-100 bg-blue-gray-50 p-4 ${
+                className={`border-b border-light bg-light  p-4  ${
                   index === 4 ? "md:table-cell hidden" : ""
                 } ${index === 2 || index === 3 ? "sm:table-cell hidden" : ""}`}
               >
                 <Typography
                   variant="small"
                   color="blue-gray"
-                  className={`leading-none text-base font-semibold`}
+                  className={`leading-none text-sm font-semibold text-black `}
                 >
                   {head}
                 </Typography>
@@ -76,7 +76,7 @@ export default function Dashboard({ userData }: DashboardProps) {
             ) =>
               active === Math.ceil((index + 1) / 5) && (
                 <React.Fragment key={id}>
-                  <tr className="even:bg-blue-gray-50/50 text-center">
+                  <tr className="border-b-[1px] border-light text-center">
                     <td className="p-4">
                       <Typography
                         variant="small"
@@ -132,15 +132,15 @@ export default function Dashboard({ userData }: DashboardProps) {
                           onClick={() =>
                             router.push(`/tests/${testId}/results/${id}`)
                           }
-                          className="py-3 px-5"
+                          className="py-3 px-5 bg-transparent shadow-none hover:shadow-none hover:bg-light text-primary normal-case font-medium"
                         >
-                          Xem lại
+                          Chi tiết
                         </Button>
                         <ButtonOutPage
                           title="Bạn chắc chắn muốn xóa?"
                           subTitle="Lịch sử sẽ không được khôi phục?"
                           onClick={() => handleDeleteTestHistory(id)}
-                          className="bg-red-600 py-3 px-5"
+                          className="bg-danger capitalize font-medium py-3 px-5"
                         >
                           <span>Xóa</span>
                         </ButtonOutPage>

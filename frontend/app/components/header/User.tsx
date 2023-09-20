@@ -19,7 +19,8 @@ interface UserProps {
 
 export default function User({ userData }: UserProps) {
   const router = useRouter();
-
+  const itemClassname =
+    "flex items-center w-full px-5 py-3 hover:bg-secondary hover:text-white gap-2";
   return (
     <Menu>
       <MenuHandler>
@@ -45,13 +46,13 @@ export default function User({ userData }: UserProps) {
           <MenuItem className="p-0">
             <div
               onClick={() => router.push("/login")}
-              className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
+              className={itemClassname}
             >
               <span>Đăng nhập</span>
             </div>
             <div
               onClick={() => router.push("/register")}
-              className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
+              className={itemClassname}
             >
               <span>Đăng ký</span>
             </div>
@@ -60,15 +61,12 @@ export default function User({ userData }: UserProps) {
           <MenuItem className="p-0">
             <div
               onClick={() => router.push("/profile")}
-              className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
+              className={itemClassname}
             >
               <CgProfile size={20} />
               <span>Profile</span>
             </div>
-            <div
-              onClick={() => signOut()}
-              className="flex items-center w-full px-5 py-3 hover:bg-primary hover:text-white gap-2"
-            >
+            <div onClick={() => signOut()} className={itemClassname}>
               <GoSignOut size={20} />
               <span>Đăng xuất</span>
             </div>

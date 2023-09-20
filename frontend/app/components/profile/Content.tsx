@@ -33,11 +33,15 @@ export default function Content({ userData }: ContentProps) {
     []
   );
 
-  const handleSave = async () => {
+  const handleSave = async (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault();
     if (
-      (name === userData.name &&
+      ((name === userData.name || !userData.name) &&
         (bio === userData.bio || !userData.bio) &&
-        !imageUrl) ||
+        (!imageUrl ||
+          (userData.avatar &&
+            imageUrl ===
+              process.env.NEXT_PUBLIC_SOURCE_URL + userData.avatar[0].url))) ||
       (!name && !bio && !imageUrl)
     ) {
       toast.error("Chưa có sự thay đổi!");
@@ -88,7 +92,10 @@ export default function Content({ userData }: ContentProps) {
   }, [userData]);
 
   return (
-    <div className="flex flex-col xl:mx-20 lg:mx-12 md:mx-6 sm:mx-4 mx-2  gap-10">
+    <form
+      onSubmit={handleSave}
+      className="flex flex-col xl:mx-20 lg:mx-12 md:mx-6 sm:mx-4 mx-2  gap-10"
+    >
       <div className="flex sm:flex-row flex-col gap-10 justify-between items-center ">
         <div className="flex items-center gap-3 px-10">
           <Image
@@ -113,12 +120,12 @@ export default function Content({ userData }: ContentProps) {
         <div className="flex gap-4">
           <Button
             variant="outlined"
-            className="min-w-[100px]"
+            className="min-w-[100px] border-primary text-primary"
             onClick={handleCancel}
           >
             Hủy
           </Button>
-          <Button color="green" className="min-w-[100px]" onClick={handleSave}>
+          <Button type="submit" className="min-w-[100px] bg-secondary">
             Lưu
           </Button>
         </div>
@@ -136,6 +143,7 @@ export default function Content({ userData }: ContentProps) {
         <div className="flex border-b py-6">
           <span className="w-2/5">Họ và tên</span>
           <Input
+            required
             type="text"
             label="Nhập tên của bạn"
             value={name}
@@ -149,6 +157,7 @@ export default function Content({ userData }: ContentProps) {
         <div className="flex border-b py-6">
           <span className="w-2/5">Bio</span>
           <Input
+            required
             type="text"
             label="Nhập Bio của bạn"
             value={bio}
@@ -193,6 +202,6 @@ export default function Content({ userData }: ContentProps) {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

@@ -125,7 +125,9 @@ export default function ContainerAuthen() {
               required
             />
           </div>
-          <Button type="submit">{isLoginPage ? "Đăng nhập" : "Đăng ký"}</Button>
+          <Button type="submit" className="bg-secondary">
+            {isLoginPage ? "Đăng nhập" : "Đăng ký"}
+          </Button>
         </form>
         {isFailure && (
           <span className="text-sm text-red-400 text-center italic">
@@ -140,7 +142,7 @@ export default function ContainerAuthen() {
           </span>
           <Link
             href={`${isLoginPage ? "/register" : "/login"}`}
-            className="second-color"
+            className="secondary-color"
           >
             {isLoginPage ? "Đăng ký" : "Đăng nhập"}
           </Link>

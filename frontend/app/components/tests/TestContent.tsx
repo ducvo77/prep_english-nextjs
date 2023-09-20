@@ -40,7 +40,7 @@ function TestContent({ data, userAssignment }: TestContentProps) {
               onClick={() => setActive(index)}
               key={name}
               value={name}
-              className={`flex-grow text-sm capitalize font-semibold text-primary test cursor-pointer py-2 block text-center ${
+              className={`flex-grow text-sm capitalize font-semibold text-black test cursor-pointer py-2 block text-center ${
                 index === active ? "bg-primary text-white" : ""
               }`}
             >
@@ -73,7 +73,7 @@ function TestContent({ data, userAssignment }: TestContentProps) {
                     <div className="flex lg:flex-row flex-col gap-5 max-h-[750px]">
                       <div
                         id="topic"
-                        className="lg:w-2/3 w-full bg-gray-100 text-gray-900 p-4 text-sm font-normal leading-7 rounded-md overflow-y-scroll"
+                        className="lg:w-2/3 w-full bg-light text-gray-900 p-4 text-sm font-normal leading-7 rounded-md overflow-y-scroll"
                       >
                         <Topic data={part} />
                       </div>

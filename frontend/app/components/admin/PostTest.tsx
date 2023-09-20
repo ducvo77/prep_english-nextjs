@@ -7,7 +7,7 @@ import editTopic from "@/app/lib/admin/topic/editTopic";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 // import ReactQuill from "react-quill";
 // import { modules } from "./PostBlog";
@@ -70,7 +70,7 @@ export default function PostTest({
   };
 
   const handleEditTopic = async () => {
-    if (!topic) {
+    if (!topic || topic === topicData?.title) {
       toast.error("Chưa có sự thay đổi");
       return;
     }
@@ -78,7 +78,6 @@ export default function PostTest({
 
     if (res) {
       toast.success("Thành công");
-      setTopic("");
       router.refresh();
     }
   };
@@ -117,11 +116,16 @@ export default function PostTest({
 
   const handleEditTest = async () => {
     if (
-      !testTitle &&
-      !testTime &&
-      !testPartNumber &&
-      !testQuestionNumber &&
-      !topicId
+      !testTitle ||
+      !testTime ||
+      !testPartNumber ||
+      !testQuestionNumber ||
+      !topicId ||
+      (testTitle === testData?.title &&
+        testTime === testData?.time &&
+        testPartNumber === testData.part_number &&
+        testQuestionNumber === testData.question_number &&
+        topicId === testData.topic?.id)
     ) {
       toast.error("Chưa có sự thay đổi");
       return;
@@ -139,22 +143,27 @@ export default function PostTest({
 
       if (res) {
         toast.success("Thành công");
-        setTestTitle("");
-        setTopicId(0);
-        setTestTime(0);
-        setTestPartNumber(0);
-        setTestQuestionNumber(0);
+
         router.refresh();
       }
     }
   };
 
-  // const handleChangeAudio = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     setAudioFile(event.target.files[0]);
-  //     setAudioUrl(URL.createObjectURL(event.target.files[0]));
-  //   }
-  // };
+  useEffect(() => {
+    if (topicData) {
+      setTopic(topicData?.title);
+    }
+  }, [topicData]);
+
+  useEffect(() => {
+    if (testData) {
+      setTestTitle(testData.title);
+      setTestTime(testData.time);
+      setTestPartNumber(testData.part_number);
+      setTestQuestionNumber(testData.question_number);
+      setTopicId(testData.topic ? testData.topic?.id : 0);
+    }
+  }, [testData]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -167,7 +176,7 @@ export default function PostTest({
               label="Title of topic"
               className="text-white"
               onChange={(e) => setTopic(e.target.value)}
-              value={topic || topicData?.title || ""}
+              value={topic}
             />
             <Button onClick={topicData ? handleEditTopic : handlePostTopic}>
               {topicData ? "Edit" : "Post"}
@@ -186,28 +195,28 @@ export default function PostTest({
                 type="text"
                 label="Title"
                 className="text-white"
-                value={testTitle || testData?.title || ""}
+                value={testTitle}
                 onChange={(e) => setTestTitle(e.target.value)}
               />
               <Input
                 type="number"
                 label="Time"
                 className="text-white"
-                value={testTime || testData?.time || 0}
+                value={testTime}
                 onChange={(e) => setTestTime(Number(e.target.value))}
               />
               <Input
                 type="number"
                 label="Part Number"
                 className="text-white"
-                value={testPartNumber || testData?.part_number || 0}
+                value={testPartNumber}
                 onChange={(e) => setTestPartNumber(Number(e.target.value))}
               />
               <Input
                 type="number"
                 label="Question Number"
                 className="text-white"
-                value={testQuestionNumber || testData?.question_number || 0}
+                value={testQuestionNumber}
                 onChange={(e) => setTestQuestionNumber(Number(e.target.value))}
               />
               <Select

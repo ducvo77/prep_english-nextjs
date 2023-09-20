@@ -94,7 +94,10 @@ export default function TabSpeaking() {
             <Option value="Advanced">Advanced</Option>
           </Select>
         </div>
-        <Button type="submit" className="flex-[1] overflow-visible bg-primary">
+        <Button
+          type="submit"
+          className="flex-[1] overflow-visible bg-secondary"
+        >
           Generate
         </Button>
       </form>

@@ -33,9 +33,13 @@ export default function PromptChatgpt() {
   return (
     <>
       <Tabs value="Speaking">
-        <TabsHeader>
+        <TabsHeader className="bg-[#DFE0DF] bg-opacity-50 ">
           {data.map(({ label }) => (
-            <Tab key={label} value={label}>
+            <Tab
+              key={label}
+              value={label}
+              // className="text-white"
+            >
               {label}
             </Tab>
           ))}
