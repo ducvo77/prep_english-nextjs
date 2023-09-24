@@ -52,7 +52,7 @@ export default function Dashboard({ userData }: DashboardProps) {
             {TABLE_HEAD.map((head, index) => (
               <th
                 key={head}
-                className={`border-b border-light bg-light  p-4  ${
+                className={`border-b border-white bg-secondary bg-opacity-60 p-4 ${
                   index === 4 ? "md:table-cell hidden" : ""
                 } ${index === 2 || index === 3 ? "sm:table-cell hidden" : ""}`}
               >
@@ -76,8 +76,8 @@ export default function Dashboard({ userData }: DashboardProps) {
             ) =>
               active === Math.ceil((index + 1) / 5) && (
                 <React.Fragment key={id}>
-                  <tr className="border-b-[1px] border-light text-center">
-                    <td className="p-4">
+                  <tr className="border-b-[1px] border-gray-200 text-center">
+                    <td className="py-2 bg-light">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -86,7 +86,7 @@ export default function Dashboard({ userData }: DashboardProps) {
                         {index + 1}
                       </Typography>
                     </td>
-                    <td className="p-4">
+                    <td className="py-2 bg-light">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -95,7 +95,7 @@ export default function Dashboard({ userData }: DashboardProps) {
                         {title}
                       </Typography>
                     </td>
-                    <td className="p-4 sm:table-cell hidden">
+                    <td className="p-4 sm:table-cell hidden bg-light">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -104,7 +104,7 @@ export default function Dashboard({ userData }: DashboardProps) {
                         {time}
                       </Typography>
                     </td>
-                    <td className="p-4 sm:table-cell hidden">
+                    <td className="p-4 sm:table-cell hidden bg-light">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -113,7 +113,7 @@ export default function Dashboard({ userData }: DashboardProps) {
                         {number_correct + " / " + total_sentences}
                       </Typography>
                     </td>
-                    <td className="p-4 md:table-cell hidden">
+                    <td className="py-2 bg-light md:table-cell hidden">
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -123,16 +123,16 @@ export default function Dashboard({ userData }: DashboardProps) {
                           "%"}
                       </Typography>
                     </td>
-                    <td className="p-4">
+                    <td className="py-2 bg-light">
                       <Typography
                         variant="small"
-                        className="font-medium flex gap-6 text-primary"
+                        className="font-medium flex sm:gap-6 gap-2 text-primary"
                       >
                         <Button
                           onClick={() =>
                             router.push(`/tests/${testId}/results/${id}`)
                           }
-                          className="py-3 px-5 bg-transparent shadow-none hover:shadow-none hover:bg-light text-primary normal-case font-medium"
+                          className="py-3 sm:px-5 px-3 bg-transparent shadow-none hover:shadow-none hover:bg-secondary hover:text-white text-primary normal-case font-medium sm:text-sm"
                         >
                           Chi tiết
                         </Button>
@@ -140,7 +140,7 @@ export default function Dashboard({ userData }: DashboardProps) {
                           title="Bạn chắc chắn muốn xóa?"
                           subTitle="Lịch sử sẽ không được khôi phục?"
                           onClick={() => handleDeleteTestHistory(id)}
-                          className="bg-danger capitalize font-medium py-3 px-5"
+                          className="bg-danger capitalize font-medium py-3 sm:px-5 px-3 sm:text-sm"
                         >
                           <span>Xóa</span>
                         </ButtonOutPage>
@@ -157,6 +157,7 @@ export default function Dashboard({ userData }: DashboardProps) {
         setActive={setActive}
         length={sortData?.length || 0}
         count={5}
+        bg_color="bg-light"
       />
     </Card>
   );

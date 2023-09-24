@@ -2,6 +2,8 @@
 
 import { Typography } from "@material-tailwind/react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const SITEMAP = [
   {
@@ -51,9 +53,13 @@ const SITEMAP = [
   },
 ];
 
-const currentYear = new Date().getFullYear();
-
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const pathname = usePathname();
+
+  const Tag = pathname === "/" ? "a" : Link;
+
   return (
     <footer className="relative w-full">
       <div className="mx-auto w-full max-w-7xl px-8">
@@ -76,12 +82,12 @@ export default function Footer() {
                     className="font-normal"
                   >
                     {link ? (
-                      <a
+                      <Tag
                         href={link}
                         className="inline-block py-1 pr-2 transition-transform hover:scale-105"
                       >
                         {label}
-                      </a>
+                      </Tag>
                     ) : (
                       <span className="inline-block py-1 pr-2 transition-transform hover:scale-105">
                         {label}
@@ -103,7 +109,7 @@ export default function Footer() {
           </Typography>
           <div className="flex gap-4 text-blue-gray-900 sm:justify-center">
             <Typography
-              as="a"
+              as={"a"}
               href="#"
               className="opacity-80 transition-opacity hover:opacity-100"
             >
@@ -121,7 +127,7 @@ export default function Footer() {
               </svg>
             </Typography>
             <Typography
-              as="a"
+              as={"a"}
               href="#"
               className="opacity-80 transition-opacity hover:opacity-100"
             >
@@ -139,7 +145,7 @@ export default function Footer() {
               </svg>
             </Typography>
             <Typography
-              as="a"
+              as={"a"}
               href="#"
               className="opacity-80 transition-opacity hover:opacity-100"
             >
@@ -153,7 +159,7 @@ export default function Footer() {
               </svg>
             </Typography>
             <Typography
-              as="a"
+              as={"a"}
               href="#"
               className="opacity-80 transition-opacity hover:opacity-100"
             >
@@ -171,7 +177,7 @@ export default function Footer() {
               </svg>
             </Typography>
             <Typography
-              as="a"
+              as={"a"}
               href="#"
               className="opacity-80 transition-opacity hover:opacity-100"
             >

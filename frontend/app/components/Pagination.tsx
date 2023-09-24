@@ -8,6 +8,7 @@ interface PaginationProps {
   setActive: (n: number) => void;
   length: number;
   count: number;
+  bg_color?: string;
 }
 
 export default function Pagination({
@@ -15,6 +16,7 @@ export default function Pagination({
   setActive,
   length,
   count,
+  bg_color,
 }: PaginationProps) {
   const getItemProps = (index: number) =>
     ({
@@ -45,23 +47,25 @@ export default function Pagination({
         className={`rounded-full text-sm text-white ${
           active === i
             ? "bg-secondary hover:bg-secondary "
-            : "bg-light hover:bg-secondary text-secondary hover:text-white"
+            : "bg-secondary bg-opacity-20 hover:bg-secondary text-secondary hover:text-white"
         }`}
       >
         {i}
       </IconButton>
     );
   }
-  const buttonClass = "flex items-center gap-2 rounded-full text-secondary";
+  const buttonClass =
+    "flex items-center gap-2 rounded-full text-secondary sm:flex hidden";
   return (
-    <div className="flex items-center justify-center py-4 gap-4">
+    <div className={`flex items-center justify-center py-4 gap-4 ${bg_color}`}>
       <Button
         variant="text"
         className={buttonClass}
         onClick={prev}
         disabled={active === 1}
       >
-        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Trước
+        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4 " />
+        Trước
       </Button>
       <div className="flex items-center gap-2">{items}</div>
       <Button

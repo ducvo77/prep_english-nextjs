@@ -6,37 +6,41 @@ import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-const MENU_LIST = [
-  {
-    label: "Trang chủ",
-    href: "/#",
-  },
-  {
-    label: "Bài tập",
-    href: "/#practice",
-  },
-  {
-    label: "ChatGPT",
-    href: "/#chatgpt",
-  },
-  {
-    label: "Bài viết",
-    href: "/#blogs",
-  },
-  {
-    label: <Button>Đăng nhập</Button>,
-    href: "/login",
-  },
-  {
-    label: <Button onClick={() => signOut()}>Đăng xuất</Button>,
-  },
-];
 interface NavProps {
   show: boolean;
   userData: CurrentUser;
 }
 
 export default function Nav({ show, userData }: NavProps) {
+  const MENU_LIST = [
+    {
+      label: "Trang chủ",
+      href: "/#",
+    },
+    {
+      label: "Bài tập",
+      href: "/#practice",
+    },
+    {
+      label: "ChatGPT",
+      href: "/#chatgpt",
+    },
+    {
+      label: "Bài viết",
+      href: "/#blogs",
+    },
+    {
+      label: <Button>Đăng nhập</Button>,
+      href: "/login",
+    },
+    {
+      label: <Button onClick={() => signOut()}>Đăng xuất</Button>,
+    },
+    // {
+    //   label: <button onClick={() => router.push("/profile")}>Profile</button>,
+    // },
+  ];
+
   const { data: session } = useSession();
   const pathname = usePathname();
   const Tag = pathname === "/" ? "a" : Link;

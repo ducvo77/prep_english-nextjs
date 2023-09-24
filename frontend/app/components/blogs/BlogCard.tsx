@@ -45,8 +45,9 @@ export default function BlogCard({ data }: BlogCardProps) {
       </CardBody>
       <CardFooter className="pt-0">
         <Button
+          variant="outlined"
           onClick={() => router.push(`/blogs/${data.id}`)}
-          className="bg-secondary"
+          className="hover:bg-secondary text-black hover:text-white border-secondary hover:opacity-100 normal-case font-medium text-sm"
         >
           Đọc thêm
         </Button>

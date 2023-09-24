@@ -33,7 +33,7 @@ function TestList({ data }: TestListProps) {
               ({ id, title, time, part_number, question_number }) => (
                 <div
                   key={id}
-                  className="border h-auto p-4 rounded-lg bg-light flex flex-col gap-3"
+                  className="border border-secondary border-opacity-30 h-auto p-4 rounded-lg bg-[#00000005] flex flex-col gap-3"
                 >
                   <h3 className="font-medium text-black text-base">{title}</h3>
                   <div className="flex flex-col gap-1 text-primary opacity-80 text-sm font-normal">

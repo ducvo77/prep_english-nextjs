@@ -73,7 +73,7 @@ function TestContent({ data, userAssignment }: TestContentProps) {
                     <div className="flex lg:flex-row flex-col gap-5 max-h-[750px]">
                       <div
                         id="topic"
-                        className="lg:w-2/3 w-full bg-light text-gray-900 p-4 text-sm font-normal leading-7 rounded-md overflow-y-scroll"
+                        className="lg:w-2/3 w-full bg-[#00000005] text-gray-900 p-4 text-sm font-normal leading-7 rounded-md overflow-y-scroll"
                       >
                         <Topic data={part} />
                       </div>

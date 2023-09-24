@@ -167,8 +167,7 @@ export default function DataList({
                         className="font-normal text-white flex gap-2 items-center justify-center"
                       >
                         <ButtonOutPage
-                          color="red"
-                          className="py-2 px-4"
+                          className="py-2 px-4 bg-danger"
                           title="Bạn muốn xóa?"
                           subTitle="Bạn sẽ không khôi phục được?"
                           onClick={
@@ -183,8 +182,7 @@ export default function DataList({
                         </ButtonOutPage>
 
                         <Button
-                          className="py-2 px-4"
-                          color="green"
+                          className="py-2 px-4 bg-secondary"
                           onClick={() => router.push(pathname + "/edit/" + id)}
                         >
                           Edit

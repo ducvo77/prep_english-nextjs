@@ -96,8 +96,6 @@ export default function PostBlog({ blogId, data }: PostBlogProps) {
     ) {
       toast.error("Thất bại !!");
       setIsError(true);
-      console.log(1);
-
       return;
     }
     if (data && blogId) {
